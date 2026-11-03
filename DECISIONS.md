@@ -434,3 +434,21 @@ or sparkles, and the three game colours are muted and appear only on the game ti
 headers (`SITE.lines[].color`). The logo uses the same muted set. The Christmas decoration is
 the family's (owner, 2026-11-01) and stays. Nothing about URLs, titles, metadata or content
 changed. Released with `[deploy] [urgent]` because the owner was looking at the live page.
+
+## A card's headline price is what it sells for; empty tools stay off the rail (2026-11-03)
+
+Visitors to the Reddit launch posts called the site "AI slop". The site itself gave them the reason: the
+reference price fell back from TCGplayer's market price to its mid and low, and a product nobody has
+sold has only a seller's ask, so a $28,000 ask on a serial-numbered card, a $10,000 "Sukuna (015)
+(SR***)" and a $7,000 "Cinderella (015) (PcSR***)" topped the trending row, every "most valuable" list,
+the newest set's chase cards, the Price Duel and the set values (418 of 9,611 products had no market
+price; 110 of them asked $500 or more). Alongside that, "Today's top deals" were eBay listings 50% under
+a $1,488 card (a different or damaged copy, never a deal), and the rail linked six tools of which three
+said "not enough history yet" on a one-day-old site.
+
+Now `referenceCents` is TCGplayer's market price only (`tests/reference-price.test.ts`); a product
+without one has no headline price, ranks nowhere and says so on its card page. Deals (`deals()`,
+`dealRows()`) come from stores only, never an eBay row. Movers, Rising Cards and the monthly report are
+left off the rail, the phone row, the footer and the tools hub until a week of history exists
+(`historyOn()`, passed from server components into `navGroups`/`phoneNav`). Engine change, synced to the
+four sister repos.

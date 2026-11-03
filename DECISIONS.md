@@ -409,3 +409,10 @@ saying so; this is the owner saying so. Coverage over depth: `minPriceUsd` 10, e
 product, the rest rotated by `planEbayRefresh`. The EPN campaign is the family's one
 (5339155912, `customid` prefix `bandai`); Amazon uses the US tag from Vercel and the AU
 fallback until the site's own tracking IDs exist.
+
+## Display font: Plus Jakarta Sans, like every engine site — 2026-11-03
+
+The owner called the per-game display fonts "way too tacky" (redesign thread, 2026-11-03), so
+the engine sets every site's `displayFont` to Plus Jakarta Sans and BandaiCompare follows; the
+rounded M PLUS face from earlier today is gone. The site's own look stays in `src/content/site.css`
+(colours, game tiles, pill buttons), which never names a font.

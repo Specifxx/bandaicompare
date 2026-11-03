@@ -1,7 +1,7 @@
 /* ---------------------------------------------------------------------------
    BandaiCompare's own look: bright and friendly, like the games' own boxes
    (owner, 2026-11-03: "nice and friendly like the Bandai card games").
-   A warm light page with soft colour blobs, rounded type and panels, pill
+   A warm light page with soft colour blobs, rounded panels, pill
    buttons you can "press", and one bright colour per game (Union Arena pink,
    Fusion World orange, Digimon blue; SITE.lines[].color, as --game).
    Light is the default (SITE.theme.defaultMode); dark stays one tap away.

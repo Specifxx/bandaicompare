@@ -87,11 +87,12 @@ header.sticky nav[aria-label="Main"] a:nth-child(2) { color: #e86a00; }
 header.sticky nav[aria-label="Main"] a:nth-child(3) { color: var(--bc-blue); }
 .wordmark { letter-spacing: 0; }
 
-/* ── Hero: a sunny panel with soft rays and sparkles ── */
+/* ── Hero: a sunny band with soft rays and sparkles. Full-bleed, no card
+   (owner, 2026-11-03: "the hero needs to fill for all of the engine sites …
+   like riftcompare and like gundamcompare"): the rays and sparkles stay, the
+   rounded corners and the ring went. ── */
 .hero-band {
-  border-radius: 28px;
   border: 0;
-  box-shadow: 0 18px 40px -18px rgb(255 106 0 / 0.35), inset 0 0 0 2px rgb(255 255 255 / 0.6);
 }
 :root[data-theme="light"] .hero-band {
   background:
@@ -190,6 +191,5 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
   a.card-surface:hover, .game-tile:hover, .game-tile:active, .btn-primary:active { transform: none; }
 }
 @media (max-width: 639px) {
-  .hero-band { border-radius: 22px; }
   .hero-band::after { width: 70px; height: 70px; top: 10px; right: 10px; }
 }

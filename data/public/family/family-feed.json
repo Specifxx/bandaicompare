@@ -1,0 +1,143 @@
+{
+ "v": 1,
+ "site": "bandai",
+ "generatedAt": "2026-11-03T10:29:11.996Z",
+ "links": {
+  "US": {
+   "deals": "https://bandaicompare.com/black-friday",
+   "preorders": "https://bandaicompare.com/preorders"
+  }
+ },
+ "items": [
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "BLEACH: Thousand-Year Blood War Vol.2 - Booster Box",
+   "url": "https://bandaicompare.com/card/bleach-thousand-year-blood-war-vol-2-booster-box",
+   "cents": 12000,
+   "currency": "USD",
+   "store": "Eternal Games Chesterfield",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/607851_200w.jpg",
+   "refCents": 17514,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 31
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "GODDESS OF VICTORY: NIKKE - Booster Box",
+   "url": "https://bandaicompare.com/card/goddess-of-victory-nikke-booster-box",
+   "cents": 6000,
+   "currency": "USD",
+   "store": "Eternal Games Chesterfield",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
+   "refCents": 8200,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 27
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Ignition of X Booster Box",
+   "url": "https://bandaicompare.com/card/ignition-of-x-booster-box",
+   "cents": 9499,
+   "currency": "USD",
+   "store": "Many Realms",
+   "refCents": 11957,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 21
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Ultra Limit Booster Box",
+   "url": "https://bandaicompare.com/card/ultra-limit-booster-box",
+   "cents": 12999,
+   "currency": "USD",
+   "store": "Game-O-Storus",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
+   "refCents": 15031,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 14
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "CODE GEASS: Lelouch of the Rebellion Vol.2 - Booster Box Case",
+   "url": "https://bandaicompare.com/card/code-geass-lelouch-of-the-rebellion-vol-2-booster-box-case",
+   "cents": 94999,
+   "currency": "USD",
+   "store": "GuuBuu Hobby",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/646797_200w.jpg",
+   "refCents": 104749,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 9
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Chivalrous XIII - Booster Box Case",
+   "url": "https://bandaicompare.com/card/chivalrous-xiii-booster-box-case",
+   "cents": 95000,
+   "currency": "USD",
+   "store": "Impact Gaming Center",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/711382_200w.jpg",
+   "refCents": 103683,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 8
+  },
+  {
+   "kind": "preorder",
+   "cluster": "cards",
+   "region": "US",
+   "title": "UEX08BT: BLEACH: Thousand-Year Blood War Vol.3 Booster Box",
+   "url": "https://bandaicompare.com/preorders/uex08bt-bleach-thousand-year-blood-war-vol-3",
+   "cents": 7984,
+   "currency": "USD",
+   "store": "Gamers Guild AZ",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/708750_200w.jpg",
+   "releaseDate": "2026-11-13"
+  },
+  {
+   "kind": "preorder",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Ignition of X Booster Box",
+   "url": "https://bandaicompare.com/preorders/ignition-of-x",
+   "cents": 9499,
+   "currency": "USD",
+   "store": "Many Realms",
+   "releaseDate": "2026-12-11"
+  },
+  {
+   "kind": "preorder",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Starter Deck 13: The Saiyan Raised on Earth Starter Deck",
+   "url": "https://bandaicompare.com/preorders/starter-deck-13-the-saiyan-raised-on-earth",
+   "cents": 1599,
+   "currency": "USD",
+   "store": "Gamers Guild AZ",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/721534_200w.jpg",
+   "releaseDate": "2027-01-22"
+  },
+  {
+   "kind": "preorder",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Starter Deck 14: The Prince of Saiyan Starter Deck",
+   "url": "https://bandaicompare.com/preorders/starter-deck-14-the-prince-of-saiyan",
+   "cents": 1599,
+   "currency": "USD",
+   "store": "Gamers Guild AZ",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/721537_200w.jpg",
+   "releaseDate": "2027-01-22"
+  }
+ ]
+}

@@ -4,7 +4,7 @@
    A warm light page with soft colour blobs, rounded panels, pill
    buttons you can "press", and one bright colour per game (Union Arena pink,
    Fusion World orange, Digimon blue; SITE.lines[].color, as --game).
-   Light is the default (SITE.theme.defaultMode); dark stays one tap away.
+   Dark is the default (owner, 2026-11-03 11:17); the light page is one tap away.
    Loaded after the engine's globals.css by app/layout.tsx; only this site has it.
 
    Rules: pure CSS, no images, no script. Decoration is pseudo-elements with
@@ -23,7 +23,7 @@
   --bc-rainbow: linear-gradient(90deg, var(--bc-pink), var(--bc-orange) 50%, var(--bc-blue));
 }
 
-/* ── Light (default): warm cream with soft blobs of the three game colours ── */
+/* ── Light: warm cream with soft blobs of the three game colours ── */
 :root[data-theme="light"] {
   --c-ink-950: 255 255 255;
   --c-ink-900: 255 255 255;

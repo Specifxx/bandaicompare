@@ -57,7 +57,7 @@ export const SITE: SiteConfig = {
       tcgplayerSlug: "union-arena",
       ebayQuery: "union arena",
       blurb: "Bandai's anime crossover card game: Jujutsu Kaisen, Demon Slayer, Chainsaw Man, Solo Leveling and dozens more series, each its own set.",
-      color: "#ff3d6e",
+      color: "#d4557f",
     },
     {
       id: "fw",
@@ -68,7 +68,7 @@ export const SITE: SiteConfig = {
       tcgplayerSlug: "dragon-ball-super-fusion-world",
       ebayQuery: "dragon ball super fusion world",
       blurb: "The Dragon Ball Super Card Game's 2024 reboot: FB booster sets, FS starter decks and the Manga Boosters collectors chase.",
-      color: "#ff9a1f",
+      color: "#e08a3c",
     },
     {
       id: "dg",
@@ -79,7 +79,7 @@ export const SITE: SiteConfig = {
       tcgplayerSlug: "digimon-card-game",
       ebayQuery: "digimon card game",
       blurb: "Bandai's Digimon TCG since 2020: BT and EX booster sets, starter decks and Rare Pull alternate arts.",
-      color: "#2f9bff",
+      color: "#4a8fd6",
     },
   ],
   ebay: {
@@ -139,13 +139,13 @@ export const SITE: SiteConfig = {
   ],
 
   theme: {
-    brand: "#ff6a00",
-    brandLight: "#ff9a3d",
-    brandDark: "#d94f00",
-    accent: "#1f8fff",
+    brand: "#e8893a",
+    brandLight: "#f2b36b",
+    brandDark: "#b4601a",
+    accent: "#4a8fd6",
     pageDark: "#10122a",
     inkDark: ["#0b0c1f", "#151834", "#1d2142", "#272c52", "#3a4070", "#545b8c"],
-    wordmarkGradient: "linear-gradient(90deg, #ff2e7e 0%, #ff6a00 50%, #ffb800 100%)",
+    wordmarkGradient: "linear-gradient(90deg, #f2b36b 0%, #e8893a 100%)",
     // Dark by default like every engine site (owner, 2026-11-03 11:17); the bright light theme
     // (content/site.css) stays one tap away.
     displayFont: "Plus Jakarta Sans",

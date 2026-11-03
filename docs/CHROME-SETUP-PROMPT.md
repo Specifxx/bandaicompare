@@ -11,7 +11,7 @@ You are setting up my new website, BandaiCompare (a free Union Arena, Dragon Bal
 
 ## Task 1: Domain
 
-1. I registered bandaicompare.com (if I have not yet, stop and tell me: never buy it yourself). Open https://vercel.com/dashboard → Domains and note whether bandaicompare.com is listed there, and where its DNS is managed (Vercel or another registrar). Don't change anything yet.
+1. I bought bandaicompare.com in Vercel (if it is not in Vercel → Domains yet, stop and tell me: never buy it yourself). Open https://vercel.com/dashboard → Domains and note whether bandaicompare.com is listed there, and where its DNS is managed (Vercel or another registrar). Don't change anything yet.
 
 ## Task 2: Vercel project
 
@@ -20,7 +20,6 @@ You are setting up my new website, BandaiCompare (a free Union Arena, Dragon Bal
    - NEXT_PUBLIC_SITE_URL = https://bandaicompare.com
    - TCGPLAYER_IMPACT_LINK = copy the exact value from the gundamcompare project (Vercel → gundamcompare → Settings → Environment Variables; click the eye icon to read it). If that project doesn't have it, use https://partner.tcgplayer.com/c/7385758/1780961/21018
    - INDEXNOW_KEY = a new random 32-character string of lowercase letters and digits (make one up; write it down for Task 3)
-   - AMAZON_ASSOCIATE_TAG = copy from the gundamcompare project if it has one; otherwise skip.
    - REPORTS_GITHUB_TOKEN (Production only, Sensitive): if the team has it as a Shared variable (Vercel team Settings → Environment Variables → Shared), link it to this project. Then open https://github.com/settings/personal-access-tokens, edit the token named site-reports, and add the repository bandaicompare to its repository access (keep Contents: Read and write). Change nothing else on the token.
 3. Click Deploy. The first build will show as "Ignored" or "Canceled": that is expected (the site only builds for a release commit). Don't retry it.
 4. Project → Settings → Functions: if there is a "Function Region" choice, leave the default. Settings → Deployment Protection: leave as is.
@@ -37,9 +36,13 @@ Open https://github.com/Specifxx/bandaicompare/settings/secrets/actions.
 2. Variables tab: SITE_URL = https://bandaicompare.com. If SITE_URL already exists with another value , edit it to exactly https://bandaicompare.com; otherwise create it.
 3. Open https://github.com/Specifxx/bandaicompare/settings → General → Default branch. It should be main; if not, switch it to main.
 
+## Task 3b: Amazon Australia tracking ID
+
+1. Open https://affiliate-program.amazon.com.au (the AU Associates account that has compareempire-22) → Account Settings → Manage Your Tracking IDs → Add Tracking ID → type exactly `bandaicompare` and save. Amazon appends `-22`; confirm the new ID reads `bandaicompare-22`. If an ID with that name already exists, do nothing. The site's code already uses `bandaicompare-22` for AU links; the US (riftcompare-20), UK, Canada and Germany use the family's shared IDs, so there is nothing else to create and no AMAZON variable to set anywhere.
+
 ## Task 4: First release
 
-1. The prices are already imported on GitHub. Open https://github.com/Specifxx/bandaicompare/actions/workflows/production-deploy.yml → Run workflow (branch main) → Run. It lands a release commit and Vercel builds it (about 3 to 6 minutes). From then on the site rebuilds once a day by itself after the 03:17 UTC price import, which also starts using eBay now that the keys are in.
+1. The prices are already imported on GitHub. Open https://github.com/Specifxx/bandaicompare/actions/workflows/production-deploy.yml → Run workflow (branch main) → Run. It lands a release commit and Vercel builds it (about 3 to 6 minutes). From then on the site rebuilds once a day by itself after the 03:17 UTC price import, which also starts using eBay now that the keys are in (2,500 calls a day, cards worth US$10 or more and every sealed product).
 2. If Vercel shows no new deployment 5 minutes after that run is green, open the Vercel project → Deployments and tell me what the newest entry says.
 3. When the Vercel deployment is Ready, open the production URL (and https://bandaicompare.com once it shows Valid Configuration). Check: the home page shows prices; open /games/union-arena, click the first booster box, and confirm the price table lists TCGplayer and at least one store; click a Buy button and confirm it opens the store (TCGplayer links go through partner.tcgplayer.com, eBay links contain campid=5339155912).
 
@@ -50,7 +53,7 @@ Open https://github.com/Specifxx/bandaicompare/settings/secrets/actions.
 3. Bing Webmaster Tools (https://www.bing.com/webmasters): Import from Google Search Console and tick bandaicompare.com; then check the sitemap is listed, and add it if not.
 4. Yandex Webmaster (https://webmaster.yandex.com): Add site https://bandaicompare.com, verify with the DNS (TXT) method, adding the record as above, then Indexing → Sitemap files → add the sitemap.
 
-(No affiliate step: BandaiCompare uses the eBay Partner Network campaign and the TCGplayer Impact link every Compare site already shares, tagged per site.)
+(Affiliates, for the record: eBay Partner Network is the family's one campaign, 5339155912, with a `bandai-` tag per link, hard-coded, nothing to set; the TCGplayer Impact link is the shared one from Task 2; the eBay API keyset is Cyberpunk Compare's, shared 2,500 calls a day each, from Task 3; Amazon AU is Task 3b.)
 
 ## When you finish
 

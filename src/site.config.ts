@@ -42,6 +42,8 @@ export const SITE: SiteConfig = {
   disclaimer:
     "BandaiCompare is not affiliated with, endorsed by or sponsored by Bandai, Bandai Namco or any of their companies. Union Arena, Dragon Ball Super, Digimon and related names are trademarks of their owners, used only to describe the products stores sell.",
   priceAlerts: true,
+  // Amazon AU: this site's own tracking ID in the owner's AU account (the US stays the engine default).
+  amazonAuTag: "bandaicompare-22",
   // The first game; with `lines` set, each game's own category, slug and eBay words win.
   tcgcsvCategoryId: 81,
   tcgplayerSlug: "union-arena",

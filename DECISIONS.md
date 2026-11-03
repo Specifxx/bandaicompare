@@ -422,3 +422,15 @@ rounded M PLUS face from earlier today is gone. The site's own look stays in `sr
 The owner (11:17 UTC): "default theme should be dark theme as well", so `defaultMode` is unset and
 BandaiCompare opens dark like every engine site; the bright light page stays one tap away and
 keeps its own styling in `src/content/site.css`. The engine option stays, off everywhere.
+
+## A tamer palette — 2026-11-03
+
+The owner (21:57 UTC, with a screenshot of the live home page): "the website theme is a bit
+annoying and the colours hurt the eye, can we make it more tame?" The first look was a
+pink–orange–yellow rainbow (wordmark, header and footer rules, nav links), a sunburst behind
+the hero and colour blobs on the page. Now one warm orange (`#e8893a`) carries the brand, the
+wordmark fades amber to orange, the rules are thin, the hero is one quiet gradient with no rays
+or sparkles, and the three game colours are muted and appear only on the game tiles and hub
+headers (`SITE.lines[].color`). The logo uses the same muted set. The Christmas decoration is
+the family's (owner, 2026-11-01) and stays. Nothing about URLs, titles, metadata or content
+changed. Released with `[deploy] [urgent]` because the owner was looking at the live page.

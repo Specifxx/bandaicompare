@@ -42,6 +42,8 @@ export const SITE: SiteConfig = {
   disclaimer:
     "BandaiCompare is not affiliated with, endorsed by or sponsored by Bandai, Bandai Namco or any of their companies. Union Arena, Dragon Ball Super, Digimon and related names are trademarks of their owners, used only to describe the products stores sell.",
   priceAlerts: true,
+  // Amazon AU: this site's own tracking ID in the owner's AU account (the US stays the engine default).
+  amazonAuTag: "bandaicompare-22",
   // The first game; with `lines` set, each game's own category, slug and eBay words win.
   tcgcsvCategoryId: 81,
   tcgplayerSlug: "union-arena",
@@ -86,8 +88,8 @@ export const SITE: SiteConfig = {
     singlesCategoryId: "183454",
     sealedCategoryId: "183456",
     minPriceUsd: 10,
-    // Its OWN eBay app (owner rule, 2026-11-01: a new site never shares a key). Off until
-    // EBAY_CLIENT_ID / EBAY_CLIENT_SECRET exist; half a 5,000-call app. Raise only with the owner.
+    // Cyberpunk Compare's eBay app, shared 2,500 / 2,500 (owner, 2026-11-03). Off until
+    // EBAY_CLIENT_ID / EBAY_CLIENT_SECRET (Cyberpunk's values) exist. Raise only with the owner.
     dailyBudget: 2500,
     runHourUtc: 3,
   },

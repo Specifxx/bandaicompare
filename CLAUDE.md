@@ -69,13 +69,15 @@ write copy that reads as official ("the official", "Bandai's store").
 
 ## eBay
 
-BandaiCompare needs its OWN eBay app (owner rule, 2026-11-01: a new site never
-shares a key), which the owner supplies: `SITE.ebay.dailyBudget` 2,500 calls a day,
-counted in `data/state/ebay-usage.json`. Cards under $10 get no call; every
-sealed product does. The pass is a no-op until `EBAY_CLIENT_ID` /
-`EBAY_CLIENT_SECRET` exist. Never point it at a sister's keyset or raise the
-cap without the owner. `/api/ebay/account-deletion` must stay deployed while
-the keyset exists.
+BandaiCompare shares Cyberpunk Compare's eBay app (owner, 2026-11-03), a
+5,000-call app split 2,500 each: `SITE.ebay.dailyBudget` 2,500 calls a day,
+counted in `data/state/ebay-usage.json`, the run at 03:17 UTC (Cyberpunk's is
+00:17) so the two never overlap. Cards under $10 get no call; every sealed
+product does; the plan spreads the calls for coverage (`planEbayRefresh`). The
+pass is a no-op until `EBAY_CLIENT_ID` / `EBAY_CLIENT_SECRET` (the same values
+as cyberpunkcompare's secrets) exist. Never raise the cap or point it at any
+other keyset without the owner. Cyberpunk's `/api/ebay/account-deletion` is the
+keyset's registered endpoint; this site's stays deployed too.
 
 ## Matching
 

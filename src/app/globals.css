@@ -438,4 +438,5 @@ body { background: var(--page-bg); min-height: 100vh; }
 .game-tile:hover .game-fan-2 { transform: rotate(13deg) translateX(6px); }
 .game-tile-name, .game-tile-blurb { padding-right: 140px; }
 @media (min-width: 768px) and (max-width: 1100px) { .game-fan { display: none; } .game-tile-name, .game-tile-blurb { padding-right: 0; } }
+@media (max-width: 480px) { .game-fan { width: 96px; height: 90px; top: 12px; right: 8px; } .game-fan-card { width: 52px; } .game-fan-0 { right: 32px; } .game-fan-1 { right: 16px; } .game-tile-name, .game-tile-blurb { padding-right: 100px; } }
 @media (prefers-reduced-motion: reduce) { .game-tile { transition: none; } .game-tile:hover { transform: none; } .game-fan-card { transition: none; } }

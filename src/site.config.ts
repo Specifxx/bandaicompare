@@ -42,6 +42,8 @@ export const SITE: SiteConfig = {
   disclaimer:
     "BandaiCompare is not affiliated with, endorsed by or sponsored by Bandai, Bandai Namco or any of their companies. Union Arena, Dragon Ball Super, Digimon and related names are trademarks of their owners, used only to describe the products stores sell.",
   priceAlerts: true,
+  // Amazon AU: this site's own tracking ID in the owner's AU account (the US stays the engine default).
+  amazonAuTag: "bandaicompare-22",
   // The first game; with `lines` set, each game's own category, slug and eBay words win.
   tcgcsvCategoryId: 81,
   tcgplayerSlug: "union-arena",
@@ -86,8 +88,8 @@ export const SITE: SiteConfig = {
     singlesCategoryId: "183454",
     sealedCategoryId: "183456",
     minPriceUsd: 10,
-    // Its OWN eBay app (owner rule, 2026-11-01: a new site never shares a key). Off until
-    // EBAY_CLIENT_ID / EBAY_CLIENT_SECRET exist; half a 5,000-call app. Raise only with the owner.
+    // Cyberpunk Compare's eBay app, shared 2,500 / 2,500 (owner, 2026-11-03). Off until
+    // EBAY_CLIENT_ID / EBAY_CLIENT_SECRET (Cyberpunk's values) exist. Raise only with the owner.
     dailyBudget: 2500,
     runHourUtc: 3,
   },
@@ -145,7 +147,7 @@ export const SITE: SiteConfig = {
     inkDark: ["#0b0c1f", "#151834", "#1d2142", "#272c52", "#3a4070", "#545b8c"],
     wordmarkGradient: "linear-gradient(90deg, #ff2e7e 0%, #ff6a00 50%, #ffb800 100%)",
     // Friendly and bright, like the games' own boxes (owner, 2026-11-03): rounded type, light page.
-    displayFont: "M PLUS Rounded 1c",
+    displayFont: "Plus Jakarta Sans",
     defaultMode: "light",
     pageLight: "#fff8f0",
   },

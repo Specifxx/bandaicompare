@@ -398,3 +398,21 @@ still wins) and `pageLight` for the browser bar; both are off on every other sit
 header leaves out Cards, Movers and Forum so the three games fit one row; the footer still links
 them. The owner's card-engine redesign (sidebar, RiftCompare-style homepage) lands on all five
 engine repos from its own thread.
+
+## eBay: Cyberpunk Compare's keyset, 2,500 each — 2026-11-03
+
+Reverses the entry above from earlier today. The owner (10:27 UTC) put BandaiCompare on
+Cyberpunk Compare's eBay app rather than a new one: a 5,000-call app split 2,500 / 2,500,
+BandaiCompare's run at 03:17 UTC against Cyberpunk's 00:17 so the quota day is never hit
+twice at once. The rule stands that a site never takes a sister's keys without the owner
+saying so; this is the owner saying so. Coverage over depth: `minPriceUsd` 10, every sealed
+product, the rest rotated by `planEbayRefresh`. The EPN campaign is the family's one
+(5339155912, `customid` prefix `bandai`); Amazon uses the US tag from Vercel and the AU
+fallback until the site's own tracking IDs exist.
+
+## Display font: Plus Jakarta Sans, like every engine site — 2026-11-03
+
+The owner called the per-game display fonts "way too tacky" (redesign thread, 2026-11-03), so
+the engine sets every site's `displayFont` to Plus Jakarta Sans and BandaiCompare follows; the
+rounded M PLUS face from earlier today is gone. The site's own look stays in `src/content/site.css`
+(colours, game tiles, pill buttons), which never names a font.

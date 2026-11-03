@@ -19,7 +19,7 @@ import { featuredSealed, preorderSetList, sealedHubs } from "@/lib/hubs";
 import { isPreorder, preorderPath } from "@/lib/preorders";
 import { inSeason as bfSeason } from "@/lib/black-friday";
 import { CORE_SALES, salesInSeason } from "@/lib/sale-seasons";
-import { gradeHubs, kits, kitsOn, popular } from "@/lib/kits";
+import { kits, kitsOn, popular } from "@/lib/kits";
 import { KitGrid } from "@/components/KitTile";
 import { SealedHero } from "@/components/SealedHero";
 import { SiteReviews } from "@/components/site-reviews/SiteReviews";
@@ -49,15 +49,19 @@ export const revalidate = 21600;
 // posts"): a centred hero with the search, the region pills and trending
 // chips; today's top deals; sealed; the newest set's chase cards; what people
 // say; guides; the FAQ. Nothing else: the tools, movers, pre-order and set
-// grids and the ad strips that used to follow the hero are gone from here
-// (the rail links them), so the page is "much more concise, much more simple".
+// grids, the hub chip rows and the ad strips that used to follow the hero are
+// gone from here (the rail links them): "less is more" (owner, same day).
 export default function Home() {
   const m = meta();
   const latest = latestReleasedSet();
   const releases = preorderSetList();
   const upcoming = releases.find((s) => isPreorder(s)) ?? null;
   const chase = latest ? byValue(productsInSet(latest.id).filter((p) => p.kind === "card")).slice(0, 12) : [];
-  const trending = byValue(products().filter((p) => p.kind === "card")).slice(0, 6);
+  // Trending chips: the most valuable chase-rarity cards (SITE.chaseRarities), so a
+  // tokens-and-markers catalogue never fills the row with "Energy Marker" (BandaiCompare).
+  const cards = products().filter((p) => p.kind === "card");
+  const chaseOnly = cards.filter((p) => p.rarity && SITE.chaseRarities.includes(p.rarity));
+  const trending = byValue(chaseOnly.length >= 6 ? chaseOnly : cards.filter((p) => p.rarity)).slice(0, 6);
   const topDeals = deals(6);
   const shelf = featuredSealed(6);
   const sealedLinks = sealedHubs();
@@ -161,13 +165,6 @@ export default function Home() {
         <section className="sd">
           <Header title={`${SITE.gameShort} booster boxes and sealed`} href="/sealed" sub="Newest sets first. Open one to compare every store." />
           <TileGrid items={shelf} />
-          {sealedLinks.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {sealedLinks.map((h) => (
-                <Link key={h.slug} href={`/sealed/${h.slug}`} className="chip hover:border-brand/60 hover:text-fg">{h.label} ({h.items.length})</Link>
-              ))}
-            </div>
-          )}
         </section>
       )}
 
@@ -176,11 +173,6 @@ export default function Home() {
         <section className="sd">
           <Header title={`${SITE.kits.label} prices`} href="/kits" sub={`${kits().length.toLocaleString()} ${SITE.kits.noun} across ${SITE.kits.stores.length} hobby shops, matched by barcode.`} />
           <KitGrid items={popular(kits()).slice(0, 6)} />
-          <div className="mt-3 flex flex-wrap gap-2">
-            {gradeHubs().map((h) => (
-              <Link key={h.slug} href={`/kits/grade/${h.slug}`} className="chip hover:border-brand/60 hover:text-fg">{h.label} ({h.items.length})</Link>
-            ))}
-          </div>
         </section>
       )}
 

@@ -146,9 +146,9 @@ export const SITE: SiteConfig = {
     pageDark: "#10122a",
     inkDark: ["#0b0c1f", "#151834", "#1d2142", "#272c52", "#3a4070", "#545b8c"],
     wordmarkGradient: "linear-gradient(90deg, #ff2e7e 0%, #ff6a00 50%, #ffb800 100%)",
-    // Friendly and bright, like the games' own boxes (owner, 2026-11-03): rounded type, light page.
+    // Dark by default like every engine site (owner, 2026-11-03 11:17); the bright light theme
+    // (content/site.css) stays one tap away.
     displayFont: "Plus Jakarta Sans",
-    defaultMode: "light",
     pageLight: "#fff8f0",
   },
   halloween: {

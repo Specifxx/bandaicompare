@@ -416,3 +416,9 @@ The owner called the per-game display fonts "way too tacky" (redesign thread, 20
 the engine sets every site's `displayFont` to Plus Jakarta Sans and BandaiCompare follows; the
 rounded M PLUS face from earlier today is gone. The site's own look stays in `src/content/site.css`
 (colours, game tiles, pill buttons), which never names a font.
+
+## Dark by default after all — 2026-11-03
+
+The owner (11:17 UTC): "default theme should be dark theme as well", so `defaultMode` is unset and
+BandaiCompare opens dark like every engine site; the bright light page stays one tap away and
+keeps its own styling in `src/content/site.css`. The engine option stays, off everywhere.

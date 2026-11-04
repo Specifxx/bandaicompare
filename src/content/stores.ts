@@ -26,7 +26,6 @@ export const STORES: StoreConfig[] = [
   { key: "goodgames", name: "Good Games", base: "https://goodgames.com.au", market: "AU", collections: ["dragonball-super","digimon"], kind: "both" },
   { key: "grailborne", name: "Grailborne", base: "https://grailborne.com.au", market: "AU", collections: ["dragon-ball-one-piece-best-sellers"], kind: "both" },
   { key: "guf", name: "Guf", base: "https://guf.com.au", market: "AU", collections: ["digimon-tcg"], kind: "sealed" },
-  { key: "hbtcollectables", name: "HBT Collectables", base: "https://hbtcollectables.com", market: "AU", collections: ["union-arena","dragonball-super","digimon-card-game-singles-eng","digimon-card-game"], kind: "both" },
   { key: "hrgames", name: "HR Games", base: "https://hrgames.au", market: "AU", collections: ["bt21-wild-resurgence-dragon-ball-super-card-game","dragon-ball-super-card-game-sealed"], kind: "both" },
   { key: "kollecter", name: "Kollecter", base: "https://kollecter.com.au", market: "AU", collections: ["dragon-ball","digimon-card-game"], kind: "both" },
   { key: "legendsandcollectables", name: "legendsandcollectables", base: "https://legendsandcollectables.com", market: "AU", collections: ["dragon-ball-super-trading-card-game","digimon-singles-all","digimon-sealed-all"], kind: "both" },

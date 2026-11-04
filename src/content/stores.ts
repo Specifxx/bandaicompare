@@ -53,6 +53,8 @@ export const STORES: StoreConfig[] = [
   { key: "tradingcardmasters", name: "Trading Card Masters", base: "https://tradingcardmasters.com.au", market: "AU", collections: ["dragon-ball-singles"], kind: "both" },
   { key: "turtletcg", name: "Turtle TCG", base: "https://turtletcg.com.au", market: "AU", collections: ["dragon-ball-super-fusion-world","digimon-singles","digimon"], kind: "both" },
   { key: "urbanempirecollectables", name: "Urban Empire Collectables", base: "https://urbanempirecollectables.com", market: "AU", collections: ["dragon-ball-super","digimon-tcg"], kind: "sealed" },
+  { key: "eclipsegamesau", name: "Eclipse Games", base: "https://eclipsegames.com.au", market: "AU", collections: ["digimon-tcg-english"], kind: "sealed" },
+  { key: "hobbyco", name: "Hobbyco", base: "https://hobbyco.com.au", market: "AU", collections: ["dragon-ball-super-card-game", "digimon"], kind: "sealed" },
   { key: "3mana", name: "3 Mana CA", base: "https://3mana.ca", market: "CA", collections: ["union-arena-singles","union-arena-solo-leveling","dragon-ball-super-singles","fusion-world-tournament-cards","digimon-singles","digimon-promotional-cards"], kind: "both" },
   { key: "6ixtcgsmarkham", name: "TheSix TCGs Markham", base: "https://6ixtcgsmarkham.ca", market: "CA", collections: ["union-arena","dragonball"], kind: "both" },
   { key: "abyssgamestore", name: "Abyss", base: "https://abyssgamestore.ca", market: "CA", collections: ["union-arena"], kind: "sealed" },

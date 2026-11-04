@@ -34,7 +34,6 @@ HOST goodgames.com.au AUD 0 10 10
 HOST grailborne.com.au AUD 0 10 0
 HOST groovycollectables.com.au AUD 0 2 0
 HOST guf.com.au AUD 0 1 10
-HOST hbtcollectables.com AUD 1 4 4
 HOST hobbishack.com.au AUD 0 4 0
 HOST hrgames.au AUD 0 10 1
 HOST inngames.com.au AUD 0 9 2

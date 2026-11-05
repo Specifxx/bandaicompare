@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-04T11:08:36.951Z",
+ "generatedAt": "2026-11-05T11:12:10.400Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -19,9 +19,9 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/607851_200w.jpg",
-   "refCents": 17514,
+   "refCents": 17814,
    "refLabel": "TCGplayer market price",
-   "savingPct": 31
+   "savingPct": 33
   },
   {
    "kind": "deal",

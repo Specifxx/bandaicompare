@@ -2,7 +2,7 @@
 
 Read `README.md` first. This is BandaiCompare (Union Arena, Dragon Ball Super
 Fusion World and the Digimon Card Game on one site, `SITE.lines`); Lorcana
-Compare, YGO Compare and Cyberpunk Compare run the same engine (Gundam Compare
+Compare and Cyberpunk Compare run the same engine (Gundam Compare
 left it for the Dex / MTG Compare engine on 2026-11-04). Engine code (`src/lib`,
 `src/app`, `src/components`, `scripts`) must stay game-agnostic: anything
 game-specific goes in `src/site.config.ts` or `src/content/`. When you change

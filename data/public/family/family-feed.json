@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-05T11:12:10.400Z",
+ "generatedAt": "2026-11-06T11:05:20.158Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -13,15 +13,29 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
+   "title": "Bleach: Thousand-Year Blood War Vol. 3 - Booster Display",
+   "url": "https://bandaicompare.com/card/bleach-thousand-year-blood-war-vol-3-booster-display",
+   "cents": 14999,
+   "currency": "USD",
+   "store": "jawbreakers",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/708750_200w.jpg",
+   "refCents": 25407,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 41
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
    "title": "BLEACH: Thousand-Year Blood War Vol.2 - Booster Box",
    "url": "https://bandaicompare.com/card/bleach-thousand-year-blood-war-vol-2-booster-box",
    "cents": 12000,
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/607851_200w.jpg",
-   "refCents": 17814,
+   "refCents": 18047,
    "refLabel": "TCGplayer market price",
-   "savingPct": 33
+   "savingPct": 34
   },
   {
    "kind": "deal",
@@ -33,9 +47,9 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
-   "refCents": 8181,
+   "refCents": 8143,
    "refLabel": "TCGplayer market price",
-   "savingPct": 27
+   "savingPct": 26
   },
   {
    "kind": "deal",
@@ -46,23 +60,9 @@
    "cents": 9499,
    "currency": "USD",
    "store": "Many Realms",
-   "refCents": 11957,
+   "refCents": 11951,
    "refLabel": "TCGplayer market price",
    "savingPct": 21
-  },
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
-   "title": "Ultra Limit Booster Box",
-   "url": "https://bandaicompare.com/card/ultra-limit-booster-box",
-   "cents": 12999,
-   "currency": "USD",
-   "store": "Game-O-Storus",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
-   "refCents": 15060,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 14
   },
   {
    "kind": "deal",

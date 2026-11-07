@@ -82,6 +82,8 @@ export const SITE: SiteConfig = {
       color: "#4a8fd6",
     },
   ],
+  // Booster boxes in one Booster Box Case (eBay titles and store listings, 2026-11-07): a listing stating another count is another product.
+  caseUnits: { ua: 16, fw: 12, dg: 12 },
   ebay: {
     // Each game's own words (lines[].ebayQuery) start every search; this is the fallback.
     query: "bandai card game",

@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-06T11:05:20.158Z",
+ "generatedAt": "2026-11-07T10:21:39.312Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -9,20 +9,6 @@
   }
  },
  "items": [
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
-   "title": "Bleach: Thousand-Year Blood War Vol. 3 - Booster Display",
-   "url": "https://bandaicompare.com/card/bleach-thousand-year-blood-war-vol-3-booster-display",
-   "cents": 14999,
-   "currency": "USD",
-   "store": "jawbreakers",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/708750_200w.jpg",
-   "refCents": 25407,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 41
-  },
   {
    "kind": "deal",
    "cluster": "cards",
@@ -47,9 +33,23 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
-   "refCents": 8143,
+   "refCents": 8125,
    "refLabel": "TCGplayer market price",
    "savingPct": 26
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Bleach: Thousand-Year Blood War Vol. 3 - Booster Display",
+   "url": "https://bandaicompare.com/card/bleach-thousand-year-blood-war-vol-3-booster-display",
+   "cents": 14999,
+   "currency": "USD",
+   "store": "jawbreakers",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/708750_200w.jpg",
+   "refCents": 19745,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 24
   },
   {
    "kind": "deal",
@@ -60,9 +60,9 @@
    "cents": 9499,
    "currency": "USD",
    "store": "Many Realms",
-   "refCents": 11951,
+   "refCents": 11947,
    "refLabel": "TCGplayer market price",
-   "savingPct": 21
+   "savingPct": 20
   },
   {
    "kind": "deal",
@@ -98,9 +98,9 @@
    "region": "US",
    "title": "UEX08BT: BLEACH: Thousand-Year Blood War Vol.3 Booster Box",
    "url": "https://bandaicompare.com/preorders/uex08bt-bleach-thousand-year-blood-war-vol-3",
-   "cents": 7984,
+   "cents": 14999,
    "currency": "USD",
-   "store": "Gamers Guild AZ",
+   "store": "jawbreakers",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/708750_200w.jpg",
    "releaseDate": "2026-11-13"
   },

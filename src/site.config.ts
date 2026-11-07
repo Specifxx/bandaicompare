@@ -99,7 +99,9 @@ export const SITE: SiteConfig = {
   numberStyle: "series",
   // Three games and over 21,000 TCGplayer products: cards under US$1 in every
   // printing stay out, except in sets from the last 120 days (data and build size).
-  catalogMinCardCents: 100,
+  // The low-traction cull (owner, 2026-11-07): cards under $5 leave the catalogue (was $1); new sets and
+  // any card page Search Console shows people finding stay. ~2,500 bulk cards out of ~10,000.
+  catalogMinCardCents: 500,
   sitemapMinCardCents: 300,
   // One Union Arena number exists as SR, SR* and SR***, at very different prices.
   rarityMustAgree: true,

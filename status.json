@@ -1,0 +1,43 @@
+{
+ "v": 1,
+ "site": "bandaicompare.com",
+ "at": "2026-11-07T10:51:05.027Z",
+ "overall": "warn",
+ "checks": [
+  {
+   "name": "Live site",
+   "status": "ok",
+   "detail": "200"
+  },
+  {
+   "name": "A card page",
+   "status": "ok",
+   "detail": "200"
+  },
+  {
+   "name": "Daily price import",
+   "status": "ok",
+   "detail": "0.6h old"
+  },
+  {
+   "name": "Store imports",
+   "status": "warn",
+   "detail": "hobbyco: 0 matched; playe: 0 matched; sentinelgamessg: 0 matched; sgmanapro: 0 matched; toyorgame: 0 matched; five6gaming: 0 matched"
+  },
+  {
+   "name": "eBay budget",
+   "status": "ok",
+   "detail": "2500/2500 calls on 2026-11-07, 3293 eligible"
+  },
+  {
+   "name": "Family feed",
+   "status": "ok",
+   "detail": "10 items, 0.5h old; 8 sister feeds (rift, op, dex, mtg, gundam, lorcana, ygo, cyberpunk)"
+  },
+  {
+   "name": "Amazon ASIN finder",
+   "status": "ok",
+   "detail": "AU: off, 0h ago; CA: off, 0h ago; EU: off, 0h ago; UK: off, 0h ago; US: off, 0h ago"
+  }
+ ]
+}

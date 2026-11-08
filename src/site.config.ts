@@ -105,6 +105,11 @@ export const SITE: SiteConfig = {
   // any card page Search Console shows people finding stay. ~2,500 bulk cards out of ~10,000.
   catalogMinCardCents: 500,
   sitemapMinCardCents: 300,
+  // The store focus (owner, 2026-11-08: "a bit large"): after the store pass, a card stays when 2 stores
+  // in one market have it in stock, or it is worth $20 and a store lists it, or $50 outright; sealed when
+  // any store has it, it is new or upcoming, or it is a priced box or case. Search demand always stays.
+  // ~6,370 products -> ~2,600 on the 2026-11-07 data (lib/import/focus.ts).
+  catalogFocus: { minStores: 2, keepListedCents: 2000, keepCents: 5000 },
   // One Union Arena number exists as SR, SR* and SR***, at very different prices.
   rarityMustAgree: true,
   rarityAliases: {

@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-07T10:21:39.312Z",
+ "generatedAt": "2026-11-08T09:56:26.097Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -19,7 +19,7 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/607851_200w.jpg",
-   "refCents": 18047,
+   "refCents": 18307,
    "refLabel": "TCGplayer market price",
    "savingPct": 34
   },
@@ -33,23 +33,9 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
-   "refCents": 8125,
+   "refCents": 8143,
    "refLabel": "TCGplayer market price",
    "savingPct": 26
-  },
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
-   "title": "Bleach: Thousand-Year Blood War Vol. 3 - Booster Display",
-   "url": "https://bandaicompare.com/card/bleach-thousand-year-blood-war-vol-3-booster-display",
-   "cents": 14999,
-   "currency": "USD",
-   "store": "jawbreakers",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/708750_200w.jpg",
-   "refCents": 19745,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 24
   },
   {
    "kind": "deal",
@@ -63,6 +49,20 @@
    "refCents": 11947,
    "refLabel": "TCGplayer market price",
    "savingPct": 20
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Ultra Limit Booster Box",
+   "url": "https://bandaicompare.com/card/ultra-limit-booster-box",
+   "cents": 12999,
+   "currency": "USD",
+   "store": "Game-O-Storus",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
+   "refCents": 15032,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 14
   },
   {
    "kind": "deal",

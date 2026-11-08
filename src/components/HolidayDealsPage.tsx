@@ -9,7 +9,6 @@ import { sourceNameServer } from "@/lib/sources";
 import { blackFriday, cyberMonday, EVENT_NAME, holidayFaq, longDate, seasonYear, splitDeals, type HolidayEvent } from "@/lib/black-friday";
 import { listRegions } from "@/lib/sale-seasons";
 import { FamilyCluster } from "@/components/FamilyCluster";
-import { fitDescription } from "@/lib/seo-title";
 import { ADJ, IN, UnderStores } from "@/components/SaleSeasonPage";
 import { postsAbout } from "@/lib/posts";
 import type { Market } from "@/lib/site-types";
@@ -32,13 +31,13 @@ export function holidayMetadata(event: HolidayEvent): Metadata {
   if (event === "black-friday") {
     return {
       title: `${SITE.gameShort} Black Friday Deals ${year}: Store Prices Under TCGplayer`,
-      description: fitDescription(`Black Friday and Cyber Monday ${year} ${SITE.game} deals: sealed product and cards that ${SITE.stores.length} stores sell under TCGplayer's market price today, updated every day.`),
+      description: `Black Friday and Cyber Monday ${year} ${SITE.game} deals: sealed product and cards that ${SITE.stores.length} stores sell under TCGplayer's market price today, updated every day.`,
       ...canon("/black-friday"),
     };
   }
   return {
     title: `${SITE.gameShort} Cyber Monday Deals ${year}: Store Prices Compared`,
-    description: fitDescription(`Cyber Monday ${year} ${SITE.game} deals: booster boxes, sealed product and cards that ${SITE.stores.length} online stores sell under TCGplayer's market price today, updated every day.`),
+    description: `Cyber Monday ${year} ${SITE.game} deals: booster boxes, sealed product${SITE.sealedOnly ? "" : " and cards"} that ${SITE.stores.length} online stores sell under TCGplayer's market price today, updated every day.`,
     ...canon("/cyber-monday"),
   };
 }
@@ -73,13 +72,13 @@ export function HolidayDealsPage({ event }: { event: HolidayEvent }) {
       </header>
 
       <Section title="Sealed product under TCGplayer today" rows={sealed} empty="No sealed product is under TCGplayer's market price in a US store today." />
-      <Section title="Cards under TCGplayer today" rows={cards} empty="No card worth $5 or more is under TCGplayer's market price in a US store today." />
+      {!SITE.sealedOnly && <Section title="Cards under TCGplayer today" rows={cards} empty="No card worth $5 or more is under TCGplayer's market price in a US store today." />}
 
       {others.map((m) => (
         <section key={m} id={m.toLowerCase()} className="flex scroll-mt-20 flex-col gap-4">
           <h2 className="text-2xl font-bold">{EVENT_NAME[event]} deals in {ADJ[m]} stores</h2>
           <UnderStores title={`Sealed product under other ${ADJ[m]} stores`} rows={storeDealsIn(m, 12, "sealed")} m={m} />
-          <UnderStores title={`Cards under other ${ADJ[m]} stores`} rows={storeDealsIn(m, 12, "card")} m={m} />
+          {!SITE.sealedOnly && <UnderStores title={`Cards under other ${ADJ[m]} stores`} rows={storeDealsIn(m, 12, "card")} m={m} />}
         </section>
       ))}
 

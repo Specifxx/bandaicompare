@@ -7,11 +7,13 @@ import { LINES } from "@/lib/lines";
 export interface GameView {
   line: GameLine;
   sets: SetInfo[];
-  cards: number;
   sealed: number;
   newest: SetInfo | null;
-  topCards: Product[];
+  /** The game's most valuable sealed products with a photo (the homepage tile's fan). */
+  topSealed: Product[];
   boxes: Product[];
+  /** Starter decks and decks, newest set first. */
+  decks: Product[];
 }
 
 const memo = new Map<string, GameView>();
@@ -25,14 +27,18 @@ export function gameView(line: GameLine): GameView {
   const boxes = mine
     .filter((p) => p.kind === "sealed" && p.sealedType === "Booster Box" && released(p) !== null && refCents(p.id) != null)
     .sort((a, b) => released(b)!.localeCompare(released(a)!) || (refCents(b.id) ?? 0) - (refCents(a.id) ?? 0));
+  const sealed = mine.filter((p) => p.kind === "sealed" && p.sealedType !== "Insert");
+  const decks = sealed
+    .filter((p) => /deck/i.test(p.sealedType ?? "") && released(p) !== null)
+    .sort((a, b) => released(b)!.localeCompare(released(a)!));
   const view: GameView = {
     line,
     sets: own,
-    cards: mine.filter((p) => p.kind === "card").length,
-    sealed: mine.filter((p) => p.kind === "sealed").length,
-    newest: own.find((s) => !s.upcoming && /booster|^[A-Z]{2}\d|bt/i.test(`${s.code} ${s.name}`)) ?? own.find((s) => !s.upcoming) ?? null,
-    topCards: byValue(mine.filter((p) => p.kind === "card")).slice(0, 12),
+    sealed: sealed.length,
+    newest: own.find((s) => !s.upcoming && sealed.some((p) => p.setId === s.id && p.sealedType === "Booster Box")) ?? own.find((s) => !s.upcoming) ?? null,
+    topSealed: byValue(sealed.filter((p) => p.image && (p.sealedType === "Booster Box" || p.sealedType === "Case"))).slice(0, 12),
     boxes: boxes.slice(0, 12),
+    decks: decks.slice(0, 12),
   };
   memo.set(line.id, view);
   return view;

@@ -6,7 +6,7 @@ import { canon, abs } from "@/lib/site";
 import { byValue, meta, priceOf, productsInSet, refCents, setBySlug } from "@/lib/data";
 import { preorderSetList, sealedInSet } from "@/lib/hubs";
 import { daysUntil, isPreorder, longDate, preorderPath, preorderTitleCandidates } from "@/lib/preorders";
-import { fitTitle, fitDescription } from "@/lib/seo-title";
+import { fitTitle } from "@/lib/seo-title";
 import { postsAbout } from "@/lib/posts";
 import { PREORDER_COPY } from "@/content/preorders";
 import { PriceTable } from "@/components/PriceTable";
@@ -21,8 +21,7 @@ import { FamilyCluster } from "@/components/FamilyCluster";
 
 // /preorders/<set slug>: one release's landing page (lib/preorders.ts). Six
 // hours like every page buyers act on; nothing prerendered at build.
-export const revalidate = 21600;
-export const generateStaticParams = () => [];
+export const dynamic = "force-dynamic"; // one CDN copy per URL (next.config.js CDN_PAGES), never ISR
 
 /** The set, if it has a page today; a set past its window goes to its card list. */
 function release(slug: string): SetInfo {
@@ -54,9 +53,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!s) return {};
   const pre = isPreorder(s);
   const title = fitTitle(preorderTitleCandidates(s.name, pre));
-  const description = fitDescription(pre
+  const description = pre
     ? `${s.name} pre-order prices: booster boxes, packs and sealed from every ${SITE.gameShort} store we track, cheapest first, in your currency. Out ${longDate(s.releasedOn)}.`
-    : `${s.name} booster box and sealed prices from every ${SITE.gameShort} store we track, in-stock first, in your currency, updated daily. Released ${longDate(s.releasedOn)}.`);
+    : `${s.name} booster box and sealed prices from every ${SITE.gameShort} store we track, in-stock first, in your currency, updated daily. Released ${longDate(s.releasedOn)}.`;
   const path = preorderPath(s);
   return { title, description, ...canon(path), openGraph: { ...canon(path).openGraph, title: title.absolute, description } };
 }

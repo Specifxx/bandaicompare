@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SITE } from "@/site.config";
 import { canon } from "@/lib/site";
-import { fitTitle, fitDescription } from "@/lib/seo-title";
+import { fitTitle } from "@/lib/seo-title";
 import { GameTiles } from "@/components/GameTiles";
 import { isMultiGame } from "@/lib/lines";
 
 export const revalidate = 86400;
 export const metadata: Metadata = {
   title: fitTitle([`Card Games We Compare — ${SITE.gameShort}`, "Card Games We Compare"]),
-  description: fitDescription(`Every card game ${SITE.name} compares: ${SITE.game}. Pick one for its sets, booster boxes and card prices across every store.`),
+  description: `Every card game ${SITE.name} compares: ${SITE.game}. Pick one for its sets, booster boxes, cases and starter decks across every store.`,
   ...canon("/games"),
 };
 

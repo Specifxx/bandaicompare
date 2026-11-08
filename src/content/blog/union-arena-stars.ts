@@ -23,10 +23,10 @@ export const post: Post = {
 <li><b>Action Point</b> cards: the AP cards every deck uses, some with star versions too.</li>
 </ul>
 
-<h2>How this site keeps them apart</h2>
-<p>A store or eBay listing is only matched to a card when its number and name agree, and when the listing names a rarity it must be that card's own. An "SR***" listing is never shown as the price of the plain SR, and the reverse.</p>
+<h2>What it means for a box</h2>
+<p>The star parallels are why a Union Arena booster box sells above the sum of its commons: most boxes hold no three-star card at all, so the chance of one is priced into every sealed box of a popular series. A set whose anime has a big fanbase keeps its box price longest.</p>
 
 <h2>See the prices</h2>
-<p>The <a href="/games/union-arena">Union Arena page</a> lists every set and the most valuable cards; the <a href="/cards">card list</a> filters by rarity.</p>
+<p>The <a href="/games/union-arena">Union Arena page</a> lists every set with its booster boxes, cases and starter decks, and <a href="/sealed/booster-box">booster boxes</a> compares every game's boxes across the stores.</p>
 `,
 };

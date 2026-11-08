@@ -15,11 +15,8 @@ import { meta } from "@/lib/data";
 import { abs, KITS_SHARE_IMAGE } from "@/lib/site";
 import { MARKET_LABEL } from "@/lib/site-types";
 import { sourceNameServer } from "@/lib/sources";
-import { fitDescription } from "@/lib/seo-title";
 
-export const revalidate = 86400; // data only changes with a release (DECISIONS.md, "Vercel cost")
-// Empty list = nothing prerendered at build; each page is cached after its first visit.
-export const generateStaticParams = () => [];
+export const dynamic = "force-dynamic"; // one CDN copy per URL (next.config.js CDN_PAGES), never ISR
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const k = SITE.kits ? kitBySlug(params.slug) : null;
@@ -28,7 +25,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const stores = new Set(offers.map((o) => o.source)).size;
   const us = offers.find((o) => o.market === "US" && o.inStock);
   const title = `${k.name} price: compare ${stores} shops`;
-  const description = fitDescription(`${k.name} ${SITE.kits.label} kit${us ? ` from ${money(us.cents, us.currency)} in the US` : ""}. Compare ${stores} hobby shops in the US, UK, Canada and Australia, matched by barcode (JAN ${k.jan}), cheapest in stock first.`);
+  const description = `${k.name} ${SITE.kits.label} kit${us ? ` from ${money(us.cents, us.currency)} in the US` : ""}. Compare ${stores} hobby shops in the US, UK, Canada and Australia, matched by barcode (JAN ${k.jan}), cheapest in stock first.`;
   const images = k.image ? [kitImage(k.image, 1000)] : [KITS_SHARE_IMAGE];
   return {
     title,
@@ -112,7 +109,7 @@ export default function KitPage({ params }: { params: { slug: string } }) {
               <h2 className="text-lg font-bold">Compare prices</h2>
               <CheckedAgo at={kitsUpdatedAt() ?? m?.updatedAt} />
             </div>
-            <PriceTable offers={offers} fx={m?.fx ?? { USD: 1 }} productId={pid} page="kit" image={k.image ? kitImage(k.image, 400) : null} product={`${k.name} (JAN ${k.jan})`} />
+            <PriceTable offers={offers} fx={m?.fx ?? { USD: 1 }} productId={pid} page="kit" image={k.image ?? null} product={`${k.name} (JAN ${k.jan})`} />
             <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
               <a className="link font-semibold" rel="sponsored nofollow noopener" target="_blank" href={goHref({ url: ebaySearchUrl(search, "US"), source: "ebay", market: "US" }, pid, "kit_ebay_search")}>Check eBay listings →</a>
               {amazon && <a className="link font-semibold" rel="sponsored nofollow noopener" target="_blank" href={goHref({ url: amazon, source: "amazon", market: "US" }, pid, "kit_amazon_search")}>Check Amazon →</a>}

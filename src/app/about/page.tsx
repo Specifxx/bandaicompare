@@ -2,15 +2,14 @@ import type { Metadata } from "next";
 import { SITE } from "@/site.config";
 import { canon } from "@/lib/site";
 import { StaticPage } from "@/components/StaticPage";
-import { fitDescription } from "@/lib/seo-title";
 
 export const revalidate = 86400;
-export const metadata: Metadata = { title: `About ${SITE.name}`, description: fitDescription(`${SITE.name} compares ${SITE.game} prices across stores so you never overpay.`), ...canon("/about") };
+export const metadata: Metadata = { title: `About ${SITE.name}`, description: `${SITE.name} compares ${SITE.game} prices across stores so you never overpay.`, ...canon("/about") };
 
 export default function About() {
   return (
     <StaticPage title={`About ${SITE.name}`}>
-      <p>{SITE.name} is a free price comparison site for {SITE.game}. Every day it collects the price of every {SITE.gameShort} card and sealed product from TCGplayer, eBay and {SITE.stores.length} online game stores in the US, UK, Canada, Australia and Europe, and puts them side by side, cheapest first.</p>
+      <p>{SITE.name} is a free price comparison site for {SITE.game}. Every day it collects the price of every {SITE.gameShort} booster box, case, pack and starter deck from TCGplayer, eBay, Amazon and {SITE.stores.length} online game stores in the US, UK, Canada, Australia, Europe and Singapore, and puts them side by side, cheapest first.</p>
       <p>It is built by the team behind <a href="https://riftcompare.com" rel="noopener">Rift Compare</a> (Riftbound) and <a href="https://opcompare.app" rel="noopener">OP Compare</a> (One Piece), with the same rule: comparing prices is free for everyone, and we never hide a cheaper store.</p>
       {SITE.disclaimer && <p>{SITE.disclaimer}</p>}
       <h2>How we make money</h2>

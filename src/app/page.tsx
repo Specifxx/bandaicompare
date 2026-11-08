@@ -6,15 +6,15 @@ import { CreatorsBubble } from "@/components/creators/CreatorsBubble";
 import { HeroSparks } from "@/components/HeroSparks";
 import { ChristmasGifts } from "@/components/ChristmasGifts";
 import { TileGrid } from "@/components/ProductTile";
-import { byValue, deals, latestReleasedSet, meta, products, productsInSet } from "@/lib/data";
+import { byValue, deals, latestReleasedSet, meta, products } from "@/lib/data";
 import { ago, money } from "@/lib/format";
 import { posts } from "@/lib/posts";
 import { shortName } from "@/lib/names";
 import { JsonLd } from "@/components/JsonLd";
 import { SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
-import { fitTitle, fitDescription } from "@/lib/seo-title";
-import { featuredSealed, preorderSetList, sealedHubs } from "@/lib/hubs";
+import { fitTitle } from "@/lib/seo-title";
+import { featuredSealed, preorderSetList, sealedHubs, sealedInSet } from "@/lib/hubs";
 import { isPreorder, preorderPath } from "@/lib/preorders";
 import { inSeason as bfSeason } from "@/lib/black-friday";
 import { CORE_SALES, salesInSeason } from "@/lib/sale-seasons";
@@ -24,18 +24,22 @@ import { SealedHero } from "@/components/SealedHero";
 import { SiteReviews } from "@/components/site-reviews/SiteReviews";
 import { sealedHero } from "@/lib/sealed-hero";
 import { GameTiles } from "@/components/GameTiles";
+import { LandingAds } from "@/components/LandingAds";
+import { Section } from "@/components/Section";
+import { cardAds } from "@/lib/card-ads";
+import { HeroCards } from "@/components/home/HeroCards";
 
-// The homepage leads with "<game> Card Prices" and the number of stores compared, as Rift Compare's does.
+// The homepage leads with "<game> Booster Box Prices" (sealed only since 2026-11-06) and the number of stores compared.
 export function generateMetadata(): Metadata {
   const n = SITE.stores.length;
   // Keyword first, brand last (SEO audit, 2026-11-03: a long game name pushed the brand off Cyberpunk's title). Every
   // candidate is tried with the brand before any is tried bare.
   const g = SITE.gameShort;
   const brand = ` | ${SITE.name}`;
-  const title = fitTitle([`${g} Card Prices — Compare ${n} Stores${brand}`, `${g} Card Prices — ${n} Stores${brand}`, `${g} Card Prices${brand}`, `${g} Card Prices — Compare ${n} Stores`, `${g} Card Prices`]);
+  const title = fitTitle([`${g} Booster Box Prices — Compare ${n} Stores${brand}`, `${g} Booster Box Prices — ${n} Stores${brand}`, `${g} Booster Box Prices${brand}`, `${g} Booster Box Prices — Compare ${n} Stores`, `${g} Booster Box Prices`]);
   return {
     title,
-    description: fitDescription(`Compare ${SITE.game} card and booster box prices across TCGplayer, eBay and ${n} online stores. Cheapest in-stock first, in your currency, updated daily.`),
+    description: `Compare ${SITE.game} booster box, case, starter deck and pre-order prices across TCGplayer, eBay, Amazon and ${n} online stores. Cheapest in-stock first, in your currency, updated daily.`,
     alternates: { canonical: "/", types: { "application/rss+xml": "/feed.xml" } },
     openGraph: { type: "website", siteName: SITE.name, url: "/", title: title.absolute },
   };
@@ -55,107 +59,123 @@ export default function Home() {
   const latest = latestReleasedSet();
   const releases = preorderSetList();
   const upcoming = releases.find((s) => isPreorder(s)) ?? null;
-  const chase = latest ? byValue(productsInSet(latest.id).filter((p) => p.kind === "card")).slice(0, 12) : [];
-  // Trending chips: the most valuable chase-rarity cards (SITE.chaseRarities), so a
-  // tokens-and-markers catalogue never fills the row with "Energy Marker" (BandaiCompare).
-  const cards = products().filter((p) => p.kind === "card");
-  const chaseOnly = cards.filter((p) => p.rarity && SITE.chaseRarities.includes(p.rarity));
-  const trending = byValue(chaseOnly.length >= 6 ? chaseOnly : cards.filter((p) => p.rarity)).slice(0, 6);
+  // Sealed only (2026-11-06): the newest set's sealed products, and the most valuable booster boxes as trending chips.
+  const chase = latest ? sealedInSet(latest.id).slice(0, 12) : [];
+  const trending = byValue(products().filter((p) => p.sealedType === "Booster Box")).slice(0, 6);
   const topDeals = deals(6);
   const shelf = featuredSealed(6);
+  // The hero's two featured boxes: the shelf's first two with a photo (the newest released sets' booster boxes).
+  const heroPicks = shelf.filter((p) => p.image).slice(0, 2);
   const sealedLinks = sealedHubs();
   // The sealed shelf: one tabbed, swipeable row (components/SealedHero.tsx) on every site.
   const hero = sealedHero();
   const storeCount = SITE.stores.length;
   const today = (m?.updatedAt ?? new Date().toISOString()).slice(0, 10);
   const faqs = [
-    { q: `What is ${SITE.name}?`, a: `${SITE.name} is a free ${SITE.game} price comparison site. It compares prices for every ${SITE.gameShort} card and sealed product across TCGplayer, eBay and ${storeCount} online game stores in the US, UK, Canada, Australia and Europe, and updates them every day.` },
-    { q: `Where is the cheapest place to buy ${SITE.gameShort} cards?`, a: `It changes card by card. Search a card on ${SITE.name} to see every store's price for it, cheapest in-stock first, in your own currency, with a direct link to buy.` },
-    { q: `How often are ${SITE.gameShort} prices updated?`, a: `Every day. TCGplayer prices and store listings refresh daily; eBay listings for cards worth $${SITE.ebay.minPriceUsd} or more are re-checked every one to four days depending on value and demand.` },
+    { q: `What is ${SITE.name}?`, a: `${SITE.name} is a free ${SITE.game} sealed price comparison site. It compares prices for every ${SITE.gameShort} booster box, case, pack and starter deck across TCGplayer, eBay, Amazon and ${storeCount} online game stores in the US, UK, Canada and Australia, and updates them every day.` },
+    { q: `Where is the cheapest place to buy a ${SITE.gameShort} booster box?`, a: `It changes box by box. Search a set on ${SITE.name} to see every store's price for its booster box, cheapest in-stock first, in your own currency, with a direct link to buy.` },
+    { q: `How often are ${SITE.gameShort} prices updated?`, a: `Every day. TCGplayer prices and store listings refresh daily, and eBay listings for every sealed product are re-checked every one to two days.` },
+    { q: `Does ${SITE.name} list single cards?`, a: `No. ${SITE.name} compares sealed product only: booster boxes, cases, packs and starter decks, where store prices differ the most.` },
     { q: `Is ${SITE.name} free?`, a: `Yes, completely, and you don't need an account. ${SITE.name} is paid for by affiliate commissions: when you buy through some links, the store may pay us a small fee at no cost to you.` },
   ];
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-14">
       <JsonLd data={{ "@context": "https://schema.org", "@type": "Organization", "@id": `${SITE_URL}/#org`, name: SITE.name, url: SITE_URL, logo: `${SITE_URL}/icon.svg` }} />
-      <JsonLd data={{ "@context": "https://schema.org", "@type": "WebSite", name: SITE.name, url: SITE_URL, publisher: { "@id": `${SITE_URL}/#org` }, potentialAction: { "@type": "SearchAction", target: `${SITE_URL}/cards?q={q}`, "query-input": "required name=q" } }} />
-      {/* The products on this page, by their own URLs: the shelf and the newest set's chase cards (SEO audit, 2026-11-03). */}
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "WebSite", name: SITE.name, url: SITE_URL, publisher: { "@id": `${SITE_URL}/#org` } }} />
+      {/* The products on this page, by their own URLs: the shelf and the newest set's sealed (SEO audit, 2026-11-03). */}
       {shelf.length + chase.length > 0 && (
-        <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: `${SITE.gameShort} sealed and chase card prices`, itemListElement: [...shelf, ...chase].map((p, i) => ({ "@type": "ListItem", position: i + 1, url: `${SITE_URL}/card/${p.slug}`, name: p.name })) }} />
+        <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: `${SITE.gameShort} booster box and sealed prices`, itemListElement: [...shelf, ...chase].map((p, i) => ({ "@type": "ListItem", position: i + 1, url: `${SITE_URL}/card/${p.slug}`, name: p.name })) }} />
       )}
       <JsonLd data={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }} />
 
-      {/* The hero: full-bleed across the content column and tall enough to fill
-          the first screen, like RiftCompare's (owner, 2026-11-03: "the hero can
-          fit more like riftcompare … everything should be fill"); the search as
-          its one action, the living background behind it (HeroSparks) and the
-          creators bubble in its corner. `hero-bleed` (globals.css) breaks out of
-          the page container; `hero-search` keeps the suggestions above what follows. */}
-      <section className="hero-band hero-bleed relative -mt-6 flex flex-col items-center justify-center overflow-x-clip px-4 pb-10 pt-8 text-center sm:px-8 sm:pb-14 sm:pt-12">
+      {/* The hero: the engine's band (a surface with a hairline under it, full width of the column), the search as its one
+          action, the living background behind it (HeroSparks) and the creators bubble in its corner. The words, the h1 and the
+          links are the ones the old hero carried. */}
+      <section className="hero-band relative -mx-4 -mt-6 overflow-x-clip border-b border-line px-4 pb-10 pt-8 sm:-mx-6 sm:px-8 sm:pb-14 sm:pt-12">
         <HeroSparks />
         <CreatorsBubble />
-        <ChristmasGifts />
-        <p className="mx-auto hidden items-center justify-center gap-2 font-display text-base font-black sm:flex">
-          <img src="/icon.svg" alt={`${SITE.name} logo`} width={28} height={28} className="h-7 w-7 rounded-lg" />
-          <span className="wordmark">{SITE.wordmark[0]}</span>
-          <span className="text-fg">{SITE.wordmark[1]}</span>
-        </p>
-        <h1 className="hero-glow mx-auto mt-3 max-w-4xl font-display text-3xl font-black leading-[1.1] sm:text-5xl lg:text-6xl">
-          <span className="wordmark">{SITE.gameShort}</span> Card Prices
-        </h1>
-        <p className="mx-auto mt-4 max-w-3xl text-base text-muted sm:text-lg">
-          <strong className="block text-fg">Buy {SITE.gameShort} cards at the best price</strong>
-          Price check any card or sealed product and find the cheapest place to buy: live prices from TCGplayer, eBay and {storeCount} stores in the US, UK, Canada, Australia and Europe, in your own currency, updated daily.
-        </p>
-        <div className="hero-search relative z-30 mx-auto mt-6 hidden w-full max-w-3xl sm:block"><SearchBox big /></div>
-        <p className="mt-6 text-[11px] font-bold uppercase tracking-widest text-muted">Shopping from</p>
-        <MarketChooser className="mt-2 justify-center" bare />
-        {trending.length > 0 && (
-          <div className="mx-auto mt-5 w-full max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-muted">Trending</p>
-            <ul className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {trending.map((p) => (
-                <li key={p.id}>
-                  <Link href={`/card/${p.slug}`} className="block truncate rounded-xl border border-ink-700 bg-ink-900/70 px-3 py-2.5 text-sm text-fg/85 transition-colors hover:border-brand hover:text-fg">
-                    {shortName(p.name)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        {/* Two columns from lg (owner, 2026-11-08: KaeYoung and ScentCompare's hero, "feature some products on the hero"): the words,
+            search, region row and trending chips on the left, two featured boxes on the right (under the words on a phone). The
+            words, the h1 and the links are the ones the centred hero carried. */}
+        <div className="mx-auto grid w-full max-w-[1440px] gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(340px,480px)] lg:items-center lg:gap-10">
+          <div className="min-w-0">
+            <ChristmasGifts />
+            <p className="eyebrow">{SITE.gameShort} price comparison</p>
+            <h1 className="hero-glow mt-3 max-w-4xl font-display text-3xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+              <span className="text-brand">{SITE.gameShort}</span> Booster Box Prices
+            </h1>
+            <p className="mt-4 max-w-3xl text-base leading-7 text-muted sm:text-lg">
+              <strong className="block text-ink">Buy {SITE.gameShort} sealed at the best price</strong>
+              Price check any booster box, case, starter deck or pre-order and find the cheapest place to buy: live prices from TCGplayer, eBay, Amazon and {storeCount} stores in the US, UK, Canada, Australia, Europe and Singapore, in your own currency, updated daily.
+            </p>
+            <div className="hero-search relative z-30 mt-6 hidden w-full max-w-2xl sm:block"><SearchBox big /></div>
+            <p className="eyebrow mt-6">Shopping from</p>
+            <MarketChooser className="mt-2" bare />
+            {trending.length > 0 && (
+              <div className="mt-5 w-full max-w-2xl">
+                <p className="eyebrow">Trending</p>
+                <ul className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {trending.map((p) => (
+                    <li key={p.id}>
+                      <Link href={`/card/${p.slug}`} className="chip w-full justify-center truncate">
+                        <span className="truncate">{shortName(p.name)}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <p className="mt-5 flex flex-wrap items-center gap-2 text-sm">
+              {m ? (
+                <>
+                  <span className="hero-stat"><b className="tabular">{products().length.toLocaleString()}</b> sealed products</span>
+                  <span className="hero-stat"><b className="tabular">{storeCount}</b> stores</span>
+                  <span className="hero-stat">prices updated {ago(m.updatedAt)}</span>
+                </>
+              ) : (
+                <span className="hero-stat">Prices update daily</span>
+              )}
+              {upcoming && <Link className="hero-stat hover:border-ink/40" href={preorderPath(upcoming)}>{upcoming.name} pre-orders →</Link>}
+            </p>
+            <p className="mt-3 text-sm"><Link href="/sealed" className="link font-semibold">Every {SITE.gameShort} sealed product →</Link></p>
           </div>
-        )}
-        <p className="mt-5 text-xs text-muted">
-          {m ? `${m.counts.cards.toLocaleString()} cards · ${m.counts.sealed} sealed products · ${storeCount} stores · prices updated ${ago(m.updatedAt)}` : "Prices update daily"}
-          {upcoming && <> · <Link className="link" href={preorderPath(upcoming)}>{upcoming.name} pre-orders →</Link></>}
-        </p>
-        <p className="mt-3 text-sm"><Link href="/cards" className="link font-semibold">All {m?.counts.cards.toLocaleString() ?? ""} cards in the database →</Link></p>
+          {heroPicks.length > 0 && (
+            <div className="min-w-0">
+              <p className="eyebrow mb-3">Newest booster boxes · TCGplayer market</p>
+              <HeroCards items={heroPicks} />
+            </div>
+          )}
+        </div>
       </section>
+
+      {/* The engine's ad banner (DexCompare / MTG Compare, owner 2026-11-03): eBay beside TCGplayer, real cards and today's prices. */}
+      <LandingAds ads={cardAds({ limit: 10 })} />
 
       {/* Multi-game sites (SITE.lines): one tile per game, straight under the hero. */}
       <GameTiles />
 
       {topDeals.length > 0 && (
-        <section className="sd">
-          <Header title="Today's top deals" href="/tools/deal-finder" sub="In-stock listings below TCGplayer market, refreshed daily." all="Browse all deals" />
+        <Section className="sd" title="Today's top deals" href="/tools/deal-finder" sub="In-stock listings below TCGplayer market, refreshed daily." linkLabel="Browse all deals">
           {bfSeason(today) && <p className="mb-3 text-sm"><Link className="link" href="/black-friday">Black Friday deals</Link> · <Link className="link" href="/cyber-monday">Cyber Monday deals</Link>, updated daily →</p>}
           {salesInSeason(CORE_SALES, today).map((s) => (
             <p key={s.slug} className="mb-3 text-sm"><Link className="link" href={`/${s.slug}`}>{s.linkLabel}, updated daily →</Link></p>
           ))}
           <div className="sd-stagger grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {topDeals.map((d) => (
-              <Link key={`${d.p.id}${d.offer.source}`} href={`/card/${d.p.slug}`} className="card-surface flex min-w-0 items-center gap-3 p-3 transition hover:border-brand/60">
-                {d.p.image && <img src={d.p.image} alt={d.p.name} className="h-20 w-14 object-contain" loading="lazy" />}
+              <Link key={`${d.p.id}${d.offer.source}`} href={`/card/${d.p.slug}`} className="card group flex min-w-0 items-center gap-3 p-3 transition-colors hover:border-ink/40">
+                <span className="plate h-20 w-14 shrink-0">{d.p.image && <img src={d.p.image} alt={d.p.name} className="h-full w-full object-contain p-0.5" loading="lazy" />}</span>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">{shortName(d.p.name)}</p>
+                  <p className="truncate text-sm font-semibold group-hover:text-brand">{shortName(d.p.name)}</p>
                   <p className="text-xs text-muted">Market {money(d.market)}</p>
-                  <p className="text-sm"><b className="text-buy-400">{money(d.offer.cents, d.offer.currency)}</b> <span className="text-xs text-muted">({d.saving}% under)</span></p>
+                  <p className="tabular text-sm"><b className="text-open">{money(d.offer.cents, d.offer.currency)}</b> <span className="text-xs text-muted">({d.saving}% under)</span></p>
                 </div>
               </Link>
             ))}
           </div>
-        </section>
+        </Section>
       )}
 
-      {/* Sealed is as big a market as singles: one section the size of the chase-cards one, tabs for the boxes and each pre-order. */}
+      {/* The sealed shelf: tabs for the boxes and each pre-order. */}
       {hero.featured.length + hero.preorders.length > 0 && (
         <div className="sd">
           <SealedHero data={hero} game={SITE.gameShort} sealedHref={sealedLinks.some((h) => h.slug === "booster-box") ? "/sealed/booster-box" : "/sealed"} />
@@ -164,58 +184,43 @@ export default function Home() {
 
       {/* Model kits (SITE.kits): the kits most shops have in stock. */}
       {SITE.kits && kitsOn() && (
-        <section className="sd">
-          <Header title={`${SITE.kits.label} prices`} href="/kits" sub={`${kits().length.toLocaleString()} ${SITE.kits.noun} across ${SITE.kits.stores.length} hobby shops, matched by barcode.`} />
+        <Section className="sd" title={`${SITE.kits.label} prices`} href="/kits" sub={`${kits().length.toLocaleString()} ${SITE.kits.noun} across ${SITE.kits.stores.length} hobby shops, matched by barcode.`}>
           <KitGrid items={popular(kits()).slice(0, 6)} />
-        </section>
+        </Section>
       )}
 
       {latest && chase.length > 0 && (
-        <section className="sd">
-          <Header title={`${latest.name} chase cards`} href={`/sets/${latest.slug}`} sub="The most valuable cards in the newest set, with every store's price." all="Full set price guide" />
+        <Section className="sd" title={`${latest.name} booster boxes and sealed`} href={`/sets/${latest.slug}`} sub="The newest set's sealed product, with every store's price." linkLabel="Every product in the set">
           <TileGrid items={chase} />
-        </section>
+        </Section>
       )}
 
       {/* The site's own star score and approved reviews (owner, 2026-11-03), loaded in the browser; nothing until there is a rating. */}
       <SiteReviews />
 
       {posts().length > 0 && (
-        <section className="sd">
-          <Header title="Guides" href="/blog" sub={`Buying guides and price explainers for ${SITE.gameShort}.`} />
+        <Section className="sd" title="Guides" href="/blog" sub={`Buying guides and price explainers for ${SITE.gameShort}.`}>
           <div className="sd-stagger grid gap-3 md:grid-cols-3">
             {posts().slice(0, 3).map((p) => (
-              <Link key={p.slug} href={`/blog/${p.slug}`} className="card-surface p-5 transition hover:border-brand/60">
-                <p className="font-semibold">{p.title}</p>
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="card group p-5 transition-colors hover:border-ink/40">
+                <p className="font-semibold group-hover:text-brand">{p.title}</p>
                 <p className="mt-1 line-clamp-3 text-sm text-muted">{p.description}</p>
               </Link>
             ))}
           </div>
-        </section>
+        </Section>
       )}
 
       <section className="sd max-w-3xl">
-        <h2 className="mb-3 text-xl font-bold">Frequently asked questions</h2>
+        <h2 className="mb-3 font-display text-2xl font-bold tracking-tight">Frequently asked questions</h2>
         {faqs.map((f) => (
-          <details key={f.q} className="border-b border-ink-800 py-3">
+          <details key={f.q} className="border-b border-line py-3">
             <summary className="cursor-pointer font-medium">{f.q}</summary>
-            <p className="mt-2 text-sm text-muted">{f.a}</p>
+            <p className="mt-2 text-sm leading-6 text-muted">{f.a}</p>
           </details>
         ))}
       </section>
       <p className="sr-only">{products().length} products tracked</p>
-    </div>
-  );
-}
-
-function Header({ title, href, sub, all = "See all" }: { title: string; href?: string; sub?: string; all?: string }) {
-  return (
-    <div className="mb-4 flex items-end justify-between gap-4">
-      <div>
-        <h2 className="font-display text-xl font-black sm:text-2xl">{title}</h2>
-        {sub && <p className="text-sm text-muted">{sub}</p>}
-      </div>
-      {href && <Link href={href} className="btn-ghost shrink-0 px-3.5 py-1.5 text-xs sm:text-sm">{all} →</Link>}
     </div>
   );
 }

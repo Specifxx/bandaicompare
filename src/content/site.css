@@ -1,161 +1,60 @@
 /* ---------------------------------------------------------------------------
-   BandaiCompare's own look: warm and friendly, but tame (owner, 2026-11-03
-   21:57: "the colours hurt the eye, can we make it more tame?", after the first
-   bright rainbow-and-sunburst version). One warm orange carries the brand; the
-   three game colours (SITE.lines[].color, as --game) appear only on the game
-   tiles and hub headers, muted. No rays, no sparkles, no rainbow rules: rounded
-   panels, pill buttons and a quiet gradient hero.
-   Dark is the default (owner, 2026-11-03 11:17); the light page is one tap away.
-   Loaded after the engine's globals.css by app/layout.tsx; only this site has it.
-
-   Rules: pure CSS, no images, no script. Decoration is pseudo-elements with
-   pointer-events:none, so every price and link stays plain server HTML. Motion
-   only on hover, none for prefers-reduced-motion. Never Bandai logos, card
-   back designs, character art or anime artwork as decoration.
+   BandaiCompare's own touches on the Dex / MTG Compare engine's look (owner,
+   2026-11-08: sealed only, on the Dex engine). The colours themselves are the
+   tokens in app/globals.css (warm orange, a cool blue, a deep navy at night);
+   this file only keeps what is this site's: the three game colours
+   (SITE.lines[].color, as --game) on the game tiles and hub headers, muted,
+   and one thin warm rule under the header. Loaded after globals.css by
+   app/layout.tsx. Pure CSS, decoration only on pseudo-elements with
+   pointer-events:none, no motion for prefers-reduced-motion. Never Bandai
+   logos, card back designs, character art or anime artwork as decoration.
    --------------------------------------------------------------------------- */
 
-:root {
-  --bc-orange: #e8893a;
-  --bc-amber: #f2b36b;
-  --bc-blue: #4a8fd6;
-  --bc-ink: #1b1d3a;
-  --bc-radius: 20px;
-  --bc-rule: linear-gradient(90deg, var(--bc-orange), var(--bc-amber));
-}
-
-/* ── Light: warm cream with soft blobs of the three game colours ── */
-:root[data-theme="light"] {
-  --c-ink-950: 255 255 255;
-  --c-ink-900: 255 255 255;
-  --c-ink-850: 255 249 242;
-  --c-ink-800: 255 240 226;
-  --c-ink-700: 246 222 204;
-  --c-ink-600: 222 196 178;
-  --c-fg: 27 29 58;
-  --c-muted: 98 96 124;
-  --page-bg: #fff8f0;
-}
-:root[data-theme="light"] body {
-  background:
-    radial-gradient(50rem 30rem at 50% -14rem, rgb(232 137 58 / 0.1), transparent 70%),
-    var(--page-bg);
-  background-repeat: no-repeat;
-}
-::selection { background: var(--bc-amber); color: #1b1d3a; }
-
-/* Readable orange on white (the engine's brand-400 is for dark pages). */
-:root[data-theme="light"] .link,
-:root[data-theme="light"] .text-brand-400,
-:root[data-theme="light"] .prose-site a { color: #b4601a; }
-:root[data-theme="light"] .text-muted { color: rgb(var(--c-muted)); }
-
-/* ── Type: rounded, chunky headings ── */
-main h1, main h2, .game-tile-name, .wordmark { font-family: var(--font-display); }
-main h1 { font-weight: 900; letter-spacing: -0.01em; }
-main h2 { font-weight: 800; }
+/* ── A section heading starts with a small dot in its game's colour ── */
 main section > h2::before {
   content: "";
   display: inline-block;
-  width: 0.62em;
-  height: 0.62em;
+  width: 0.55em;
+  height: 0.55em;
   margin-right: 10px;
-  vertical-align: 0.04em;
+  vertical-align: 0.06em;
   border-radius: 999px;
-  background: var(--game, var(--bc-orange));
+  background: var(--game, rgb(var(--spark)));
 }
 
-/* ── Header: a clean bar with one thin warm rule under it ── */
-header.sticky { border-bottom: 0; }
+/* ── Header: one thin warm rule under the bar ── */
 header.sticky::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -2px;
+  bottom: -1px;
   height: 2px;
-  background: var(--bc-rule);
-  opacity: 0.7;
+  background: linear-gradient(90deg, #e8893a, #f2b36b);
+  opacity: 0.6;
   pointer-events: none;
 }
-:root[data-theme="light"] header.sticky { background: rgb(255 255 255 / 0.9); box-shadow: 0 4px 18px rgb(140 70 20 / 0.06); }
-header.sticky nav a { border-radius: 999px; font-weight: 600; }
-header.sticky nav a:hover { background: rgb(232 137 58 / 0.1); color: var(--bc-orange); }
-.wordmark { letter-spacing: 0; }
 
-/* ── Hero: one quiet gradient, full-bleed, no rays or sparkles ── */
-.hero-band { border: 0; }
-:root[data-theme="light"] .hero-band {
-  background: linear-gradient(160deg, #fff1e3 0%, #fff8f0 55%, #eef3fa 100%);
-}
-:root[data-theme="light"] .hero-band h1 { color: var(--bc-ink); }
-
-/* ── Panels: white, rounded, a soft warm shadow; they lift on hover ── */
-.card-surface { border-radius: var(--bc-radius); }
-:root[data-theme="light"] .card-surface {
-  background: #fff;
-  border: 1px solid rgb(246 222 204 / 0.9);
-  box-shadow: 0 6px 20px -10px rgb(140 70 20 / 0.18);
-}
-a.card-surface { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
-a.card-surface:hover {
-  transform: translateY(-3px);
-  border-color: var(--game, var(--bc-orange));
-  box-shadow: 0 14px 28px -14px rgb(232 137 58 / 0.35);
-}
-
-/* ── Game tiles (components/GameTiles): a muted panel per game, its cards fanned out ── */
+/* ── Game tiles (components/GameTiles): a muted panel per game, its boxes fanned out ── */
 .game-tile {
   border: 0;
-  border-radius: 24px;
+  border-radius: 18px;
   padding: 20px;
   color: #fff;
   background:
-    radial-gradient(18rem 12rem at 100% 0%, rgb(255 255 255 / 0.12), transparent 70%),
-    linear-gradient(150deg, color-mix(in srgb, var(--game) 62%, #1b1d3a) 0%, color-mix(in srgb, var(--game) 48%, #1b1d3a) 100%);
-  box-shadow: 0 4px 0 color-mix(in srgb, var(--game) 30%, #1b1d3a), 0 14px 24px -16px rgb(0 0 0 / 0.5);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+    radial-gradient(18rem 12rem at 100% 0%, rgb(255 255 255 / 0.1), transparent 70%),
+    linear-gradient(150deg, color-mix(in srgb, var(--game) 58%, #161936) 0%, color-mix(in srgb, var(--game) 42%, #161936) 100%);
+  transition: transform 0.15s ease;
 }
-.game-tile:hover { transform: translateY(-3px); box-shadow: 0 7px 0 color-mix(in srgb, var(--game) 30%, #1b1d3a), 0 18px 28px -16px rgb(0 0 0 / 0.5); }
-.game-tile:active { transform: translateY(2px); box-shadow: 0 2px 0 color-mix(in srgb, var(--game) 30%, #1b1d3a); }
-.game-tile-name { color: #fff; font-size: 1.45rem; line-height: 1.15; text-shadow: 0 2px 0 rgb(0 0 0 / 0.18); }
-.game-tile-blurb { color: rgb(255 255 255 / 0.92); }
-.game-tile-stats > span { border: 0; background: rgb(255 255 255 / 0.22); color: #fff; font-weight: 700; }
-.game-tile-go { color: #1b1d3a; background: rgb(255 255 255 / 0.9); border-radius: 999px; padding: 4px 12px; }
-.game-fan-card { border: 2px solid #fff; }
-.game-hero { border-left-width: 8px; border-radius: 4px; }
-.game-chip { color: #fff; }
-
-/* ── Buttons: pills you can press ── */
-.btn { border-radius: 999px; font-weight: 800; }
-.btn-primary {
-  background: linear-gradient(180deg, #f0984e, var(--bc-orange));
-  color: #fff;
-  box-shadow: 0 3px 0 #b4601a;
-}
-.btn-primary:hover { background: linear-gradient(180deg, #f3a65f, #ec9344); }
-.btn-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 #b4601a; }
-.btn-ghost { border: 2px solid rgb(74 143 214 / 0.45); color: #2f6fb3; }
-.btn-ghost:hover { background: rgb(74 143 214 / 0.08); }
-.chip { border-radius: 999px; font-weight: 700; }
-
-footer { position: relative; }
-footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--bc-rule); opacity: 0.6; pointer-events: none; }
-
-/* ── Dark: a deep navy night with one warm glow ── */
-:root[data-theme="dark"] body {
-  background:
-    radial-gradient(50rem 30rem at 50% -14rem, rgb(232 137 58 / 0.08), transparent 70%),
-    var(--page-bg);
-  background-repeat: no-repeat;
-}
-:root[data-theme="dark"] header.sticky { background: rgb(16 18 42 / 0.92); }
-:root[data-theme="dark"] .hero-band {
-  background: linear-gradient(160deg, #1a1b36 0%, #161a34 55%, #141c33 100%);
-}
-:root[data-theme="dark"] .card-surface { box-shadow: 0 6px 20px -12px rgb(0 0 0 / 0.6); }
-:root[data-theme="dark"] .btn-ghost { color: #8fbce8; }
+.game-tile:hover { transform: translateY(-2px); }
+.game-tile-name { color: #fff; font-size: 1.4rem; line-height: 1.15; }
+.game-tile-blurb { color: rgb(255 255 255 / 0.9); }
+.game-tile-stats > span { border: 0; background: rgb(255 255 255 / 0.2); color: #fff; font-weight: 700; }
+.game-tile-go { color: #161936; background: rgb(255 255 255 / 0.92); border-radius: 999px; padding: 4px 12px; }
+.game-fan-card { border: 2px solid #fff; background: #fff; }
+.game-hero { border-left-width: 6px; border-radius: 4px; }
 
 @media (prefers-reduced-motion: reduce) {
-  a.card-surface, .game-tile { transition: none; }
-  a.card-surface:hover, .game-tile:hover, .game-tile:active, .btn-primary:active { transform: none; }
+  .game-tile { transition: none; }
+  .game-tile:hover { transform: none; }
 }

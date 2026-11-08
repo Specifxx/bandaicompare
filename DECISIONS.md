@@ -775,3 +775,40 @@ logo, candy-cane stripes and seasonal palette swaps) is gone, with its art in `p
 touch, drawn in the site's own colours: the gifts line in the hero (`ChristmasGifts`, `.xmas-pill`), a plain pill that inherits the hero's text colour, with no gift icon or red glow. (wording still `SITE.christmas`). It still starts and ends by itself (`lib/season.ts`, 1 November to
 Boxing Day), and the tests pin that nothing else comes back. Black Friday and Cyber Monday (strip, pages, nav) are
 unchanged. The same rule went to every sister site: the site's own identity first.
+
+## 2026-11-08 — Sealed only, on the Dex / MTG Compare engine's look (BandaiCompare)
+
+**Asked (owner, 2026-11-08):** "cull it way more … we should not have cards at all. It should be using the dex compare
+engine … only sealed products … completely change BandaiCompare and deploy urgently."
+
+**Done**, following YGO Compare's 2026-11-06 port (its entry is the model; this site took its engine files whole):
+
+- **The look:** the Dex / MTG Compare engine's presentation as YGO Compare runs it today (header and Browse menu,
+  `<dialog>` phone menu, sidebar, tiles, quick view, eBay + TCGplayer banner and side rails, the full-width hero with
+  two featured products, cart list). BandaiCompare's own colours stay as tokens in `app/globals.css`: the warm orange
+  of the 2026-11-03 tamed look, a cool blue for highlights and a deep navy at night (dark by default). `content/site.css`
+  keeps only the game colours on the game tiles and hub headers. Product, set, game, sealed-type and pre-order pages
+  are one CDN copy a day (`CDN_PAGES`), never ISR.
+- **Leaves the card-engine family:** `engine.json` and the sync/drift scripts are gone; Lorcana and Cyberpunk are the
+  card engine now. Port engine changes by hand.
+- **Sealed only:** `SITE.sealedOnly`, exactly as YGO Compare. The three games, the `/games` hubs and multi-game
+  matching stay; the game hubs now show booster boxes, starter decks and each set's sealed count and box price.
+- **Culled hard (`SITE.catalogFocus`, `lib/import/focus.ts`, rewritten for sealed):** a booster box, case, starter
+  deck, starter deck display or collection keeps a page when any store has it in stock (or lists a new set's
+  pre-order); a pack, prerelease pack or anything else needs 2 stores in one market; inserts and loose singles
+  never; Search Console demand always stays. Hysteresis keys on `meta.sealedFocused` (not the card-era `focused`) so
+  the first sealed run starts from today's stock. On the 2026-11-08 data: ~6,370 products (810 sealed) → ~190
+  (80 booster boxes, 21 cases, 36 starter decks, 48 packs), ~120 set pages. The eight singles-only stores are removed.
+- **URLs:** every card URL (the 5,558 in the catalogue and the ~15,500 the earlier culls had redirected, 21,058 in
+  all) is frozen in `data/redirects/cards.json` and 301s to its set, or its game hub when the set has no sealed
+  product left. Culled sealed URLs 301 the same way through `culled.json`. `/cards/*`, `/list`, the card tools and
+  the two card-table guides (most expensive Union Arena cards, the three price curves) 301 from `next.config.js`.
+  The rarity and card-number guides stay as text, their card tables and card-page claims rewritten for sealed.
+- **Sitemap:** ~350 URLs (home, game hubs, sealed hubs, ~120 sets, ~190 products, pre-orders, guides).
+- **eBay:** `planSealedCoverage` spends Bandai's 2,500 of the Cyberpunk keyset on the kept sealed products in the
+  US, UK, Canada and Australia. Cap unchanged.
+- **Not ported from the card engine:** `fitDescription` (the 2026-11-07 meta description length pass), because
+  YGO Compare's engine never had it; descriptions here were rewritten by hand for sealed.
+
+**Release:** the owner asked for an urgent deploy: after merge, *Refresh prices* runs the sealed import, then one
+`[deploy] [urgent]` release. Reindex: sitemap resubmitted in Search Console and Bing, IndexNow after the release.

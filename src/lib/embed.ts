@@ -71,7 +71,7 @@ export function dailyHtml(d: { site: string; game: string; n: number; a: { name:
 
 /** The snippet for the daily widget: the iframe, then one plain text link. */
 export function dailySnippet(siteUrl: string, siteName: string, game: string): string {
-  return `<iframe src="${siteUrl}/embed/daily" width="100%" height="270" style="border:0" loading="lazy" title="${game} Price Duel"></iframe>\n<p style="font-size:12px;margin:2px 0 0"><a href="${siteUrl}/daily">Daily ${game} card price game on ${siteName}</a></p>`;
+  return `<iframe src="${siteUrl}/embed/daily" width="100%" height="270" style="border:0" loading="lazy" title="${game} Price Duel"></iframe>\n<p style="font-size:12px;margin:2px 0 0"><a href="${siteUrl}/daily">Daily ${game} sealed price game on ${siteName}</a></p>`;
 }
 
 /** Seconds until the next midnight UTC, when the puzzle changes (at least five minutes). */

@@ -766,3 +766,12 @@ products that keep a page. On the 2026-11-07 data: 6,368 → ~2,600 products (2,
 keep a page. A culled product 301s to its set (`culled.json`, now for every culled product); a released set left
 empty 301s to its game hub. Slugs are settled before any cull, so kept URLs never change. To widen or narrow, change
 the three numbers, never a page.
+
+## 2026-11-08 — Christmas is one quiet line, not a costume
+
+Owner: "some of the christmas themes on our websites are a bit too much - the theme must match the domain". The
+2026-11-01 Christmas look (falling snow, a strand of lights, trees, presents, candy canes, stockings, a Santa hat on the
+logo, candy-cane stripes and seasonal palette swaps) is gone, with its art in `public/xmas/`. The season keeps at most ONE
+touch, drawn in the site's own colours: the gifts line in the hero (`ChristmasGifts`, `.xmas-pill`), a plain pill that inherits the hero's text colour, with no gift icon or red glow. (wording still `SITE.christmas`). It still starts and ends by itself (`lib/season.ts`, 1 November to
+Boxing Day), and the tests pin that nothing else comes back. Black Friday and Cyber Monday (strip, pages, nav) are
+unchanged. The same rule went to every sister site: the site's own identity first.

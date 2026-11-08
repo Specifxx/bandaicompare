@@ -44,7 +44,7 @@ GitHub Actions, daily 03:17 UTC (refresh-prices.yml)
 * **Star rarities**: Union Arena's SR, SR*, SR** and SR*** share a number; a
   listing that names one never prices another.
 * **Catalogue floor**: cards under US$1 in every printing stay out, except in
-  sets from the last 120 days (`catalogMinCardCents`), so the data and build stay small.
+  sets from the last 120 days (`catalogMinCardCents`), then products no store sells (`catalogFocus`), so the data and build stay small.
 
 ## Run locally
 

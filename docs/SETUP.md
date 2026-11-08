@@ -30,4 +30,4 @@ secrets, search engines) is the Claude in Chrome prompt in
   off.
 * `data/` ships inside every function. Three games hold over 21,000
   TCGplayer products, so cards under US$1 in every printing stay out except in
-  sets from the last 120 days (`catalogMinCardCents`). Measure `data/` before lowering it.
+  sets from the last 120 days (`catalogMinCardCents`), then products no store sells (`catalogFocus`). Measure `data/` before lowering it.

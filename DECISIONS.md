@@ -748,3 +748,21 @@ DexCompare's footer went first (CompareEmpire #153); every other site now does t
 internal page, `/our-sites`, and that page links each other family site once, by its plain name, from
 `FAMILY_SITES` (`lib/family-network.ts`, unchanged; `footerSisters` stays for the shared test). Every other footer
 link, page URL and title is unchanged. Cross-traffic still comes from the price blocks on the deals and pre-order pages.
+
+## 2026-11-08 — The store focus: keep what stores sell (BandaiCompare)
+
+Owner: "we might need to cull bandaicompare a bit since it's a bit large". After the $5 floor (2026-11-07) the
+catalogue still held 6,368 products, and 3,142 of its 5,558 cards and 607 of its 810 sealed products were in stock at
+no store: pages with nothing to compare. Search Console has almost nothing yet (the site is five days old; no card
+page has a click or ten impressions), so demand can't be the test; the stores are.
+
+`SITE.catalogFocus` (`lib/import/focus.ts`, engine option, off unless set) runs after the store pass, on the whole
+catalogue's matches, and keeps a card in stock at 2 stores in one market, or worth $20 with any store listing it, or
+$50 outright (the chase cards people search for whoever sells them); sealed in stock at any store, listed by 2, from a
+set out in the last 120 days or not out yet, or a priced booster box or case. Search demand always stays. A product
+the last focused import kept stays while 2 stores in one market still list it, so one store's stock doesn't flap a
+page between 200 and 301. It runs before eBay, so the shared Cyberpunk keyset's 2,500 calls (unchanged) go only to
+products that keep a page. On the 2026-11-07 data: 6,368 → ~2,600 products (2,266 cards, 328 sealed), 200 of 246 sets
+keep a page. A culled product 301s to its set (`culled.json`, now for every culled product); a released set left
+empty 301s to its game hub. Slugs are settled before any cull, so kept URLs never change. To widen or narrow, change
+the three numbers, never a page.

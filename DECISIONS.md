@@ -812,3 +812,13 @@ engine … only sealed products … completely change BandaiCompare and deploy u
 
 **Release:** the owner asked for an urgent deploy: after merge, *Refresh prices* runs the sealed import, then one
 `[deploy] [urgent]` release. Reindex: sitemap resubmitted in Search Console and Bing, IndexNow after the release.
+
+## 2026-11-08 — The card share image is text only (Vercel cost cap)
+
+Vercel's billing (owner's team, 2026-11-08) showed ISR writes as the biggest line on the team after Compare Empire's
+CPU, and Observability put ~90% of this engine family's ISR write units on one route: `/card/[slug]/opengraph-image`.
+Each image carried the card's art and came out at ~580 KB, and Vercel bills every cached copy by the 8 KB write unit
+(~72 units per image, written again each day and after every deploy as crawlers fetch `og:image`). The image keeps
+everything that makes it worth sharing (name, set and number, the US price gap or TCGplayer market) and drops the art:
+flat colour and text render at ~49 KB, about a twelfth. `tests/share.test.ts` fails if `<img>` or `imageAt` comes back.
+The page itself still shows the art; only the link thumbnail lost it.

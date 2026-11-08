@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { SITE } from "@/site.config";
 import { canon } from "@/lib/site";
 import { StaticPage } from "@/components/StaticPage";
-import { fitDescription } from "@/lib/seo-title";
 import { FAMILY_SITES, NETWORK_PAGE } from "@/lib/family-network";
 
 // The one page that links the owner's other sites (2026-11-08, DECISIONS.md "Our sites"). The footer used to name the other
@@ -11,7 +10,7 @@ import { FAMILY_SITES, NETWORK_PAGE } from "@/lib/family-network";
 export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Our other sites",
-  description: fitDescription(`${SITE.name} is one of the Compare Empire price comparison sites. The others compare card games, hobby and tech prices the same way.`),
+  description: `${SITE.name} is one of the Compare Empire price comparison sites. The others compare card games, hobby and tech prices the same way.`,
   ...canon("/our-sites"),
 };
 

@@ -7,7 +7,6 @@ import { money, pct } from "@/lib/format";
 import { shortName } from "@/lib/names";
 import { MARKETS, MARKET_LABEL } from "@/lib/site-types";
 import { reportMonth, sealedLines, storeCoverage, storesVsTcgplayer, type ReportRow } from "@/lib/market-report";
-import { fitDescription } from "@/lib/seo-title";
 
 // The self-updating monthly price report (DECISIONS.md, "Self-updating price report",
 // 2026-11-02): the page outreach offers to writers and creators, rebuilt from the
@@ -19,7 +18,7 @@ export function generateMetadata(): Metadata {
   const month = reportMonth(meta()?.updatedAt);
   return {
     title: `${SITE.gameShort} Price Report, ${month}: Stores vs TCGplayer`,
-    description: fitDescription(`How ${SITE.game} prices compare across ${SITE.stores.length} stores in six markets this month: how often a store undercuts TCGplayer, the cheapest sealed boxes and the biggest price movers. Free to cite.`),
+    description: `How ${SITE.game} prices compare across ${SITE.stores.length} stores in six markets this month: how often a store undercuts TCGplayer, the cheapest sealed boxes and the biggest price movers. Free to cite.`,
     ...canon("/price-report"),
   };
 }
@@ -61,7 +60,12 @@ export default function PriceReport() {
 
       <section className="card-surface flex flex-col gap-3 p-4">
         <h2 className="text-lg font-bold">Do stores beat TCGplayer?</h2>
-        {share == null ? (
+        {share == null && sealedShare != null ? (
+          <p>
+            For <b>{sealedBeat.compared.toLocaleString("en-US")}</b> {SITE.gameShort} sealed products worth $10 or more with an in-stock US store price, a store was cheaper than TCGplayer&apos;s market price on{" "}
+            <b>{sealedShare}%</b> of them{sealedBeat.medianSaving != null ? <>, by a median of <b>{sealedBeat.medianSaving}%</b></> : null}.
+          </p>
+        ) : share == null ? (
           <p className="text-sm text-muted">Not enough US store prices yet to compare.</p>
         ) : (
           <p>

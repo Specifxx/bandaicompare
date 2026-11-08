@@ -10,7 +10,6 @@ import { FORUM_SITE } from "@/lib/forum/site";
 import { readForum } from "@/lib/forum/store";
 import { canon, SITE_URL } from "@/lib/site";
 import { SITE } from "@/site.config";
-import { fitDescription } from "@/lib/seo-title";
 
 export const revalidate = 21600;
 // Drawn on first visit, never at build.
@@ -24,7 +23,7 @@ export async function generateMetadata({ params }: { params: { thread: string } 
   if (!t) return { title: `${SITE.gameShort} forum`, robots: { index: false, follow: true } };
   return {
     title: `${t.title} | ${SITE.gameShort} forum`,
-    description: fitDescription(threadDescription(t)),
+    description: threadDescription(t),
     ...canon(threadPath(FORUM_SITE, t)),
     ...(threadIndexable(t) ? {} : { robots: { index: false, follow: true } }),
   };

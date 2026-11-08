@@ -12,11 +12,11 @@ import { creatorsOn } from "@/lib/creators";
 // Pages that are empty until a week of daily prices exists. The caller (a server
 // component) passes `history` from lib/data.ts historyOn(); this file is also read
 // by the client rail, so it never touches the data files itself.
-const NEEDS_HISTORY = new Set(["/movers", "/tools/rising", "/price-report"]);
+const NEEDS_HISTORY = new Set(["/movers", "/price-report"]);
 export interface NavOptions {
   /** False on a site younger than a week: the history pages are left out. */
   history?: boolean;
-  /** In season, the Black Friday or Cyber Monday page (lib/black-friday.ts saleStrip): first in Prices and the phone row. */
+  /** In season, the Black Friday or Cyber Monday page (lib/black-friday.ts saleStrip): first in Prices. */
   sale?: NavLink | null;
 }
 const readyFor = (o: NavOptions) => (l: NavLink) => o.history !== false || !NEEDS_HISTORY.has(l.href);
@@ -35,9 +35,9 @@ export function navGroups(o: NavOptions = {}): NavGroup[] {
   const prices: NavLink[] = [
     ...(o.sale ? [o.sale] : []),
     ...(SITE.lines ?? []).map((l) => ({ href: `/games/${l.slug}`, label: l.short })),
-    { href: "/cards", label: "Card prices" },
-    { href: "/sets", label: "Set price guides" },
     { href: "/sealed", label: "Sealed products" },
+    { href: "/sealed/booster-box", label: "Booster boxes" },
+    { href: "/sets", label: "Sets" },
     ...(SITE.kits ? [{ href: "/kits", label: `${SITE.kits.label} kits` }] : []),
     { href: "/preorders", label: "Pre-orders" },
     { href: "/tools/deal-finder", label: "Today's deals" },
@@ -63,11 +63,9 @@ export function navGroups(o: NavOptions = {}): NavGroup[] {
 export function phoneNav(o: NavOptions = {}): NavLink[] {
   const ready = readyFor(o);
   return [
-    ...(o.sale ? [o.sale] : []),
     ...(SITE.lines ?? []).map((l) => ({ href: `/games/${l.slug}`, label: l.short })),
-    { href: "/cards", label: "Cards" },
-    { href: "/sets", label: "Sets" },
     { href: "/sealed", label: "Sealed" },
+    { href: "/sets", label: "Sets" },
     ...(SITE.kits ? [{ href: "/kits", label: SITE.kits.label }] : []),
     { href: "/tools/deal-finder", label: "Deals" },
     { href: "/movers", label: "Movers" },

@@ -63,6 +63,21 @@ async function fxRates(prev: Record<string, number>): Promise<Record<string, num
   }
 }
 
+/** A product keeps yesterday's slug (its URL never changes), unless another product now holds that slug. */
+function keepSlugs(products: Catalog["products"], prev: Catalog | null) {
+  if (!prev) return;
+  const was = new Map(prev.products.map((p) => [p.id, p.slug]));
+  const taken = new Set(products.map((p) => p.slug));
+  for (const p of products) {
+    const old = was.get(p.id);
+    if (!old || old === p.slug || taken.has(old)) continue;
+    console.log(`[slug] ${p.id} keeps ${old} (today's listing reads ${p.slug})`);
+    taken.delete(p.slug);
+    p.slug = old;
+    taken.add(old);
+  }
+}
+
 async function main() {
   const now = new Date();
   const today = dayNumber(now);
@@ -71,13 +86,17 @@ async function main() {
 
   // 1. Catalogue + TCGplayer
   console.log(`[tcgcsv] category ${SITE.tcgcsvCategoryId}`);
-  const demand = SITE.catalogMinCardCents || SITE.catalogFocus ? readDemandSlugs() : new Set<string>();
-  // Yesterday's catalogue, read before it is overwritten: the store focus's hysteresis (lib/import/focus.ts).
-  const prevKept = prevMeta?.focused ? new Set(readJson<Catalog | null>(path.join(PUBLIC, "catalog.json"), null)?.products.map((p) => p.id) ?? []) : new Set<number>();
-  const loaded = await loadTcgcsv(now, demand);
-  const { sets, tcg, culled } = loaded;
+  const prevCatalog = readJson<Catalog | null>(path.join(PUBLIC, "catalog.json"), null);
+  const loaded = await loadTcgcsv(now);
+  const { sets, tcg } = loaded;
   let products = loaded.products;
   console.log(`[tcgcsv] ${sets.length} sets, ${products.length} products`);
+  keepSlugs(products, prevCatalog);
+  // The sealed focus (SITE.catalogFocus, lib/import/focus.ts): search demand, and yesterday's kept list for its
+  // hysteresis. `sealedFocused` (not the card-era `focused`) so the first sealed-only run starts from today's stock.
+  const demand = SITE.catalogFocus ? readDemandSlugs() : new Set<string>();
+  const prevKept = prevMeta?.sealedFocused ? new Set(prevCatalog?.products.map((p) => p.id) ?? []) : new Set<number>();
+  const culled: { slug: string; setId: number }[] = [];
   // Before release TCGplayer carries placeholder listings ($9,999 boxes) with
   // no market price. For upcoming sets, only a real market price counts.
   const upcomingIds = new Set(sets.filter((s) => s.upcoming).map((s) => s.id));
@@ -163,11 +182,10 @@ async function main() {
       for (const o of entry.offers) if (o.source !== "ebay" && o.source !== "tcgplayer") addOffer(Number(id), o);
   }
 
-  // 2b. The store focus (SITE.catalogFocus): after matching on the whole catalogue, keep what the
-  // stores sell, the chase cards and anything people search for. Before eBay, so the shared keyset's
-  // calls go only to products that keep a page.
+  // 2b. The sealed focus (SITE.catalogFocus): after matching on the whole catalogue, keep the sealed product stores
+  // sell and anything people search for. Before eBay, so the shared keyset's calls go only to products that keep a page.
   if (SITE.catalogFocus) {
-    const kept = focusCatalog({ products, sets, offers: storeOffers, tcg, rule: SITE.catalogFocus, now, demand, previous: prevKept });
+    const kept = focusCatalog({ products, sets, offers: storeOffers, rule: SITE.catalogFocus, now, demand, previous: prevKept });
     const keptIds = new Set(kept.map((p) => p.id));
     for (const p of products) if (!keptIds.has(p.id)) { culled.push({ slug: p.slug, setId: p.setId }); byId.delete(p.id); }
     for (const id of [...storeOffers.keys()]) if (!keptIds.has(id)) storeOffers.delete(id);
@@ -296,11 +314,11 @@ async function main() {
   }
   for (const [setId, h] of histories) writeSetHistory(setId, h);
 
-  // 5. eBay Picks (the homepage banner): the most valuable cards with a fresh
+  // 5. eBay Picks (the homepage banner): the most valuable cards (sealed products on a sealed-only site) with a fresh
   // US listing, newest sets first. No extra calls: reuses step 3's results.
   const setRank = new Map(sets.map((s, i) => [s.id, i]));
   const picks: EbayPick[] = products
-    .filter((p) => p.kind === "card")
+    .filter((p) => (SITE.sealedOnly ? p.kind === "sealed" && p.sealedType !== "Insert" : p.kind === "card"))
     .map((p) => ({ p, e: prices.byId[p.id].offers.find((o) => o.source === "ebay" && o.market === "US") }))
     .filter((x) => x.e)
     .sort(
@@ -331,17 +349,17 @@ async function main() {
       offers: offerCount,
       sets: sets.length,
     },
-    ...(SITE.catalogFocus ? { focused: true } : {}),
+    ...(SITE.catalogFocus ? { sealedFocused: true } : {}),
   };
 
   writeJson(path.join(PUBLIC, "catalog.json"), catalog);
-  // Culled products' URLs -> their set (lib/culled.ts); a set left empty 301s on to its game.
-  const setSlugById = new Map(sets.map((s) => [s.id, s.slug]));
-  writeJson(path.join(PUBLIC, "culled.json"), Object.fromEntries(culled.flatMap((c) => (setSlugById.has(c.setId) ? [[c.slug, setSlugById.get(c.setId)!] as const] : [])).sort((a, b) => a[0].localeCompare(b[0]))));
   writePrices(prices.byId, products);
   fs.rmSync(path.join(PUBLIC, "prices.json"), { force: true });
   writeJson(path.join(PUBLIC, "meta.json"), meta);
   writeJson(path.join(PUBLIC, "ebay-picks.json"), picks);
+  // Culled products' URLs -> their set (lib/culled.ts); a set left with no sealed product 301s on to its game.
+  const setSlugById = new Map(sets.map((s) => [s.id, s.slug]));
+  writeJson(path.join(PUBLIC, "culled.json"), Object.fromEntries(culled.flatMap((c) => (setSlugById.has(c.setId) ? [[c.slug, setSlugById.get(c.setId)!] as const] : [])).sort((a, b) => a[0].localeCompare(b[0]))));
   writeJson(path.join(STATE, "ebay.json"), ebayState);
   writeJson(path.join(STATE, "ebay-usage.json"), usage);
   console.log(`[done] ${meta.counts.cards} cards, ${meta.counts.sealed} sealed, ${offerCount} offers`);

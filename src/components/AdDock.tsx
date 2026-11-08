@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Icon } from "./Icon";
 
 // The phone dock (owner, 2026-11-06: "how can we have those [side rail ads] on mobile … in the best way that doesn't interrupt user
 // experience"): the side rails' eBay and TCGplayer tiles, one of each, side by side in a slim bar along the foot of a screen too narrow
@@ -84,18 +85,18 @@ export const DOCK_LINK = "flex h-12 min-w-0 items-center gap-2 rounded-lg pr-1 o
 export function DockTile({ img, alt, brand, title, price, cta, plate = false }: { img: string; alt: string; brand: ReactNode; title: string; price: string; cta: string; plate?: boolean }) {
   return (
     <>
-      <span className={`relative block h-11 w-11 shrink-0 overflow-hidden rounded-md ${plate ? "bg-white" : "bg-ink-850"}`}>
+      <span className={`relative block h-11 w-11 shrink-0 overflow-hidden rounded-md ${plate ? "plate" : "bg-raised"}`}>
         <img src={img} alt={alt} width={44} height={44} loading="lazy" decoding="async" referrerPolicy="no-referrer" className={`absolute inset-0 h-full w-full object-contain ${plate ? "p-0.5 mix-blend-multiply" : ""}`} />
       </span>
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="flex h-3.5 items-center gap-1 text-[10px] font-semibold leading-none text-muted">
           {brand}
-          <span className="rounded bg-ink-800 px-1 py-px text-[9px] uppercase tracking-wide">Ad</span>
+          <span className="rounded bg-raised px-1 py-px text-[9px] uppercase tracking-wide">Ad</span>
         </span>
         <span className="mt-0.5 truncate text-xs font-semibold leading-4">{title}</span>
-        <span className="tabular-nums truncate text-sm font-bold leading-4">{price}</span>
+        <span className="tabular truncate text-sm font-bold leading-4">{price}</span>
       </span>
-      <span className="dock-cta shrink-0 rounded-full border border-ink-600 px-3 py-1.5 text-xs font-bold">
+      <span className="dock-cta shrink-0 rounded-full border border-line px-3 py-1.5 text-xs font-bold">
         {cta} <span aria-hidden="true">↗</span>
       </span>
     </>
@@ -229,7 +230,7 @@ export function AdDock({ label, sides, placement, minWidth, yieldTo = "[data-ad]
       aria-hidden={visible ? undefined : true}
       data-ad={visible ? placement : undefined}
       data-dock={visible ? "shown" : "hidden"}
-      className={`fixed inset-x-0 bottom-0 z-30 border-t border-ink-700 bg-ink-950/95 px-3 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_30px_-12px_rgba(0,0,0,0.45)] backdrop-blur ${
+      className={`fixed inset-x-0 bottom-0 z-30 border-t border-line bg-surface/95 px-3 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 shadow-lift backdrop-blur ${
         visible ? "translate-y-0 transition-transform duration-200 ease-out motion-reduce:transition-none" : "invisible translate-y-full"
       }`}
     >
@@ -247,11 +248,9 @@ export function AdDock({ label, sides, placement, minWidth, yieldTo = "[data-ad]
           type="button"
           onClick={dismiss}
           aria-label="Hide these ads for this visit"
-          className="-mr-2 inline-flex h-11 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-ink-800 hover:text-fg"
+          className="-mr-2 inline-flex h-11 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-raised hover:text-ink"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg>
+          <Icon name="close" size={16} />
         </button>
       </div>
     </div>
@@ -278,7 +277,7 @@ function DockHalf({ side, turn, divider }: { side: DockSide; turn: number; divid
   }, [turn, side.items.length]);
   return (
     <>
-      {divider && <span aria-hidden="true" className="h-9 w-px shrink-0 bg-ink-700" />}
+      {divider && <span aria-hidden="true" className="h-9 w-px shrink-0 bg-line" />}
       <ul
         ref={list}
         role="list"

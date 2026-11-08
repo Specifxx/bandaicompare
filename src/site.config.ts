@@ -22,16 +22,17 @@ export const SITE: SiteConfig = {
   apexHost: true,
   // Three games with many boxes and starter decks: the homepage opens with the big sealed hero.
   homeSealedHero: true,
-  tagline: "Compare Union Arena, Dragon Ball Super and Digimon card prices across every store",
+  tagline: "Compare Union Arena, Fusion World and Digimon booster box prices across every store",
   description:
-    "Free price comparison for Union Arena, Dragon Ball Super Fusion World and Digimon Card Game booster boxes, starter decks and singles, across TCGplayer, eBay and card stores in the US, UK, Canada, Australia, Europe and Singapore.",
+    "Free sealed price comparison for Union Arena, Dragon Ball Super Fusion World and Digimon Card Game booster boxes, cases and starter decks, across TCGplayer, eBay, Amazon and card stores in the US, UK, Canada, Australia, Europe and Singapore.",
   keywords: [
-    "union arena prices",
     "union arena booster box",
-    "dragon ball super fusion world prices",
+    "union arena booster box price",
     "fusion world booster box",
-    "digimon card game prices",
+    "dragon ball super fusion world booster box price",
     "digimon booster box",
+    "digimon booster box price",
+    "digimon starter deck",
     "where to buy union arena",
   ],
   adminEmails: ["bill.jyang101@gmail.com"],
@@ -105,11 +106,14 @@ export const SITE: SiteConfig = {
   // any card page Search Console shows people finding stay. ~2,500 bulk cards out of ~10,000.
   catalogMinCardCents: 500,
   sitemapMinCardCents: 300,
-  // The store focus (owner, 2026-11-08: "a bit large"): after the store pass, a card stays when 2 stores
-  // in one market have it in stock, or it is worth $20 and a store lists it, or $50 outright; sealed when
-  // any store has it, it is new or upcoming, or it is a priced box or case. Search demand always stays.
-  // ~6,370 products -> ~2,600 on the 2026-11-07 data (lib/import/focus.ts).
-  catalogFocus: { minStores: 2, keepListedCents: 2000, keepCents: 5000 },
+  // Sealed only (owner, 2026-11-08: "we should not have cards at all … only sealed products"): no single
+  // cards in the catalogue; every old card URL 301s to its set (data/redirects/cards.json, DECISIONS.md 2026-11-08).
+  sealedOnly: true,
+  // The sealed focus (owner, 2026-11-08: "cull it way more"): a box, case, starter deck, starter deck display or
+  // collection stays when any store has it in stock (or lists a new set's pre-order); a loose pack or anything
+  // else needs 2 stores in one market; inserts never. Search demand always stays. ~2,600 products -> ~190 on the
+  // 2026-11-08 data (lib/import/focus.ts).
+  catalogFocus: { minStores: 2, headlineTypes: ["Booster Box", "Case", "Starter Deck", "Starter Deck Display", "Collection"] },
   // One Union Arena number exists as SR, SR* and SR***, at very different prices.
   rarityMustAgree: true,
   rarityAliases: {
@@ -165,7 +169,7 @@ export const SITE: SiteConfig = {
     blurb: "Find the cheapest Union Arena, Fusion World and Digimon boxes before the next drop.",
   },
   christmas: {
-    headline: "Gift a booster box",
+    headline: "Gift a box",
     blurb: "Union Arena, Fusion World and Digimon boxes and starter decks to gift, cheapest store first",
   },
 

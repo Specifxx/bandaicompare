@@ -26,7 +26,7 @@ export const post: Post = {
 <h2>Digimon Card Game: BT25-104</h2>
 <p><b>BT25</b> is booster set 25, <b>EX</b> marks extra boosters and <b>ST</b> starter decks; the number follows. TCGplayer adds the rarity after it (BT25-104 SEC), and Rare Pull and alternate-art versions keep the base card's number.</p>
 
-<h2>Search by number</h2>
-<p>Type a code like FB11-084 or BT25-104 into the search box on any page to jump straight to that card's prices at every store.</p>
+<h2>The same codes name the boxes</h2>
+<p>The set code before the dash is also how stores name the sealed product: an "FB11 booster box", a "BT25 booster box" or a "UE14BT booster box" is that set's display of packs. Type the code into the search box on any page to compare that set's booster boxes, cases and starter decks at every store.</p>
 `,
 };

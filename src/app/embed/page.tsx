@@ -6,7 +6,6 @@ import { byValue, products, summaryOf } from "@/lib/data";
 import { shortName } from "@/lib/names";
 import { MARKETS } from "@/lib/site-types";
 import { badgeOffer, dailySnippet, embedSnippet, storeBadge } from "@/lib/embed";
-import { fitDescription } from "@/lib/seo-title";
 
 // The free widgets directory (DECISIONS.md, "Free price widgets", 2026-11-02): the page outreach points at instead of
 // asking for a link. Shows code, never live iframes of our own widgets.
@@ -15,7 +14,7 @@ export const revalidate = 86400;
 export function generateMetadata(): Metadata {
   return {
     title: `Free ${SITE.gameShort} Price Widgets for Your Site`,
-    description: fitDescription(`A live ${SITE.game} card price badge for blogs, deck guides and community sites, and a badge for stores we compare. One line of HTML, free, no signup.`),
+    description: `A live ${SITE.game} card price badge for blogs, deck guides and community sites, and a badge for stores we compare. One line of HTML, free, no signup.`,
     ...canon("/embed"),
   };
 }
@@ -55,7 +54,7 @@ export default function EmbedPage() {
       <section className="card-surface flex flex-col gap-3 p-4">
         <h2 className="text-lg font-bold">Daily price game</h2>
         <p className="text-sm text-muted">
-          For creators, clubs and Discord-linked sites: today&apos;s {SITE.gameShort} Price Duel, two cards and &ldquo;which is worth more?&rdquo;. It changes by itself
+          For creators, clubs and Discord-linked sites: today&apos;s {SITE.gameShort} Price Duel, two sealed products and &ldquo;which is worth more?&rdquo;. It changes by itself
           every day at midnight UTC, so your page has something new daily. <Link className="link" href="/embed/daily">See it running →</Link>
         </p>
         <pre className="overflow-x-auto rounded bg-ink-900 p-3 text-xs"><code>{daily}</code></pre>

@@ -2,15 +2,17 @@
 
 Free price comparison for three Bandai card games on one site
 (bandaicompare.com): **Union Arena**, **Dragon Ball Super Fusion World** and
-the **Digimon Card Game**. Every card and sealed product TCGplayer lists,
-compared across TCGplayer, eBay and card stores in the US, UK, Canada,
-Australia, Europe and Singapore, updated daily. Not affiliated with Bandai.
+the **Digimon Card Game**. **Sealed only** (owner, 2026-11-08): the booster
+boxes, cases, packs and starter decks stores actually sell, compared across
+TCGplayer, eBay, Amazon and card stores in the US, UK, Canada, Australia,
+Europe and Singapore, updated daily. No single cards. Not affiliated with Bandai.
 
 Built on the Rift Compare playbook (riftcompare.com, repo `Specifxx/TCGEmpire`),
-on the lean engine shared with Gundam Compare, Lorcana Compare, YGO Compare
-and Cyberpunk Compare. The only game-specific files are `src/site.config.ts`
-and `src/content/` (stores, blog posts, pre-order copy, logo and look), plus
-icons, share images, workflows and docs.
+with the Dex / MTG Compare engine's look, taken from YGO Compare's sealed-only
+port (2026-11-08; DECISIONS.md). Its own repo: nothing syncs with a sister.
+Site-specific facts live in `src/site.config.ts` and `src/content/` (stores,
+blog posts, pre-order copy, logo, game colours), plus icons, share images,
+workflows and docs.
 
 ## How it works
 
@@ -18,7 +20,7 @@ icons, share images, workflows and docs.
 GitHub Actions, daily 03:17 UTC (refresh-prices.yml)
   TCGCSV (TCGplayer catalogue + prices, categories 81, 80 and 63: SITE.lines)
   + every Shopify store in src/content/stores.ts  (products.json)
-  + eBay Browse API, budgeted (own app, 2,500 calls/day, cards from $10, all sealed;
+  + eBay Browse API, budgeted (Cyberpunk's app, 2,500 calls/day, every kept sealed product;
     a no-op until EBAY_CLIENT_ID / EBAY_CLIENT_SECRET exist)
   → data/public/*.json, data/history/<set>.json, data/state/*.json
   → commit to main with "[deploy]" in the subject  → one Vercel build a day
@@ -43,8 +45,10 @@ GitHub Actions, daily 03:17 UTC (refresh-prices.yml)
   TCGplayer).
 * **Star rarities**: Union Arena's SR, SR*, SR** and SR*** share a number; a
   listing that names one never prices another.
-* **Catalogue floor**: cards under US$1 in every printing stay out, except in
-  sets from the last 120 days (`catalogMinCardCents`), then products no store sells (`catalogFocus`), so the data and build stay small.
+* **Sealed only, culled** (`sealedOnly`, `catalogFocus`, `src/lib/import/focus.ts`):
+  boxes, cases and starter decks in stock at a store (or a new set's pre-order),
+  packs at 2 stores in one market, plus anything people search for; about 190
+  products. Every old card URL 301s to its set (`data/redirects/cards.json`).
 
 ## Run locally
 

@@ -10,8 +10,8 @@ export function HolidayStrip() {
   const s = saleStrip((meta()?.updatedAt ?? new Date().toISOString()).slice(0, 10));
   if (!s) return null;
   return (
-    <div className="border-b border-ink-700/60 bg-brand/10" data-holiday-strip={s.event}>
-      <p className="mx-auto max-w-7xl truncate px-4 py-1.5 text-center text-xs sm:text-sm">
+    <div className="border-b border-line bg-brand-soft" data-holiday-strip={s.event}>
+      <p className="truncate py-1.5 page text-center text-xs sm:text-sm">
         <Link href={s.href} className="hover:text-fg">
           <b>{s.name} {SITE.gameShort} deals</b><span className="hidden sm:inline"> · today&apos;s store prices under TCGplayer, updated daily</span> · <span className="link">see the deals →</span>
         </Link>

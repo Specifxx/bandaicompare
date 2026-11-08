@@ -5,11 +5,11 @@
 // first trial import then dropped every store it matched nothing for (Dragon
 // Ball Super Masters-only shops, Japanese imports, merchandise). Add a store
 // only after the same check: a wrong collection handle fails silently. Never
-// add a store on the family ban list (TCG Synergy).
+// add a store on the family ban list (TCG Synergy). Sealed only (2026-11-08): the eight stores whose
+// collections held only singles were removed; a new store needs a sealed collection.
 import type { StoreConfig } from "@/lib/site-types";
 
 export const STORES: StoreConfig[] = [
-  { key: "cardboardgamer", name: "The Cardboard Gamer", base: "https://cardboardgamer.com.au", market: "AU", collections: ["digimon-bt11"], kind: "singles" },
   { key: "cardbot", name: "Card Bot", base: "https://cardbot.com.au", market: "AU", collections: ["dragon-ball-super-card-game-singles","digimon"], kind: "both" },
   { key: "cherrycollectables", name: "Cherry Collectables", base: "https://cherrycollectables.com.au", market: "AU", collections: ["dragon-ball","all-digimon","digimon"], kind: "both" },
   { key: "collectiblemadness", name: "Collectible Madness", base: "https://collectiblemadness.com.au", market: "AU", collections: ["dragon-ball-super-sealed","digimon-tcg-sealed"], kind: "sealed" },
@@ -17,7 +17,6 @@ export const STORES: StoreConfig[] = [
   { key: "crithit", name: "Critical Hit Gaming", base: "https://crithit.com.au", market: "AU", collections: ["dragon-ball","digimon-tcg"], kind: "sealed" },
   { key: "fabledgames", name: "Fabled Games", base: "https://fabledgames.store", market: "AU", collections: ["dragon-ball-super-card-game-fusion-world","digimon-card-game"], kind: "both" },
   { key: "firstgames", name: "First Games", base: "https://firstgames.com.au", market: "AU", collections: ["dragon-ball-super","digimon"], kind: "sealed" },
-  { key: "frenlybricks", name: "FRENLY BRICKS - Open 7 Days", base: "https://frenlybricks.store", market: "AU", collections: ["dragonball-singles"], kind: "singles" },
   { key: "fromthedeepgames", name: "From The Deep Games", base: "https://fromthedeepgames.com.au", market: "AU", collections: ["digimon-tcg"], kind: "sealed" },
   { key: "gameology", name: "Gameology", base: "https://gameology.com.au", market: "AU", collections: ["dragon-ball-super","digimon-card-game"], kind: "both" },
   { key: "gamerholic", name: "Gamerholic", base: "https://gamerholic.com.au", market: "AU", collections: ["dragon-ball-super","digimon-booster-boxes"], kind: "both" },
@@ -62,7 +61,6 @@ export const STORES: StoreConfig[] = [
   { key: "bananagames", name: "Banana Games & Hobby", base: "https://bananagames.ca", market: "CA", collections: ["union-arena-singles","union-arena-sealed-products","digimon-sealed"], kind: "both" },
   { key: "battlegroundgames", name: "Battleground Games", base: "https://battlegroundgames.ca", market: "CA", collections: ["digimon"], kind: "both" },
   { key: "bdcosmos", name: "BD Cosmos", base: "https://bdcosmos.com", market: "CA", collections: ["digimon-tcg-sealed"], kind: "both" },
-  { key: "bentogaming", name: "Bento Gaming", base: "https://bentogaming.com", market: "CA", collections: ["digimon-singles-all-sets"], kind: "singles" },
   { key: "blackknightgames", name: "Black Knight Games", base: "https://blackknightgames.ca", market: "CA", collections: ["union-arena-sealed","dbs-fusion-world","digimon"], kind: "sealed" },
   { key: "boardgamebliss", name: "Board Game Bliss", base: "https://boardgamebliss.com", market: "CA", collections: ["dbscg-fusion-world"], kind: "sealed" },
   { key: "borealgaming", name: "Boreal Gaming & Cards", base: "https://borealgaming.com", market: "CA", collections: ["union-arena-trading-card-game-tcg-sealed","dragon-ball-super","digimon-tcg-evolve-battle-dominate"], kind: "sealed" },
@@ -162,10 +160,8 @@ export const STORES: StoreConfig[] = [
   { key: "pokeca", name: "Pokeca.NL", base: "https://pokeca.nl", market: "EU", collections: ["dragon-ball-super-1","digimon"], kind: "sealed" },
   { key: "pokepower", name: "PokePower", base: "https://poke-power.eu", market: "EU", collections: ["dragon-ball"], kind: "sealed" },
   { key: "rarecards", name: "RareCards", base: "https://rarecards.nl", market: "EU", collections: ["digimon-tcg"], kind: "sealed" },
-  { key: "recollectibles", name: "ReCollectibles", base: "https://recollectibles.de", market: "EU", collections: ["android-17-fs01-06-fusion-world-alle-versionen"], kind: "singles" },
   { key: "shopponistore", name: "Shopponi Store", base: "https://shopponistore.com", market: "EU", collections: ["dragon_ball_super","story-booster-01-fusion-world","digimon","carte-singole-digimon"], kind: "both" },
   { key: "side7", name: "Side7", base: "https://side7.nl", market: "EU", collections: ["dragon-ball-super-card-game","digimon-card-game"], kind: "sealed" },
-  { key: "spellnexus", name: "SpellNexus", base: "https://spellnexus.com", market: "EU", collections: ["dragon_ball_super","digimon"], kind: "singles" },
   { key: "tcgtavern", name: "TCG Tavern", base: "https://tcgtavern.de", market: "EU", collections: ["union-arena","dragon-ball-super-card-game-fusion-world-karten-sets-neuheiten"], kind: "sealed" },
   { key: "templarsarena", name: "Templars Arena Gamecenter", base: "https://templarsarena.com", market: "EU", collections: ["dragon-ball-card-game","digimon-tcg"], kind: "both" },
   { key: "timetwistergames", name: "TimeTwister Games", base: "https://timetwistergames.it", market: "EU", collections: ["dragon_ball_super","dragon-ball","outlet-digimon"], kind: "both" },
@@ -175,7 +171,6 @@ export const STORES: StoreConfig[] = [
   { key: "universetcg", name: "Universe TCG", base: "https://universetcg.com", market: "EU", collections: ["union-arena-english","dragon-ball-fusion-world","digimon-card-game"], kind: "sealed" },
   { key: "venturacardgames", name: "Ventura Games", base: "https://venturacardgames.com", market: "EU", collections: ["dragon-ball","digimon-booster-boxes"], kind: "sealed" },
   { key: "zillerstore", name: "Zillerstore Fumetteria", base: "https://zillerstore.it", market: "EU", collections: ["dragon-ball-fusion-world-fb03-carte-singole-inglese","dragon-ball-super"], kind: "both" },
-  { key: "cardboardcollectible", name: "Cardboard Collectible", base: "https://cardboardcollectible.com", market: "SG", collections: ["digimon-singles"], kind: "singles" },
   { key: "daimonjitcg", name: "Daimonji", base: "https://daimonjitcg.com", market: "SG", collections: ["union-arena-tcg","dragonball-tcg"], kind: "sealed" },
   { key: "pikkuplay", name: "Pikku Play", base: "https://pikkuplay.com", market: "SG", collections: ["union-arena-singles","union-arena","dragon-ball","digimon-tcg"], kind: "both" },
   { key: "gameacademia", name: "Game Academia", base: "https://game-academia.com", market: "SG", collections: ["dragon-ball-super-card-game-fb06-singles","dragon-ball-super-tcg","digimon-card-game-singles-1"], kind: "both" },
@@ -184,7 +179,6 @@ export const STORES: StoreConfig[] = [
   { key: "sgmanapro", name: "Mana Pro", base: "https://sg-manapro.com", market: "SG", collections: ["union-arena"], kind: "sealed" },
   { key: "toyorgame", name: "Toy Or Game", base: "https://toyorgame.com.sg", market: "SG", collections: ["union-arena","dragon-ball-super-card-game","digimon-tcg"], kind: "sealed" },
   { key: "1moregogaming", name: "1 More Go Gaming", base: "https://1moregogaming.co.uk", market: "UK", collections: ["dragon-ball"], kind: "sealed" },
-  { key: "archerongames", name: "Archeron", base: "https://archerongames.com", market: "UK", collections: ["all-digimon"], kind: "singles" },
   { key: "athenagames", name: "Athena Games Ltd", base: "https://athenagames.com", market: "UK", collections: ["digimon-card-game"], kind: "sealed" },
   { key: "badwolfgaming", name: "Bad Wolf Gaming", base: "https://badwolfgaming.co.uk", market: "UK", collections: ["dragon-ball","digimon"], kind: "sealed" },
   { key: "boardsandswords", name: "Boards and Swords Hobbies", base: "https://boardsandswords.co.uk", market: "UK", collections: ["dragon-ball-super-fusion-world","digimon-card-game"], kind: "both" },
@@ -222,7 +216,6 @@ export const STORES: StoreConfig[] = [
   { key: "atlantiscomics", name: "Atlantis Games & Comics", base: "https://atlantis-comics.com", market: "US", collections: ["union-arena","digimon-tcg-sealed-products"], kind: "sealed" },
   { key: "baxtersrealm", name: "Baxter's Game Store", base: "https://baxtersrealm.com", market: "US", collections: ["dragon-ball-super-singles-all","digimon"], kind: "both" },
   { key: "blackswampgames", name: "Black Swamp Games", base: "https://blackswampgames.com", market: "US", collections: ["digimon-tcg-singles"], kind: "both" },
-  { key: "blackvaultgaming", name: "Black Vault Gaming", base: "https://blackvaultgaming.com", market: "US", collections: ["everything-union-arena"], kind: "singles" },
   { key: "bluemistcollectibles", name: "Blue Mist", base: "https://bluemistcollectibles.com", market: "US", collections: ["union-arena-1","digimon"], kind: "sealed" },
   { key: "boardgamesdallas", name: "Common Ground Games", base: "https://boardgamesdallas.com", market: "US", collections: ["union-arena","digimon-tcg"], kind: "sealed" },
   { key: "cardboardanddie", name: "Cardboardia", base: "https://cardboardanddie.com", market: "US", collections: ["dragon-ball-super-singles-in-stock","dbs-sealed","digimon-singles","digimon-sealed"], kind: "both" },

@@ -1,8 +1,8 @@
 /* The cart list (src/lib/cart-list.ts). Drawn in currentColor so it sits in any
    site's theme; --cart-accent is the one colour each site sets (below). */
 :root {
-  --cart-accent: var(--ce-cart-accent, #1ea65c);
-  --cart-on-accent: #fff;
+  --cart-accent: var(--ce-cart-accent, rgb(var(--brand)));
+  --cart-on-accent: rgb(var(--brand-ink, 255 255 255));
 }
 :where(.ce-cart-add) {
   display: inline-flex;

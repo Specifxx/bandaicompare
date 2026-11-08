@@ -11,7 +11,6 @@ import { CheckedAgo } from "@/components/CardBuy";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MARKET_LABEL } from "@/lib/site-types";
 import { FamilyCluster } from "@/components/FamilyCluster";
-import { fitDescription } from "@/lib/seo-title";
 
 export const revalidate = 86400; // data only changes with a release (DECISIONS.md, "Vercel cost")
 
@@ -20,7 +19,7 @@ export function generateMetadata(): Metadata {
   const n = SITE.kits.stores.length;
   return {
     title: `${SITE.kits.label} prices: compare ${n} hobby shops`,
-    description: fitDescription(`Compare ${SITE.kits.noun} prices across ${n} hobby shops in the US, UK, Canada and Australia: HG, RG, MG, PG and more, cheapest in-stock first, updated daily.`),
+    description: `Compare ${SITE.kits.noun} prices across ${n} hobby shops in the US, UK, Canada and Australia: HG, RG, MG, PG and more, cheapest in-stock first, updated daily.`,
     ...canon("/kits", KITS_SHARE_IMAGE),
   };
 }

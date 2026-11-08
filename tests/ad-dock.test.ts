@@ -28,7 +28,7 @@ test("the phone dock: narrow screens only, never on the first screen, never besi
   assert.match(d, />Ad<\/span>/, "labelled Ad");
   const s = src("components/SideAds.tsx");
   assert.match(s, /"dock-ebay"\)[\s\S]*"dock-tcg"\)/, "its own page tags");
-  assert.match(s, /fetch\("\/api\/rails"\)[\s\S]*<AdDock /, "the rails' own answer");
+  assert.match(s, /yieldTo="\.ad-box, \[data-ad\]"/, "yields to every ad unit");
   assert.match(src("components/CardBuy.tsx"), /data-buybar=""/, "never on a card page (the buy bar)");
   assert.doesNotMatch(d + s, /amazon/i, "no Amazon in the dock");
 });

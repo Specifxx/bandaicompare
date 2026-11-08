@@ -1,27 +1,29 @@
 # Working in this repo
 
-Read `README.md` first. This is BandaiCompare (Union Arena, Dragon Ball Super
-Fusion World and the Digimon Card Game on one site, `SITE.lines`); Lorcana
-Compare and Cyberpunk Compare run the same engine (Gundam Compare
-left it for the Dex / MTG Compare engine on 2026-11-04). Engine code (`src/lib`,
-`src/app`, `src/components`, `scripts`) must stay game-agnostic: anything
-game-specific goes in `src/site.config.ts` or `src/content/`. When you change
-the engine, make the same change in the other two repos.
+Read `README.md` first. This is BandaiCompare (Union Arena, Dragon Ball Super Fusion World and the
+Digimon Card Game on one site, `SITE.lines`), **sealed only** since 2026-11-08 (owner): booster boxes,
+cases, packs and starter decks, no single cards. It runs the **Dex / MTG Compare engine's look** on its
+own data layer, as YGO Compare (2026-11-06), Gundam Compare and WargameCompare do. It is NO LONGER a sister
+of the Lorcana / Cyberpunk card engine: there is no `engine.json`, no engine-drift check and nothing to
+sync. Change this repo on its own; port engine presentation changes by hand (YGO Compare is the closest
+model). Game-specific facts still live in `src/site.config.ts` and `src/content/`.
 
-## One engine, three repos
+## Sealed only, culled hard (owner, 2026-11-08; DECISIONS.md)
 
-Lorcana Compare, Cyberpunk Compare and BandaiCompare run ONE
-engine (Gundam Compare ran it until 2026-11-04, when the owner moved it onto
-the Dex / MTG Compare engine, and YGO Compare until 2026-11-06, when it moved there too as a sealed-only
-site; neither `Specifxx/GundamCompare` nor `Specifxx/ygocompare` is a sister any more).
-`engine.json` lists its files (the code, tests and build config; never
-`src/site.config.ts`, `src/content/`, icons, share images, workflows or
-`data/`), and they must be byte-identical in all three repos. After an engine
-change here, copy it with `scripts/engine-sync.sh ../<sister> ../<sister>`,
-run the checks in each and open the PRs together; `npx tsx scripts/engine-drift.ts ../<sister>…`
-shows what still differs. The weekly *Engine drift* workflow fails (and
-emails the owner) if `main` differs from a sister's `main`. Anything one game
-needs is an option in `site.config.ts`, off by default.
+- `SITE.sealedOnly`: the import drops cards after every slug is settled (`keepSlugs` in
+  `scripts/import-all.ts` keeps yesterday's slug by product id), and `sealedOnlyCatalog` in `lib/data.ts`
+  drops any card or loose single a data file still holds.
+- `SITE.catalogFocus` (`lib/import/focus.ts`), after the store pass and before eBay: a booster box, case,
+  starter deck, starter deck display or collection keeps a page when any store has it in stock (or lists a
+  new set's pre-order); a pack or anything else needs 2 stores in one market; inserts never; Search Console
+  demand always stays. About 190 products. A culled product's URL is in `data/public/culled.json` and 301s
+  to its set (`lib/culled.ts`); a set with no sealed product 301s to its game hub (`gameHubOfSet`).
+- Every single-card URL the site had is in `data/redirects/cards.json` (frozen; never edit, never grow).
+  `/card/<slug>` is still the sealed product page; a card slug found there gets a permanent redirect to
+  its set, or its game hub (`lib/card-redirects.ts`). `/cards/*`, the card tools, `/list` and the two
+  card-table guides 301 from `next.config.js` (`RETIRED`). Never let an old URL 404, and never put a card,
+  a card hub or a retired page back in the sitemap (`tests/sealed-only.test.ts`). The ops monitor checks
+  one old card URL redirects.
 
 ## Deploys are gated — do not add `[deploy]` to commit subjects
 
@@ -76,8 +78,9 @@ write copy that reads as official ("the official", "Bandai's store").
 BandaiCompare shares Cyberpunk Compare's eBay app (owner, 2026-11-03), a
 5,000-call app split 2,500 each: `SITE.ebay.dailyBudget` 2,500 calls a day,
 counted in `data/state/ebay-usage.json`, the run at 03:17 UTC (Cyberpunk's is
-00:17) so the two never overlap. Cards under $10 get no call; every sealed
-product does; the plan spreads the calls for coverage (`planEbayRefresh`). The
+00:17) so the two never overlap. Sealed only (2026-11-08): the plan is
+`planSealedCoverage` in `src/lib/import/ebay.ts` (every kept sealed product except inserts, in the US, UK,
+Canada and Australia; US boxes and new sets every 24 h, the rest 48 h, other markets 48/72 h). The
 pass is a no-op until `EBAY_CLIENT_ID` / `EBAY_CLIENT_SECRET` (the same values
 as cyberpunkcompare's secrets) exist. Never raise the cap or point it at any
 other keyset without the owner. Cyberpunk's `/api/ebay/account-deletion` is the

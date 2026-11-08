@@ -8,7 +8,6 @@ import { PLATFORM_STYLE, PlatformIcon } from "@/components/creators/PlatformIcon
 import { creatorsOn, featuredCreators, type Creator } from "@/lib/creators";
 import { canon, SITE_URL } from "@/lib/site";
 import { SITE } from "@/site.config";
-import { fitDescription } from "@/lib/seo-title";
 
 // /creators: the creators this site features (owner, 2026-10-31), modelled on
 // MTG Compare's /creators. The list is static (src/content/creators.ts) and the
@@ -22,7 +21,7 @@ export const revalidate = 86400;
 const first = featuredCreators()[0];
 export const metadata: Metadata = {
   title: `${SITE.gameShort} creators we feature`,
-  description: fitDescription(`${SITE.game} creators we love${first ? `, starting with ${first.name}` : ""}. Follow them on Instagram and YouTube. Make ${SITE.gameShort} content? Get featured free.`),
+  description: `${SITE.game} creators we love${first ? `, starting with ${first.name}` : ""}. Follow them on Instagram and YouTube. Make ${SITE.gameShort} content? Get featured free.`,
   ...canon("/creators"),
 };
 
@@ -85,7 +84,7 @@ function Spotlight({ c }: { c: Creator }) {
             </dl>
           )}
           <ul role="list" className="mt-4 flex flex-wrap justify-center gap-1.5 sm:justify-start">
-            {c.tags.slice(0, 4).map((t) => <li key={t} className="chip">{t}</li>)}
+            {c.tags.slice(0, 4).map((t) => <li key={t} className="tag">{t}</li>)}
           </ul>
           <div className="mt-5 flex flex-wrap justify-center gap-2 sm:justify-start">
             {c.links.map((l) => <ExternalLink key={l.url} link={l} creator={c} big />)}
@@ -221,7 +220,7 @@ export default function CreatorsPage() {
       </section>
 
       <p className="mt-10 text-sm text-muted">
-        While you&rsquo;re here: <Link href="/cards" className="link">compare {SITE.gameShort} card prices</Link> across every store.
+        While you&rsquo;re here: <Link href="/sealed" className="link">compare {SITE.gameShort} booster box and sealed prices</Link> across every store.
       </p>
     </div>
   );

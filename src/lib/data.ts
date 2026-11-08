@@ -4,12 +4,15 @@
 // once per server instance.
 import fs from "node:fs";
 import path from "node:path";
+import { isPreorder } from "./preorders";
 import type { Catalog, EbayPick, Market, Meta, Offer, PriceEntry, Product, SetInfo } from "./site-types";
 import { CURRENCY } from "./site-types";
 import { readSetPrices, readSummary, type SummaryEntry } from "./price-store";
 import { decodeOffer } from "./offer-codec";
 import { referenceCents } from "./import/tcgcsv";
 import type { Series } from "./series";
+import { SITE } from "@/site.config";
+import { lineOfSet } from "./lines";
 
 const DIR = path.join(process.cwd(), "data");
 
@@ -19,6 +22,25 @@ function read<T>(rel: string, fallback: T): T {
   } catch {
     return fallback;
   }
+}
+
+/** A sealed-only site (SITE.sealedOnly) never shows a single card, even from a catalogue written before the import
+ *  dropped them: cards are left out here and each set's count is its sealed products. */
+/** A single card that TCGplayer files in a set's sealed group (2026-11-06: "Blue-Eyes White Dragon (Secret Rare)" from
+ *  the 25th Anniversary Ultimate Kaiba Set, $419.95 on /sealed): it carries a rarity or a monster's stats. */
+export function isLooseSingle(p: Product): boolean {
+  if (p.kind !== "sealed") return false;
+  if (p.rarity) return true;
+  const a = p.attrs ?? {};
+  return ["Attack", "Defense", "Card Type", "MonsterType", "Attribute"].some((k) => k in a);
+}
+
+export function sealedOnlyCatalog(c: Catalog, on = !!SITE.sealedOnly): Catalog {
+  if (!on || !c.products.some((p) => p.kind === "card" || isLooseSingle(p))) return c;
+  const products = c.products.filter((p) => p.kind === "sealed" && !isLooseSingle(p));
+  const count = new Map<number, number>();
+  for (const p of products) count.set(p.setId, (count.get(p.setId) ?? 0) + 1);
+  return { ...c, products, sets: c.sets.map((s) => ({ ...s, productCount: count.get(s.id) ?? 0 })) };
 }
 
 let cache: {
@@ -34,7 +56,7 @@ let cache: {
 
 function load() {
   if (cache) return cache;
-  const catalog = read<Catalog>("public/catalog.json", { generatedAt: "", sets: [], products: [] });
+  const catalog = sealedOnlyCatalog(read<Catalog>("public/catalog.json", { generatedAt: "", sets: [], products: [] }));
   cache = {
     catalog,
     summary: readSummary(),
@@ -53,6 +75,16 @@ export const products = () => load().catalog.products;
 export const meta = () => load().meta;
 export const ebayPicks = () => load().picks;
 export const productBySlug = (slug: string) => load().bySlug.get(slug) ?? null;
+
+let looseSingles: Map<string, number> | null = null;
+/** The set id of a single card that was filed as sealed and is no longer listed (a redirect, never a 404). */
+export function looseSingleSetId(slug: string): number | null {
+  if (!looseSingles) {
+    const raw = read<Catalog>("public/catalog.json", { generatedAt: "", sets: [], products: [] });
+    looseSingles = new Map(raw.products.filter(isLooseSingle).map((p) => [p.slug, p.setId]));
+  }
+  return looseSingles.get(slug) ?? null;
+}
 export const productById = (id: number) => load().byId.get(id) ?? null;
 export const setBySlug = (slug: string) => load().setBySlug.get(slug) ?? null;
 export const setById = (id: number) => load().setById.get(id) ?? null;
@@ -64,7 +96,12 @@ export function priceOf(id: number): PriceEntry {
   const p = productById(id);
   if (!p) return EMPTY;
   if (!shards.has(p.setId)) shards.set(p.setId, readSetPrices(p.setId));
-  return shards.get(p.setId)![id] ?? EMPTY;
+  const e = shards.get(p.setId)![id] ?? EMPTY;
+  // A product whose set is not out yet cannot be "in stock": every store selling it is taking pre-orders (2026-11-06:
+  // the Skybox row of a box out 13 November showed as a plain in-stock price).
+  const set = setById(p.setId);
+  if (!set || !isPreorder(set) || !e.offers.some((o) => o.inStock && !o.preorder && o.source !== "tcgplayer" && o.source !== "ebay")) return e;
+  return { ...e, offers: e.offers.map((o) => (o.inStock && o.source !== "tcgplayer" && o.source !== "ebay" ? { ...o, preorder: true } : o)) };
 }
 
 export interface Summary {
@@ -123,7 +160,12 @@ export function mainSets() {
 
 export function latestReleasedSet(): SetInfo | null {
   return (
-    sets().find((s) => !s.upcoming && productsInSet(s.id).filter((p) => p.kind === "card").length > 60) ?? null
+    sets().find((s) =>
+      !s.upcoming &&
+      (SITE.sealedOnly
+        ? productsInSet(s.id).some((p) => p.sealedType === "Booster Box")
+        : productsInSet(s.id).filter((p) => p.kind === "card").length > 60),
+    ) ?? null
   );
 }
 export function nextUpcomingSet(): SetInfo | null {
@@ -212,4 +254,10 @@ export function deals(limit = 40): Deal[] {
     }
   }
   return out.sort((a, b) => b.market * b.saving - a.market * a.saving).slice(0, limit);
+}
+
+/** Where a page about a set with no sealed product sends visitors: its game's hub on a multi-game site, else /sealed. */
+export function gameHubOfSet(setSlug: string): string {
+  const l = lineOfSet(setBySlug(setSlug));
+  return l ? `/games/${l.slug}` : "/sealed";
 }

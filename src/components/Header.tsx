@@ -19,11 +19,13 @@ import { CartHeaderLink } from "@/components/cart/CartHeaderLink";
  * wade through the others (owner, 2026-11-09). `also`: other paths that count as the section, for its current state.
  */
 export function headerNavItems(more: NavGroup[], shop: ShopMenus, sale: { href: string; label: string } | null = null): HeaderNavItem[] {
+  // The Deals dropdown (owner, 2026-11-09; xl and up, the row has no room for it below) lists "Deals & stock"; "More" keeps it too, for lg.
+  const deals = more.filter((g) => g.title === "Deals & stock");
   return [
     ...(sale ? [{ href: sale.href, label: sale.label, also: [] as string[] }] : []),
     ...shop.games.map((g) => ({ href: g.href, label: g.label, menu: g.columns.length ? g.columns : undefined })),
     { href: "/sealed", label: "All sealed", also: ["/card", "/sets", "/preorders"], menu: shop.sealed.length ? shop.sealed : undefined },
-    { href: "/tools/deal-finder", label: "Deals", xl: true, also: ["/black-friday", "/cyber-monday", "/boxing-day", "/january-sales", "/lunar-new-year", "/movers"] },
+    { href: "/tools/deal-finder", label: "Deals", xl: true, also: ["/black-friday", "/cyber-monday", "/boxing-day", "/january-sales", "/lunar-new-year", "/movers"], menu: deals.length ? deals : undefined },
     { href: "/tools", label: "More", also: ["/stores", "/price-report", "/forum", "/blog"], menu: more },
   ];
 }

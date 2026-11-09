@@ -51,3 +51,15 @@ test("the type pages are noindex when thin, in the sitemap and the CDN rules, an
   assert.doesNotMatch(readFileSync("src/components/HeaderNav.tsx", "utf8"), /useState/);
   assert.match(readFileSync("src/app/api/search/route.ts", "utf8"), /setById\(p\.setId\)\?\.code/);
 });
+
+// Owner, 2026-11-09: every dropdown is one shared mega menu (components/NavMenu.tsx), and Deals & stock has its own.
+test("header: Deals opens a dropdown of real links, seven items at most, and NavMenu has hover intent, Escape, arrows and aria", async () => {
+  const { headerNavItems } = await import("@/components/Header");
+  const items = headerNavItems(navGroups({ shop: [] }), shopNav().menus, null);
+  assert.ok(items.length <= 7, items.map((i) => i.label).join());
+  const deals = items.find((i) => i.label === "Deals");
+  assert.ok(deals?.menu?.[0]?.links.length, "Deals has a dropdown");
+  assert.ok(deals!.menu!.flatMap((c) => c.links).some((l) => l.href === "/tools/deal-finder"));
+  const src = readFileSync(new URL("../src/components/NavMenu.tsx", import.meta.url), "utf8");
+  for (const needle of ["OPEN_MS", "CLOSE_MS", 'e.key === "Escape"', "ArrowDown", "aria-expanded", "aria-controls", "pointerdown", "onBlur", "usePathname"]) assert.ok(src.includes(needle), needle);
+});

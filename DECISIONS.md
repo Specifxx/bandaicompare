@@ -898,3 +898,18 @@ Three games share this site, and the header offered Sealed, Sets and Pre-orders 
 - The header search says "Search sealed or set code…" and finds a product by its set code.
 - Not done: the sidebar does not fold the other two games while one is open (it is server-light and stateless), and /sets stays one
   page grouped by game. Existing URLs, titles, canonicals and JSON-LD unchanged; the footer's single /our-sites link stays.
+
+## 2026-11-09: one mega-menu component for the header dropdowns (owner)
+
+- Bill: navigation like the best modern sites, one shared pattern across the Dex / MTG engine family. `components/NavMenu.tsx` (the same
+  file in DexCompare, MTG, Gundam, Wargame, YGO and Bandai; keep them identical) wraps every header dropdown: the panel is always in the
+  server's HTML as plain links (closed it is only `invisible`, so crawlers read it and keyboards skip it), it opens on hover with intent
+  (90 ms in, 200 ms grace out), a chevron button toggles it for touch and click, focus into the item opens it, ArrowDown/Up/Home/End move
+  through the links, Escape closes and returns focus, focus leaving or a press outside closes it, one menu open at a time, a navigation
+  closes it (`aria-expanded`, `aria-controls`, `aria-haspopup`). The label stays a real link.
+- New: a Deals dropdown at xl (the "Deals & stock" group; "More" keeps the group too, since the row has no room for Deals below xl).
+  The game dropdowns and All sealed existed. The market picker already switches in place.
+- No URL, title, canonical, h1 or JSON-LD changed; no read or page added; the phone menu and the sidebar are unchanged.
+- Not done: removing the side panel (the menus do not yet cover its deep groups, and it carries the current-section state for the
+  deep levels; revisit once the menus have been in use), a phone bottom sheet (the `<dialog>` menu stays), and the side rails and
+  footer links, which are the owner's own decisions. Deals is a hover menu: nothing is added to the deploy cadence.

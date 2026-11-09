@@ -881,3 +881,20 @@ matcher runs here, so the fix is ported (Gundam Compare DECISIONS.md, 2026-11-08
   name the product's own set, or a set whose name the product's set carries. A store's typo loses a row rather than a
   guess putting it on the wrong page.
 - bandaicompare: replaying the stored rows, 55 Japanese boxes, packs and cases (Universe TCG's "...-japanese" handles) stop matching.
+
+
+## 2026-11-09 — Navigation by game first, then product type and set (owner: "if you only care about soccer you don't care about basketball")
+
+Three games share this site, and the header offered Sealed, Sets and Pre-orders across all of them: a Fusion World player opening
+`/sealed/booster-box` met Union Arena and Digimon boxes too. Audit: `/mnt/project-files/nav-audit/bandai.json`.
+
+- Each game is a header item with a dropdown (`lib/shop-nav.ts`, `HeaderNav.tsx`: CSS-only, plain links in the server HTML): its
+  product types and its newest sets. "All sealed" keeps the cross-game types and the pre-orders; "Browse" became "More". The sidebar and
+  phone menu lead with one group per game, then "All games, by type".
+- New hub `/games/<game>/<type>` (`lib/game-hubs.ts` `gameTypeHubs`): one game's booster boxes, starter decks and so on, built from the
+  sets the game already owns, so it can never hold another game's product. It exists for any type the game has; under
+  `GAME_TYPE_MIN` (3) products it is noindex, out of the sitemap and out of the menus. `/games/<game>` and `/sealed/<type>` link to
+  it ("Union Arena only"). Breadcrumb is Games > game > type. `/games/:slug/:type` has its CDN rule.
+- The header search says "Search sealed or set code…" and finds a product by its set code.
+- Not done: the sidebar does not fold the other two games while one is open (it is server-light and stateless), and /sets stays one
+  page grouped by game. Existing URLs, titles, canonicals and JSON-LD unchanged; the footer's single /our-sites link stays.

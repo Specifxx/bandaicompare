@@ -7,6 +7,8 @@ import { SITE } from "@/site.config";
 import { canon } from "@/lib/site";
 import { setById } from "@/lib/data";
 import { sealedHubs } from "@/lib/hubs";
+import { GAME_TYPE_MIN, gameTypeHub } from "@/lib/game-hubs";
+import { LINES } from "@/lib/lines";
 import { TileGrid } from "@/components/ProductTile";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
@@ -38,6 +40,13 @@ export default function SealedHub({ params }: { params: { type: string } }) {
         <h1 className="font-display text-3xl font-black">{SITE.gameShort} {h.label.toLowerCase()}</h1>
         <p className="mt-2 text-muted">{h.items.length} products, newest set first. Open any one to compare every store and eBay.</p>
       </header>
+      {LINES.length > 0 && (
+        <nav aria-label="By game" className="-mt-2 flex flex-wrap gap-2">
+          {LINES.map((l) => ({ l, g: gameTypeHub(l, h.slug) })).filter((x) => x.g && x.g.items.length >= GAME_TYPE_MIN).map(({ l, g }) => (
+            <Link key={l.id} href={`/games/${l.slug}/${h.slug}`} className="chip hover:border-brand">{l.name} only <span className="text-muted">· {g!.items.length}</span></Link>
+          ))}
+        </nav>
+      )}
       <TileGrid items={items} />
       <section>
         <h2 className="mb-3 text-lg font-bold">Other sealed products</h2>

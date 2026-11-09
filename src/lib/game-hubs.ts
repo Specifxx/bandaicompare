@@ -3,6 +3,8 @@
 import type { GameLine, Product, SetInfo } from "@/lib/site-types";
 import { byValue, products, refCents, setById, sets } from "@/lib/data";
 import { LINES } from "@/lib/lines";
+import { SEALED_ORDER, SEALED_PLURAL } from "@/lib/hubs";
+import { slugify } from "@/lib/slug";
 
 export interface GameView {
   line: GameLine;
@@ -45,3 +47,23 @@ export function gameView(line: GameLine): GameView {
 }
 
 export const gameViews = (): GameView[] => LINES.map(gameView);
+
+// One game's sealed products by product type (/games/<game>/<type>): a Fusion World player never wades through Union Arena or
+// Digimon boxes (owner, 2026-11-09). A hub exists for any type the game has products in; it is indexed, listed in the sitemap and
+// linked from a menu only with GAME_TYPE_MIN products (a thin one is noindex).
+export const GAME_TYPE_MIN = 3;
+export interface GameTypeHub { slug: string; label: string; type: string; items: Product[] }
+
+const typeMemo = new Map<string, GameTypeHub[]>();
+export function gameTypeHubs(line: GameLine): GameTypeHub[] {
+  const hit = typeMemo.get(line.id);
+  if (hit) return hit;
+  const ids = new Set(sets().filter((s) => s.line === line.id).map((s) => s.id));
+  const sealed = products().filter((p) => p.kind === "sealed" && ids.has(p.setId));
+  const hubs = SEALED_ORDER.filter((t) => t !== "Other" && t !== "Insert")
+    .map((t) => ({ slug: slugify(t), label: SEALED_PLURAL[t] ?? t, type: t, items: byValue(sealed.filter((p) => p.sealedType === t)) }))
+    .filter((h) => h.items.length);
+  typeMemo.set(line.id, hubs);
+  return hubs;
+}
+export const gameTypeHub = (line: GameLine, slug: string) => gameTypeHubs(line).find((h) => h.slug === slug) ?? null;

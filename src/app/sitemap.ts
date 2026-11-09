@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { meta, products, refCents, setById, summaryOf } from "@/lib/data";
 import { posts } from "@/lib/posts";
 import { preorderSetList, sealedHubs, sealedSets } from "@/lib/hubs";
+import { GAME_TYPE_MIN, gameTypeHubs } from "@/lib/game-hubs";
 import { preorderPath } from "@/lib/preorders";
 import { SITE_URL } from "@/lib/site";
 import { creatorsOn } from "@/lib/creators";
@@ -22,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...fixed.map((p) => ({ url: `${SITE_URL}${p}`, lastModified: at, changeFrequency: "daily" as const, priority: p === "" ? 1 : 0.8 })),
     // The game hubs (SITE.lines): each game's sets, boxes and decks.
     ...(LINES.length ? ["/games", ...LINES.map((l) => `/games/${l.slug}`)] : []).map((p) => ({ url: `${SITE_URL}${p}`, lastModified: at, changeFrequency: "daily" as const, priority: 0.9 })),
+    ...LINES.flatMap((l) => gameTypeHubs(l).filter((h) => h.items.length >= GAME_TYPE_MIN).map((h) => ({ url: `${SITE_URL}/games/${l.slug}/${h.slug}`, lastModified: at, changeFrequency: "daily" as const, priority: 0.8 }))),
     ...sealedHubs().map((h) => ({ url: `${SITE_URL}/sealed/${h.slug}`, lastModified: at, changeFrequency: "daily" as const, priority: 0.8 })),
     ...preorderSetList().map((s) => ({ url: `${SITE_URL}${preorderPath(s)}`, lastModified: at, changeFrequency: "daily" as const, priority: 0.8 })),
     ...sealedSets().map((s) => ({ url: `${SITE_URL}/sets/${s.slug}`, lastModified: at, priority: 0.7 })),

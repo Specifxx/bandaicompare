@@ -5,7 +5,7 @@ import { SITE } from "@/site.config";
 import { canon, abs } from "@/lib/site";
 import { fitTitle } from "@/lib/seo-title";
 import { lineBySlug } from "@/lib/lines";
-import { gameView } from "@/lib/game-hubs";
+import { GAME_TYPE_MIN, gameTypeHubs, gameView } from "@/lib/game-hubs";
 import { productsInSet, refCents } from "@/lib/data";
 import { money } from "@/lib/format";
 import { TileGrid } from "@/components/ProductTile";
@@ -43,6 +43,12 @@ export default function GamePage({ params }: { params: { slug: string } }) {
           {v.newest && <p className="mt-3"><Link className="btn-primary" href={`/sets/${v.newest.slug}`}>Newest set: {v.newest.name} →</Link></p>}
         </header>
       </div>
+
+      <nav aria-label={`${line.name} product types`} className="-mt-4 flex flex-wrap gap-2">
+        {gameTypeHubs(line).filter((h) => h.items.length >= GAME_TYPE_MIN).map((h) => (
+          <Link key={h.slug} href={`/games/${line.slug}/${h.slug}`} className="chip hover:border-brand">{h.label} <span className="text-muted">· {h.items.length}</span></Link>
+        ))}
+      </nav>
 
       {v.boxes.length > 0 && (
         <section>

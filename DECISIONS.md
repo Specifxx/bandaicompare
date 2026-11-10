@@ -928,3 +928,12 @@ plain row per game with links to its type hubs, shows the visitor's recently vie
 off", localStorage only, drawn in the browser so pages stay one CDN copy), and puts the eBay/TCGplayer banner after the deals;
 the product page shows the store prices before the small ad pair and adds "More <type> from <game>" (the same product type from
 the game's other sets) and recently viewed. URLs, titles, descriptions and the h1s are unchanged.
+
+## 2026-11-10: eBay budget 2,500 to 1,000; the Cyberpunk keyset now carries MotorCompare too (owner)
+
+The eBay review (`/mnt/project-files/strategy/ebay-api-distribution-2026-11-10.html`) measured this site at 764 calls a day
+since it went sealed only (191 products in four markets, every pair searched daily), against a 2,500 budget. The keyset
+used 1,124 of its 5,000 a day. MotorCompare, starved at 600 on Compare Empire's full keyset, moves here. The owner approved
+the split: MotorCompare 3,300, BandaiCompare 1,000, Cyberpunk Compare 600 (4,900, 100 spare). 1,000 leaves room for about
+59 more sealed products before the plan has to rotate. Raise it only with the owner, and only by taking the same amount
+from one of the other two.

@@ -91,9 +91,10 @@ export const SITE: SiteConfig = {
     singlesCategoryId: "183454",
     sealedCategoryId: "183456",
     minPriceUsd: 10,
-    // Cyberpunk Compare's eBay app, shared 2,500 / 2,500 (owner, 2026-11-03). Off until
-    // EBAY_CLIENT_ID / EBAY_CLIENT_SECRET (Cyberpunk's values) exist. Raise only with the owner.
-    dailyBudget: 2500,
+    // Cyberpunk Compare's eBay app (owner, 2026-11-03), shared three ways since 2026-11-10 (owner):
+    // MotorCompare 3,300, BandaiCompare 1,000, Cyberpunk Compare 600. The 191 kept sealed products
+    // spend 764. Off until EBAY_CLIENT_ID / EBAY_CLIENT_SECRET (Cyberpunk's values) exist. Raise only with the owner.
+    dailyBudget: 1000,
     runHourUtc: 3,
   },
 

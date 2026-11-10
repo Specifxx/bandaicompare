@@ -76,7 +76,8 @@ write copy that reads as official ("the official", "Bandai's store").
 ## eBay
 
 BandaiCompare shares Cyberpunk Compare's eBay app (owner, 2026-11-03), a
-5,000-call app split 2,500 each: `SITE.ebay.dailyBudget` 2,500 calls a day,
+5,000-call app split three ways since 2026-11-10 (owner): MotorCompare 3,300,
+BandaiCompare 1,000, Cyberpunk Compare 600. `SITE.ebay.dailyBudget` 1,000 calls a day,
 counted in `data/state/ebay-usage.json`, the run at 03:17 UTC (Cyberpunk's is
 00:17) so the two never overlap. Sealed only (2026-11-08): the plan is
 `planSealedCoverage` in `src/lib/import/ebay.ts` (every kept sealed product except inserts, in the US, UK,

@@ -3,7 +3,6 @@ import { SITE } from "@/site.config";
 import { SearchBox } from "@/components/SearchBox";
 import { MarketChooser } from "@/components/ClientPrefs";
 import { CreatorsBubble } from "@/components/creators/CreatorsBubble";
-import { HeroSparks } from "@/components/HeroSparks";
 import { ChristmasGifts } from "@/components/ChristmasGifts";
 import { TileGrid } from "@/components/ProductTile";
 import { byValue, deals, latestReleasedSet, meta, products } from "@/lib/data";
@@ -23,7 +22,8 @@ import { KitGrid } from "@/components/KitTile";
 import { SealedHero } from "@/components/SealedHero";
 import { SiteReviews } from "@/components/site-reviews/SiteReviews";
 import { sealedHero } from "@/lib/sealed-hero";
-import { GameTiles } from "@/components/GameTiles";
+import { GameRows } from "@/components/GameTiles";
+import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { LandingAds } from "@/components/LandingAds";
 import { Section } from "@/components/Section";
 import { cardAds } from "@/lib/card-ads";
@@ -92,7 +92,6 @@ export default function Home() {
           action, the living background behind it (HeroSparks) and the creators bubble in its corner. The words, the h1 and the
           links are the ones the old hero carried. */}
       <section className="hero-band relative -mx-4 -mt-6 overflow-x-clip border-b border-line px-4 pb-10 pt-8 sm:-mx-6 sm:px-8 sm:pb-14 sm:pt-12">
-        <HeroSparks />
         <CreatorsBubble />
         {/* Two columns from lg (owner, 2026-11-08: KaeYoung and ScentCompare's hero, "feature some products on the hero"): the words,
             search, region row and trending chips on the left, two featured boxes on the right (under the words on a phone). The
@@ -140,7 +139,7 @@ export default function Home() {
             <p className="mt-3 text-sm"><Link href="/sealed" className="link font-semibold">Every {SITE.gameShort} sealed product →</Link></p>
           </div>
           {heroPicks.length > 0 && (
-            <div className="min-w-0">
+            <div className="hidden min-w-0 lg:block">
               <p className="eyebrow mb-3">Newest booster boxes · TCGplayer market</p>
               <HeroCards items={heroPicks} />
             </div>
@@ -148,11 +147,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The engine's ad banner (DexCompare / MTG Compare, owner 2026-11-03): eBay beside TCGplayer, real cards and today's prices. */}
-      <LandingAds ads={cardAds({ limit: 10 })} />
+      {/* 2026-11-10 (cost-cut redesign: return visits, lower bounce, more exploring): what the visitor looked at last time, then
+          one plain row per game with its type hubs, then the deals. The ad banner follows the deals instead of leading. */}
+      <RecentlyViewed title="Pick up where you left off" />
 
-      {/* Multi-game sites (SITE.lines): one tile per game, straight under the hero. */}
-      <GameTiles />
+      <GameRows />
 
       {topDeals.length > 0 && (
         <Section className="sd" title="Today's top deals" href="/tools/deal-finder" sub="In-stock listings below TCGplayer market, refreshed daily." linkLabel="Browse all deals">
@@ -174,6 +173,9 @@ export default function Home() {
           </div>
         </Section>
       )}
+
+      {/* The engine's ad banner (DexCompare / MTG Compare, owner 2026-11-03): eBay beside TCGplayer, real cards and today's prices. */}
+      <LandingAds ads={cardAds({ limit: 10 })} />
 
       {/* The sealed shelf: tabs for the boxes and each pre-order. */}
       {hero.featured.length + hero.preorders.length > 0 && (

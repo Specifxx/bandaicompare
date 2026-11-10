@@ -913,3 +913,18 @@ Three games share this site, and the header offered Sealed, Sets and Pre-orders 
 - Not done: removing the side panel (the menus do not yet cover its deep groups, and it carries the current-section state for the
   deep levels; revisit once the menus have been in use), a phone bottom sheet (the `<dialog>` menu stays), and the side rails and
   footer links, which are the owner's own decisions. Deals is a hover menu: nothing is added to the deploy cadence.
+
+## 2026-11-10: Cost cut checked, and a plainer, more explorable layout (owner: "cut it down", deploy urgently)
+
+Vercel billing for the bandaicompare project (team billing export, USD): 3 Nov $0.78, 4 Nov $1.39, 5 Nov $1.27, 6 Nov $3.71,
+7 Nov $3.40, 8 Nov $0.09, 9 Nov $0.10. ISR writes were the bill (682,760 writes, $2.73 on 7 Nov) and fell to 704 writes on 9 Nov
+after sealed only (#41) and the text-only share image (#42): about $3 a month now. What is left is ~2,200 function calls per 12
+hours on `/card/[slug]`, almost all crawlers following the frozen single-card redirects (each cached a day by the CDN); that
+fades as search engines drop the old URLs and is not worth a rewrite. Builds take 4 CPU minutes ($0). The import runs in GitHub
+Actions on a public repository (free), and eBay and Amazon calls cost nothing, so no store or API pass was cut.
+
+The redesign is functional, not visual: the homepage drops the animated hero background and the illustrated game panels for one
+plain row per game with links to its type hubs, shows the visitor's recently viewed products first ("Pick up where you left
+off", localStorage only, drawn in the browser so pages stay one CDN copy), and puts the eBay/TCGplayer banner after the deals;
+the product page shows the store prices before the small ad pair and adds "More <type> from <game>" (the same product type from
+the game's other sets) and recently viewed. URLs, titles, descriptions and the h1s are unchanged.

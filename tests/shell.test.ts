@@ -71,9 +71,12 @@ test("every rail link points at a page of the site, and prices come first", () =
   for (const l of phoneNav()) assert.ok(l.href === "/tools" || rail.includes(l.href), `${l.href} is in the phone row but not the rail`);
 });
 
-test("the homepage is RiftCompare's order: hero, ads, deals, sealed, the newest set's sealed, reviews, guides, FAQ, and nothing else", () => {
+// 2026-11-10 (cost-cut redesign): recently viewed and the plain game rows come straight after the hero, the ad banner after
+// the deals, and the hero's animated background is gone.
+test("the homepage order: hero, recently viewed, games, deals, ads, sealed, the newest set's sealed, reviews, guides, FAQ, and nothing else", () => {
   const src = readFileSync("src/app/page.tsx", "utf8");
-  const order = ["<HeroSparks />", "<CreatorsBubble />", "<LandingAds ", "Today's top deals", "<SealedHero", "booster boxes and sealed`}", "<SiteReviews />", 'title="Guides"', "Frequently asked questions"];
+  assert.doesNotMatch(src, /<HeroSparks/);
+  const order = ["<CreatorsBubble />", "<RecentlyViewed ", "<GameRows />", "Today's top deals", "<LandingAds ", "<SealedHero", "booster boxes and sealed`}", "<SiteReviews />", 'title="Guides"', "Frequently asked questions"];
   let at = -1;
   for (const o of order) {
     const i = src.indexOf(o, at + 1);

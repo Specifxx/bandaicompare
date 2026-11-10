@@ -31,6 +31,9 @@ import { attrHref, rarityHref, sealedHref } from "@/lib/hubs";
 
 import { cardTitleCandidates, fitTitle } from "@/lib/seo-title";
 import { cardIndexable, priceValidUntil } from "@/lib/indexing";
+import { lineOfSet } from "@/lib/lines";
+import { gameTypeHubs } from "@/lib/game-hubs";
+import { RecordView, RecentlyViewed } from "@/components/RecentlyViewed";
 
 export const dynamic = "force-dynamic"; // one CDN copy per URL (next.config.js CDN_PAGES), never ISR
 
@@ -82,6 +85,11 @@ export default function CardPage({ params }: { params: { slug: string } }) {
   const name = shortName(p.name);
   const related = byValue(productsInSet(p.setId).filter((x) => x.id !== p.id && x.kind === p.kind)).slice(0, 6);
   const inStock = e.offers.filter((o) => o.inStock);
+  // "More <type> from <game>" (2026-11-10, more exploring): the same product type in the same game from other sets, most
+  // valuable first, as a plain list of links under the set's own products.
+  const line = lineOfSet(set);
+  const typeHub = line && p.sealedType ? gameTypeHubs(line).find((h) => h.type === p.sealedType) ?? null : null;
+  const sameType = typeHub ? typeHub.items.filter((x) => x.id !== p.id && x.setId !== p.setId).slice(0, 8) : [];
   const usOffers = inStock.filter((o) => o.currency === "USD");
   // Sealed only: the markets' tagged searches, upgraded to the item's own page and this build's price where the API found them.
   const amazon = p.kind === "sealed" ? amazonCells(p.id, amazonSearchUrls(`${SITE.game} ${name}`)) : null;
@@ -150,10 +158,6 @@ export default function CardPage({ params }: { params: { slug: string } }) {
               </p>
             )}
           </header>
-          {/* The one ad placement on a card page (owner, 2026-11-03): the small
-              eBay + TCGplayer pair under the price and Buy. The full-size strips
-              are gone from every page; the quick view shows the same small pair. */}
-          <CompactCardAds ads={cardAds({ setId: p.setId, kind: p.kind, exclude: p.id, fill: true })} page="card" {...adSearch(set?.name, set)} />
           <section>
             <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4">
               <h2 className="text-lg font-bold">Compare prices</h2>
@@ -163,6 +167,9 @@ export default function CardPage({ params }: { params: { slug: string } }) {
             <PriceTable offers={e.offers} fx={m?.fx ?? { USD: 1 }} productId={p.id} page="card" amazon={amazon} image={p.image ? imageAt(p.image, "200w") : null} product={`${name}${p.number ? ` ${p.number}` : ""}`} />
             {SITE.priceAlerts && <PriceAlert site={SITE.key} productId={p.id} prices={lowestByMarket(e.offers)} />}
           </section>
+          {/* The one ad placement on a card page (owner, 2026-11-03): the small eBay + TCGplayer pair. Since 2026-11-10 it sits
+              under the store prices, not above them: a visitor sees what they came for first (bounce). */}
+          <CompactCardAds ads={cardAds({ setId: p.setId, kind: p.kind, exclude: p.id, fill: true })} page="card" {...adSearch(set?.name, set)} />
           <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_CARD} />
           <section className="card-surface p-4">
             <h2 className="mb-2 text-lg font-bold">Price history</h2>
@@ -183,6 +190,29 @@ export default function CardPage({ params }: { params: { slug: string } }) {
           <TileGrid items={related} />
         </section>
       )}
+      {line && typeHub && sameType.length > 0 && (
+        <section>
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4">
+            <h2 className="text-lg font-bold">More {typeHub.label.toLowerCase()} from {line.name}</h2>
+            <Link className="link text-sm font-semibold" href={`/games/${line.slug}/${typeHub.slug}`}>All {typeHub.items.length} →</Link>
+          </div>
+          <ul className="card divide-y divide-line">
+            {sameType.map((x) => {
+              const r = refCents(x.id);
+              return (
+                <li key={x.id}>
+                  <Link href={`/card/${x.slug}`} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm hover:bg-surface">
+                    <span className="min-w-0 truncate">{shortName(x.name)}</span>
+                    <span className="tabular shrink-0 text-muted">{r ? money(r) : "—"}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+      <RecentlyViewed skip={p.slug} />
+      <RecordView slug={p.slug} name={name} image={p.image ? imageAt(p.image, "200w") : null} type={p.sealedType ?? null} />
       <CardStickyBuyBar offers={e.offers} productId={p.id} />
     </article>
   );

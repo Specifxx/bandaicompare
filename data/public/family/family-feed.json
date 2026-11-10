@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-09T11:45:49.271Z",
+ "generatedAt": "2026-11-10T11:25:54.543Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -19,9 +19,9 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/607851_200w.jpg",
-   "refCents": 18307,
+   "refCents": 18591,
    "refLabel": "TCGplayer market price",
-   "savingPct": 34
+   "savingPct": 35
   },
   {
    "kind": "deal",
@@ -33,7 +33,7 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
-   "refCents": 8039,
+   "refCents": 8005,
    "refLabel": "TCGplayer market price",
    "savingPct": 25
   },
@@ -46,9 +46,9 @@
    "cents": 9499,
    "currency": "USD",
    "store": "Many Realms",
-   "refCents": 11947,
+   "refCents": 11789,
    "refLabel": "TCGplayer market price",
-   "savingPct": 20
+   "savingPct": 19
   },
   {
    "kind": "deal",
@@ -60,7 +60,7 @@
    "currency": "USD",
    "store": "Game-O-Storus",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
-   "refCents": 15032,
+   "refCents": 15047,
    "refLabel": "TCGplayer market price",
    "savingPct": 14
   },

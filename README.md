@@ -20,7 +20,7 @@ workflows and docs.
 GitHub Actions, daily 03:17 UTC (refresh-prices.yml)
   TCGCSV (TCGplayer catalogue + prices, categories 81, 80 and 63: SITE.lines)
   + every Shopify store in src/content/stores.ts  (products.json)
-  + eBay Browse API, budgeted (Cyberpunk's app, 2,500 calls/day, every kept sealed product;
+  + eBay Browse API, budgeted (Cyberpunk's app, 1,000 calls/day, every kept sealed product;
     a no-op until EBAY_CLIENT_ID / EBAY_CLIENT_SECRET exist)
   → data/public/*.json, data/history/<set>.json, data/state/*.json
   → commit to main with "[deploy]" in the subject  → one Vercel build a day

@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-10T11:25:54.543Z",
+ "generatedAt": "2026-11-11T11:11:03.734Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -19,9 +19,9 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/607851_200w.jpg",
-   "refCents": 18591,
+   "refCents": 19087,
    "refLabel": "TCGplayer market price",
-   "savingPct": 35
+   "savingPct": 37
   },
   {
    "kind": "deal",
@@ -33,9 +33,9 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
-   "refCents": 8005,
+   "refCents": 7814,
    "refLabel": "TCGplayer market price",
-   "savingPct": 25
+   "savingPct": 23
   },
   {
    "kind": "deal",
@@ -60,9 +60,9 @@
    "currency": "USD",
    "store": "Game-O-Storus",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
-   "refCents": 15047,
+   "refCents": 15016,
    "refLabel": "TCGplayer market price",
-   "savingPct": 14
+   "savingPct": 13
   },
   {
    "kind": "deal",
@@ -113,6 +113,17 @@
    "cents": 9499,
    "currency": "USD",
    "store": "Many Realms",
+   "releaseDate": "2026-12-11"
+  },
+  {
+   "kind": "preorder",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Reach the God Booster Box",
+   "url": "https://bandaicompare.com/preorders/reach-the-god",
+   "cents": 14499,
+   "currency": "USD",
+   "store": "COLLECTION REALM",
    "releaseDate": "2026-12-11"
   },
   {

@@ -145,6 +145,7 @@ export const SITE: SiteConfig = {
     "Rare 2-Star", "Rare 1-Star", "Rare", "Uncommon 2-Star", "Uncommon 1-Star", "Uncommon", "Common 2-Star", "Common 1-Star", "Common",
     "Action Point 1-Star", "Action Point", "Promo",
   ],
+  featureMinCents: 3000,
   chaseRarities: ["Super Rare 3-Star", "Secret Rare", "Ultimate Rare", "Super Rare 2-Star"],
   cardHubs: [
     // Union Arena's sets are anime series: a hub per series ("Jujutsu Kaisen Union Arena cards").

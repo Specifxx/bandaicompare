@@ -937,3 +937,19 @@ used 1,124 of its 5,000 a day. MotorCompare, starved at 600 on Compare Empire's 
 the split: MotorCompare 3,300, BandaiCompare 1,000, Cyberpunk Compare 600 (4,900, 100 spare). 1,000 leaves room for about
 59 more sealed products before the plan has to rotate. Raise it only with the owner, and only by taking the same amount
 from one of the other two.
+
+## 2026-11-12: the front page features the pricier items (owner)
+
+**Ask.** Bill: promote the more expensive items, so a sale earns more commission; the cheap ones should not be advertised on the
+front page. For the TCG sites that means sealed: booster boxes and the like.
+
+**What.** `SITE.featureMinCents` = 3000 ($30). The home page's sealed shelf (`featuredSealed`), today's top deals (`deals()`: the
+reference price must clear it, not just 500), the pre-order boxes in the shelf's tabs and the newest set's grid carry only products at or
+above it (TCGplayer market; `worthFeaturing` in `lib/data.ts`). Cheaper products keep their page, their set and hub listings, search,
+alerts and the sitemap; only the front page's selection changed, so URLs, titles, metadata and JSON-LD structure are as before.
+Starter Deck Display joins the shelf's fill types. A pre-order with no TCGplayer price yet is still shown. Store rows within a
+product are still sorted by price, never by commission; the reference price is TCGplayer's market and eBay is never a deal.
+
+
+**Why this floor.** From the day's data (TCGplayer market, sealed): booster packs median $5.00, starter decks $13.64, starter-deck displays $45.21, booster boxes $300 to $1,600. The floor keeps the real
+earners and drops packs and the cheapest decks. Revisit with the click-to-sale numbers (which placements earn) in the Monday report.

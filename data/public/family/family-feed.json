@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-11T11:11:03.734Z",
+ "generatedAt": "2026-11-12T11:24:53.588Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -27,28 +27,28 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
-   "title": "GODDESS OF VICTORY: NIKKE - Booster Box",
-   "url": "https://bandaicompare.com/card/goddess-of-victory-nikke-booster-box",
-   "cents": 6000,
-   "currency": "USD",
-   "store": "Eternal Games Chesterfield",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
-   "refCents": 7814,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 23
-  },
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
    "title": "Ignition of X Booster Box",
    "url": "https://bandaicompare.com/card/ignition-of-x-booster-box",
    "cents": 9499,
    "currency": "USD",
    "store": "Many Realms",
-   "refCents": 11789,
+   "refCents": 11786,
    "refLabel": "TCGplayer market price",
    "savingPct": 19
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Kaiju No. 8 - Booster Box",
+   "url": "https://bandaicompare.com/card/kaiju-no-8-booster-box",
+   "cents": 8000,
+   "currency": "USD",
+   "store": "Dynamic Card Collectors",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/625081_200w.jpg",
+   "refCents": 9710,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 18
   },
   {
    "kind": "deal",
@@ -60,9 +60,9 @@
    "currency": "USD",
    "store": "Game-O-Storus",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
-   "refCents": 15016,
+   "refCents": 15031,
    "refLabel": "TCGplayer market price",
-   "savingPct": 13
+   "savingPct": 14
   },
   {
    "kind": "deal",
@@ -98,9 +98,9 @@
    "region": "US",
    "title": "UEX08BT: BLEACH: Thousand-Year Blood War Vol.3 Booster Box",
    "url": "https://bandaicompare.com/preorders/uex08bt-bleach-thousand-year-blood-war-vol-3",
-   "cents": 14999,
+   "cents": 7999,
    "currency": "USD",
-   "store": "jawbreakers",
+   "store": "Many Realms",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/708750_200w.jpg",
    "releaseDate": "2026-11-13"
   },

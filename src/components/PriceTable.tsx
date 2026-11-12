@@ -31,13 +31,16 @@ export function sourceName(o: Offer) {
   return NAMES[o.source] ?? o.source;
 }
 
-/** The pinned rows' outlines (owner, 2026-11-06): eBay green, Amazon amber, so each reads as a real price row of its own. */
+/**
+ * The pinned rows' classes. Until 2026-11-12 each drew an outline (eBay green, Amazon amber, the cheapest sky blue; owner, 2026-11-06
+ * and 11-07). The owner then found "all the colored rows" too much and left the design to us (DECISIONS.md, "A calmer price table"):
+ * the rows are plain rows again, in the same order with the same tags and links. The keys stay as hooks and draw nothing; the cheapest
+ * row is marked by its tint, its "Best price" badge and the table's one filled button.
+ */
 export const PIN_OUTLINE = {
-  ebay: "outline outline-2 -outline-offset-2 outline-[#16a34a]",
-  amazon: "outline outline-2 -outline-offset-2 outline-[#f59e0b]",
-  /** The cheapest row (owner, 2026-11-07: "the cheapest listing should also have an outline too"): sky blue, never
-   *  read as eBay's green or Amazon's amber; it wins over eBay's when eBay is itself the cheapest. */
-  cheapest: "outline outline-2 -outline-offset-2 outline-[#0ea5e9]",
+  ebay: "",
+  amazon: "",
+  cheapest: "",
 } as const;
 
 /** Where the phone's sticky buy bar hides (components/CardBuy.tsx). */
@@ -114,7 +117,7 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
       <td className="px-3 py-2.5 text-right">
         <span className="inline-flex items-center justify-end gap-2">
           {!compact && amazonCart && <CartAddButton {...amazonCart} className="hidden text-muted sm:inline-flex" />}
-          <a href={goHref({ url: amazonUrl, source: "amazon", market }, productId, `${page}_pinned`)} rel="sponsored nofollow noopener" target="_blank" className="btn-primary min-h-10 whitespace-nowrap px-3 py-1.5">
+          <a href={goHref({ url: amazonUrl, source: "amazon", market }, productId, `${page}_pinned`)} rel="sponsored nofollow noopener" target="_blank" className="btn-soft px-3 py-1.5 min-h-10 whitespace-nowrap">
             {amazonLive ? "View deal" : "Check Amazon"} <span aria-hidden="true">↗</span>
           </a>
         </span>
@@ -173,7 +176,7 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
                     {!compact && o.inStock && o.source !== "tcgplayer" && (
                       <CartAddButton href={tagged(o.url, subId(o.market, `${page}_cart`, productId), { checkout: true })} productUrl={o.url} storeName={sourceName(o)} title={product ?? o.title} detail={o.printing && o.printing !== "Normal" ? o.printing : null} priceCents={o.cents} currency={o.currency} image={image} className="hidden text-muted sm:inline-flex" />
                     )}
-                    <a href={goHref(o, productId, pinned.includes(o) ? `${page}_pinned` : page)} rel="sponsored nofollow noopener" target="_blank" className={`min-h-10 whitespace-nowrap ${best ? "btn-primary px-3 py-1.5" : o.source === "ebay" && pinned.includes(o) && o.inStock ? "btn bg-[#0064d2] px-3 py-1.5 font-bold text-white hover:bg-[#0053ad]" : o.inStock ? "btn-soft px-3 py-1.5" : "btn-ghost px-3 py-1.5 opacity-80"}`}>
+                    <a href={goHref(o, productId, pinned.includes(o) ? `${page}_pinned` : page)} rel="sponsored nofollow noopener" target="_blank" className={`min-h-10 whitespace-nowrap ${best ? "btn-primary px-3 py-1.5" : o.inStock ? "btn-soft px-3 py-1.5" : "btn-ghost px-3 py-1.5 opacity-80"}`}>
                       {best ? "Buy now" : o.inStock ? "View deal" : "View"} <span aria-hidden="true">↗</span>
                     </a>
                     </span>

@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-12T11:24:53.588Z",
+ "generatedAt": "2026-11-13T11:11:07.355Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -19,9 +19,9 @@
    "currency": "USD",
    "store": "Eternal Games Chesterfield",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/607851_200w.jpg",
-   "refCents": 19087,
+   "refCents": 19247,
    "refLabel": "TCGplayer market price",
-   "savingPct": 37
+   "savingPct": 38
   },
   {
    "kind": "deal",
@@ -46,7 +46,7 @@
    "currency": "USD",
    "store": "Dynamic Card Collectors",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/625081_200w.jpg",
-   "refCents": 9710,
+   "refCents": 9715,
    "refLabel": "TCGplayer market price",
    "savingPct": 18
   },
@@ -60,9 +60,9 @@
    "currency": "USD",
    "store": "Game-O-Storus",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
-   "refCents": 15031,
+   "refCents": 15000,
    "refLabel": "TCGplayer market price",
-   "savingPct": 14
+   "savingPct": 13
   },
   {
    "kind": "deal",
@@ -91,18 +91,6 @@
    "refCents": 103683,
    "refLabel": "TCGplayer market price",
    "savingPct": 8
-  },
-  {
-   "kind": "preorder",
-   "cluster": "cards",
-   "region": "US",
-   "title": "UEX08BT: BLEACH: Thousand-Year Blood War Vol.3 Booster Box",
-   "url": "https://bandaicompare.com/preorders/uex08bt-bleach-thousand-year-blood-war-vol-3",
-   "cents": 7999,
-   "currency": "USD",
-   "store": "Many Realms",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/708750_200w.jpg",
-   "releaseDate": "2026-11-13"
   },
   {
    "kind": "preorder",

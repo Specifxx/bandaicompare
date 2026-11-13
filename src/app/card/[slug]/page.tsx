@@ -20,7 +20,7 @@ import { PriceChart } from "@/components/PriceChart";
 import { TileGrid } from "@/components/ProductTile";
 import { JsonLd } from "@/components/JsonLd";
 import { AdSlot } from "@/components/AdSlot";
-import { CompactCardAds } from "@/components/CardAds";
+import { InlineAds } from "@/components/InlineAds";
 import { adSearch, cardAds } from "@/lib/card-ads";
 import { amazonSearchUrls } from "@/lib/affiliate";
 import { amazonCarries, amazonCells } from "@/lib/amazon-live";
@@ -169,7 +169,6 @@ export default function CardPage({ params }: { params: { slug: string } }) {
           </section>
           {/* The one ad placement on a card page (owner, 2026-11-03): the small eBay + TCGplayer pair. Since 2026-11-10 it sits
               under the store prices, not above them: a visitor sees what they came for first (bounce). */}
-          <CompactCardAds ads={cardAds({ setId: p.setId, kind: p.kind, exclude: p.id, fill: true, amazon: true })} page="card" {...adSearch(set?.name, set)} />
           <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_CARD} />
           <section className="card-surface p-4">
             <h2 className="mb-2 text-lg font-bold">Price history</h2>
@@ -211,6 +210,8 @@ export default function CardPage({ params }: { params: { slug: string } }) {
           </ul>
         </section>
       )}
+      {/* The page's one ad block (owner, 2026-11-13): native and horizontal, below the price table and everything else; never beside a buy button. */}
+      <InlineAds ads={cardAds({ setId: p.setId, kind: p.kind, exclude: p.id, fill: true, limit: 10 })} search={adSearch(set?.name, set)} page="card" />
       <RecentlyViewed skip={p.slug} />
       <RecordView slug={p.slug} name={name} image={p.image ? imageAt(p.image, "200w") : null} type={p.sealedType ?? null} />
       <CardStickyBuyBar offers={e.offers} productId={p.id} />

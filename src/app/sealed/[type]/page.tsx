@@ -10,6 +10,8 @@ import { sealedHubs } from "@/lib/hubs";
 import { GAME_TYPE_MIN, gameTypeHub } from "@/lib/game-hubs";
 import { LINES } from "@/lib/lines";
 import { TileGrid } from "@/components/ProductTile";
+import { InlineAds } from "@/components/InlineAds";
+import { adSearch, cardAds } from "@/lib/card-ads";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = "force-dynamic"; // one CDN copy per URL (next.config.js CDN_PAGES), never ISR
@@ -48,6 +50,7 @@ export default function SealedHub({ params }: { params: { type: string } }) {
         </nav>
       )}
       <TileGrid items={items} />
+      <InlineAds ads={cardAds({ kind: "sealed", limit: 10 })} search={adSearch()} page="sealed-type" />
       <section>
         <h2 className="mb-3 text-lg font-bold">Other sealed products</h2>
         <div className="flex flex-wrap gap-2">

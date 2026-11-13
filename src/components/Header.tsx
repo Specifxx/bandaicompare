@@ -26,7 +26,7 @@ export function headerNavItems(more: NavGroup[], shop: ShopMenus, sale: { href: 
     ...shop.games.map((g) => ({ href: g.href, label: g.label, menu: g.columns.length ? g.columns : undefined })),
     { href: "/sealed", label: "All sealed", also: ["/card", "/sets", "/preorders"], menu: shop.sealed.length ? shop.sealed : undefined },
     { href: "/tools/deal-finder", label: "Deals", xl: true, also: ["/black-friday", "/cyber-monday", "/boxing-day", "/january-sales", "/lunar-new-year", "/movers"], menu: deals.length ? deals : undefined },
-    { href: "/tools", label: "More", also: ["/stores", "/price-report", "/forum", "/blog"], menu: more },
+    { href: "/tools", label: "More", rest: "tools and guides", also: ["/stores", "/price-report", "/forum", "/blog"], menu: more },
   ];
 }
 

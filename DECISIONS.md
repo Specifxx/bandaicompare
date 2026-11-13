@@ -1050,3 +1050,20 @@ the grid on lists, never beside a buy button and never in the quick view (which 
 the card page's small pair, the kit page's two strips and the rail code (`SideAds`: both rails, `rail-scroll`) are deleted; the phone
 dock stays (`DockAds.tsx`, the rails' old file trimmed to it) and yields to the block. `tests/inline-ads.test.ts`,
 `tests/card-ads.test.ts` and `tests/shell.test.ts` pin it. Measure clicks per `*-inline-*` placement against the old strips on 20 Nov.
+
+## 2026-11-13: the collection's button and link are written with their class, not :where()
+
+"+ I own this" drew with its words against its border, and "See my collection" took the text colour instead of the accent:
+`vault.css` wrote both as `:where(.ce-vault-btn)` / `:where(.ce-vault-link)`, which weigh nothing, and Tailwind's preflight styles a
+bare `<button>` (no padding, the parent's size and weight) and a bare `<a>` (the parent's colour). Both are now plain class rules;
+the rest of the file keeps `:where()`. Ported from YGO Compare #154 / DexCompare #210. `tests/vault.test.ts` reads the reset itself
+and the components' markup, so any class on an element the reset styles is held to the same.
+
+## 2026-11-13: a readable buy button in the dark theme, and a "More" link that says where it goes
+
+- `.btn-buy` was white on `--open`; the dark theme (the default) makes `--open` a bright green, so its words read at 2.0:1. They are now
+  the surface colour (dark on the bright green, white on the light theme's dark green, as before). `tests/contrast.test.ts` measures
+  every filled control in `globals.css` from the colour tokens in both themes, at 4.5:1 or better.
+- The header's "More" (`/tools`) was a link Lighthouse's SEO check counts as having no descriptive text (YGO Compare went 92 to 100 on
+  the same fix). It carries `rest: "tools and guides"`, drawn as `sr-only` words after the label: still "More" to the eye.
+  `tests/header-links.test.ts`. Ported from YGO Compare #154. The store thumbs buttons stay tiny on purpose (owner).

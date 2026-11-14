@@ -1067,3 +1067,14 @@ and the components' markup, so any class on an element the reset styles is held 
 - The header's "More" (`/tools`) was a link Lighthouse's SEO check counts as having no descriptive text (YGO Compare went 92 to 100 on
   the same fix). It carries `rest: "tools and guides"`, drawn as `sr-only` words after the label: still "More" to the eye.
   `tests/header-links.test.ts`. Ported from YGO Compare #154. The store thumbs buttons stay tiny on purpose (owner).
+
+## 2026-11-14: The price rows' cart button says "Add to cart"
+
+The owner, opening the price rows: "there needs to be an add to cart button ... right now, it just sends it to the site". The
+cart button was already on every store row, but as a bare grey cart icon on a computer (lost on the tinted best-price row) and
+as small coloured text on a phone, so it read as decoration. `CartAddButton` now carries its words by default ("Add to cart",
+"In cart" once added; "Add" beside the icon below 640px where a row has no room), with a firmer neutral border, and the phone's
+text button (`inline`) is drawn as a bordered button (`cart.css`). Neutral, never a new colour: the buy button stays the one
+filled action and the calm three-colour rule holds. Nothing else moved: which rows can be added (open store rows, eBay and
+Amazon with a live price; never a marketplace or a search row), the line's buy link and its affiliate tag, the row order, the
+buy button and every placement are unchanged. A caller can still ask for the bare icon (`label={false}`).

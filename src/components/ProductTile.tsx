@@ -35,7 +35,7 @@ export function ProductTile({ p, change }: { p: Product; change?: number | null 
         {p.image ? (
           <img src={imageAt(p.image, "400w")!} alt={`${name} ${p.kind === "card" ? "card" : ""}`} loading="lazy" decoding="async" className="h-full w-full object-contain p-1.5 transition-transform group-hover:scale-[1.02]" />
         ) : (
-          <div className="flex h-full items-center justify-center p-3 text-center text-xs text-neutral-500">No image yet</div>
+          <div className="flex h-full items-center justify-center p-3 text-center text-xs text-neutral-600">No image yet</div>
         )}
       </div>
       <div className="card-body flex flex-1 flex-col gap-1 px-1 pb-1 pt-2.5">

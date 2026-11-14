@@ -1086,3 +1086,43 @@ A product page on a sister engine showed an eBay row badged "Best price" and nam
 tiles and the quick buy could lead with an eBay price). Both now skip eBay and Amazon (`neverCheapest` in
 `src/lib/price-rows.ts`); eBay keeps its pinned row and its own ad list (`e`), and a paid alternative is never cheaper
 than the cheapest. `tests/never-cheapest.test.ts` pins it. The summary is rebuilt by the next import.
+
+## 2026-11-14: every page after the home page in the home page's voice (owner: "make all the other pages more aesthetic as well")
+
+Each page type was opened at 390px and 1440px in both themes, before and after (screenshots in the project files,
+`redesign/2026-11-14-polish/bandai/r2-*`). Most of this is YGO Compare's two passes of the same day (#156, #157), ported by hand
+where this repo's pages differ; nothing was added to a page: no block, promo, badge or colour.
+
+- **Header, every desktop width.** The one row was wider than the screen from 1024px to 1600px (1,516px at 1440), so the cart
+  sat off the right edge. The search box now takes the room that is left (8 to 16rem), the gaps are 8px, the wordmark shows from
+  1400px (the mark is the home link below that, as on a phone) and the season's link ("Black Friday") shows from xl, where Deals
+  does. Every link is still in the server HTML; the eBay item is unchanged.
+- **One page head** (`PageHead`, `.page-h1`, `.page-sub`): the sealed hub, the type hubs, the game hubs and their type pages, sets,
+  movers, tools, pre-orders, the sale pages and the static pages lost their heavy black h1s for the same display h1 and one muted
+  line. The game hub's coloured left stripe is gone (calm palette). Every h1's text is unchanged.
+- **Product tiles** (home, lists, sets): the stock pill is a coloured dot and grey words (nothing pulses), the week's move sits on
+  the price line (on a phone it was cut off at the tile's edge: "-46", "-56.7"), and a product without a market price says "No
+  market price yet" instead of a lone dash.
+- **Product page**: the photo sits on the site's plate in a reserved square; "Price history" is in the site's card; an unpriced
+  product says so instead of dashes; the price table's empty state says what to do; the region buttons fit one row on a phone; a
+  long store name wraps instead of pushing the buttons off; the "Best price" badge stays on one line. The set page's buy box shows
+  two lines of a product's name (three rows read alike at one line) and its photos on the plate.
+- **Lists**: section titles in the home page's h2 size; "All 31 →" and chips are 40px targets (`.chip` has `min-h-10`); the game
+  hub's set table shows the box price on a phone with the date and count under the set name (it cut off its last column), and
+  dates read "13 Nov 2026" in tables and eyebrows (the JSON-LD dates are the ISO strings they were).
+- **Reading pages** (`.prose-site`): a 68-character measure, a heading scale, quiet list markers, tables that scroll in their own
+  box. Guides index: a quiet list. Stores: one folding row per market with its count (`Fold`, a native `<details>`; every store,
+  link and count still in the HTML). A set's guides fold the same way under their h2.
+- **Search and 404**: Enter opens the highlighted or only match, a search with no match offers All sealed, Sets and Deals, and the
+  404 offers Home, All sealed, Sets and Deals beside the search. Its h1 is unchanged.
+- **Motion**: a chip gives a little when pressed and a fold opens with a 200ms rise; transform and opacity only, off under
+  `prefers-reduced-motion`.
+
+**Not touched, on purpose.** No paid link, ad block, pinned eBay, TCGplayer or Amazon row, buy button, affiliate tag or
+placement name was added, removed, moved, reordered or reworded: on seventeen sampled URLs the server HTML's sponsored links (18
+on a busy product page, 38 on the deal finder) are the same hrefs with the same words in the same order as a build of `main`, so
+the 19 November clicks-per-placement recheck is unaffected. On the same pages the title, meta description, canonical, robots,
+Open Graph, JSON-LD and h1 are identical, no h2 was lost and the internal links are the same set. No URL, redirect, font,
+library, colour, client script, `revalidate` or caching change. Left for the owner: the home page's hero still shows two product
+cards on a desktop (the TCG rule since 13 November says a hero is words, search and ways in), and the desktop sidebar is still
+there; both are the home page's structure, which this pass keeps. No deploy marker: this rides the next release.

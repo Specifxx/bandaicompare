@@ -9,7 +9,7 @@ import { Fragment, useState } from "react";
 import { AmazonPrice, AMAZON_PRICE_DISCLAIMER } from "./AmazonPrice";
 import type { AmazonCell } from "@/lib/amazon-live";
 import { SITE } from "@/site.config";
-import { CURRENCY, MARKETS, MARKET_LABEL, type Market, type Offer } from "@/lib/site-types";
+import { CURRENCY, MARKETS, MARKET_LABEL, marketInSentence, type Market, type Offer } from "@/lib/site-types";
 import { money } from "@/lib/format";
 import { Flag } from "./Flag";
 import { goHref, subId, tagged } from "@/lib/affiliate";
@@ -77,9 +77,9 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
         Prices for <Flag code={market} /> <b className="text-ink">{MARKET_LABEL[market]}</b>
         {storesIn > 0 && <> · {storesIn} store{storesIn === 1 ? "" : "s"} in stock</>}
       </span>
-      {!compact && <span className="flex flex-wrap gap-1" role="group" aria-label="Show prices for">
+      {!compact && <span className="grid w-full grid-cols-6 gap-1 sm:flex sm:w-auto sm:flex-wrap" role="group" aria-label="Show prices for">
         {MARKETS.map((m) => (
-          <button key={m} type="button" onClick={() => setMarket(m)} aria-pressed={m === market} className={`inline-flex min-h-8 items-center gap-1 rounded-full border px-2.5 text-[11px] font-semibold transition-colors ${m === market ? "border-ink bg-ink text-surface" : "border-line bg-surface text-ink hover:border-ink/30"}`}>
+          <button key={m} type="button" onClick={() => setMarket(m)} aria-pressed={m === market} className={`inline-flex min-h-9 items-center justify-center gap-1 rounded-full border px-1.5 text-[11px] font-semibold transition-colors sm:min-h-8 sm:px-2.5 ${m === market ? "border-ink bg-ink text-surface" : "border-line bg-surface text-ink hover:border-ink/30"}`}>
             <Flag code={m} />{m}
           </button>
         ))}
@@ -90,7 +90,7 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
     return (
       <div className="overflow-hidden rounded-xl border border-dashed border-line">
         {picker}
-        <p className="p-4 text-sm text-muted">No live listings in {MARKET_LABEL[market]} right now. Try another market above, or check eBay below.</p>
+        <p className="p-4 text-sm text-muted">No store in {marketInSentence(market)} lists this right now. Pick another region above to see its prices.</p>
         {product && <div className="px-4 pb-3"><ReportPrice product={product} region={market} buttonClassName="btn-ghost px-3 py-1.5" /></div>}
       </div>
     );
@@ -107,14 +107,14 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
   const amazonRow = amazonUrl && amazonLive ? (
     <tr data-amazon-row className={`border-t border-line ${PIN_OUTLINE.amazon}`}>
       <td className="px-3 py-2.5">
-        <span className="font-medium text-ink">Amazon</span>
-        <StoreVote url={amazonUrl} name="Amazon" className="ml-2 text-muted" />
+        <span className="font-medium text-ink">Amazon</span>{" "}
+        <StoreVote url={amazonUrl} name="Amazon" className="ml-1 text-muted" />
         {!compact && amazonCart && <span className="block sm:hidden"><CartAddButton {...amazonCart} inline className="text-xs" /></span>}
         <span className="ad-pill ml-2">Ad</span>
       </td>
       <td className="hidden px-3 py-2.5 text-xs text-muted sm:table-cell">New, in stock on Amazon</td>
-      <td className="px-3 py-2.5 text-right font-semibold tabular-nums"><AmazonPrice {...amazonLive} /></td>
-      <td className="px-3 py-2.5 text-right">
+      <td className="px-2 py-2.5 text-right font-semibold tabular-nums sm:px-3"><AmazonPrice {...amazonLive} /></td>
+      <td className="py-2.5 pl-1 pr-2.5 text-right sm:px-3">
         <span className="inline-flex items-center justify-end gap-2">
           {!compact && amazonCart && <CartAddButton {...amazonCart} className="hidden text-muted sm:inline-flex" />}
           <a href={goHref({ url: amazonUrl, source: "amazon", market }, productId, `${page}_pinned`)} rel="sponsored nofollow noopener" target="_blank" className="btn-soft px-3 py-1.5 min-h-10 whitespace-nowrap">
@@ -147,14 +147,14 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
               <Fragment key={i}>
                 <tr className={`border-t border-line ${best ? "bg-open-soft/40" : ""} ${o.inStock ? "" : "opacity-60"} ${best && inStock.length > 1 ? PIN_OUTLINE.cheapest : o.source === "ebay" && pinned.includes(o) ? PIN_OUTLINE.ebay : ""}`}>
                   <td className="px-3 py-2.5">
-                    <span className="font-medium text-ink">{sourceName(o)}</span>
-                    <StoreVote url={o.url} name={sourceName(o)} className="ml-2 text-muted" />
+                    <span className="font-medium text-ink [overflow-wrap:anywhere]">{sourceName(o)}</span>{" "}
+                    <StoreVote url={o.url} name={sourceName(o)} className="ml-1 text-muted" />
                     {/* Phones: the cart list's add button as a line under the store, where the row has no width to spare. */}
                     {!compact && o.inStock && o.source !== "tcgplayer" && (
                       <span className="block sm:hidden"><CartAddButton href={tagged(o.url, subId(o.market, `${page}_cart`, productId), { checkout: true })} productUrl={o.url} storeName={sourceName(o)} title={product ?? o.title} detail={o.printing && o.printing !== "Normal" ? o.printing : null} priceCents={o.cents} currency={o.currency} image={image} inline className="text-xs" /></span>
                     )}
                     {o.source === "ebay" && <span className="ad-pill ml-2">Ad</span>}
-                    {best && <span className="ml-2 rounded-full bg-open-soft px-2 py-0.5 text-[10px] font-bold uppercase text-open">Best price</span>}
+                    {best && <span className="ml-2 inline-block whitespace-nowrap rounded-full bg-open-soft px-2 py-0.5 text-[10px] font-bold uppercase text-open">Best price</span>}
                   </td>
                   <td className="hidden px-3 py-2.5 text-xs text-muted sm:table-cell">
                     {o.printing && o.printing !== "Normal" && <span className="tag mr-1">{o.printing}</span>}
@@ -163,14 +163,14 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
                     {o.source === "tcgplayer" && <span>Lowest listing</span>}
                     {o.shippingCents != null && <span>+{money(o.shippingCents, o.currency)} shipping</span>}
                   </td>
-                  <td className="px-3 py-2.5 text-right font-semibold tabular-nums">
+                  <td className="px-2 py-2.5 text-right font-semibold tabular-nums sm:px-3">
                     {money(o.cents, o.currency)}
                     {c != null && <span className="block text-xs font-normal text-muted">{o.source === "tcgplayer" ? "" : "≈ "}{money(c, cur)}</span>}
                     {pinned.includes(o) && cheapest && o !== cheapest && o.currency === cheapest.currency && cheapest.cents > 0 && o.cents > cheapest.cents && (
                       <span className="block text-xs font-normal text-muted">+{Math.round(((o.cents - cheapest.cents) / cheapest.cents) * 100)}% vs cheapest</span>
                     )}
                   </td>
-                  <td className="px-3 py-2.5 text-right">
+                  <td className="py-2.5 pl-1 pr-2.5 text-right sm:px-3">
                     {/* The cart list (components/cart, owner 2026-11-06): an in-stock store row, beside its button. */}
                     <span className="inline-flex items-center justify-end gap-2">
                     {!compact && o.inStock && o.source !== "tcgplayer" && (
@@ -195,7 +195,7 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
         </button>
       )}
       {product && !compact && (
-        <div className="border-t border-line px-3 pb-3 text-muted">
+        <div className="border-t border-line px-3 pb-1">
           <ReportPrice product={product} region={market} buttonClassName="btn-ghost px-3 py-1.5" stores={rows.filter((o) => o.source !== "ebay" && o.source !== "tcgplayer").map((o) => ({ name: sourceName(o), price: money(o.cents, o.currency) }))} />
         </div>
       )}

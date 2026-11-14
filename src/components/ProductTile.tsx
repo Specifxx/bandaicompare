@@ -41,7 +41,7 @@ export function ProductTile({ p, change }: { p: Product; change?: number | null 
       <div className="card-body flex flex-1 flex-col gap-1 px-1 pb-1 pt-2.5">
         <p className="line-clamp-2 text-sm font-semibold leading-5 text-ink group-hover:text-brand">{name}</p>
         <p className="truncate text-xs text-muted">{set}{p.number ? ` · ${p.number}` : ""}</p>
-        <div className="mt-auto flex items-center justify-between gap-2 pt-1.5">
+        <div className="mt-auto pt-1.5">
           <StockPill state={stores > 0 ? (pre ? "pre" : "open") : "soldout"} size="sm">
             {stores > 0 ? (
               <>
@@ -51,11 +51,19 @@ export function ProductTile({ p, change }: { p: Product; change?: number | null 
               "Sold out"
             )}
           </StockPill>
-          {ch != null && <span className={`tabular text-xs font-semibold ${ch >= 0 ? "text-up" : "text-down"}`}>{pct(ch)}</span>}
         </div>
+        {/* The price, then its week's move on the same line: the move used to share the stock line and was cut off on a phone. */}
         <div className="flex flex-col gap-0.5">
-          <span className="tabular text-base font-bold text-ink">{money(ref)}<span className="ml-1 text-[10px] font-medium text-muted">market</span></span>
-          <span className="text-[11px] font-semibold text-brand">Compare {e.listedSources} price{e.listedSources === 1 ? "" : "s"} →</span>
+          {ref ? (
+            <span className="flex min-w-0 flex-wrap items-baseline gap-x-1.5">
+              <span className="tabular text-base font-bold text-ink">{money(ref)}</span>
+              <span className="text-[11px] font-medium text-muted">market</span>
+              {ch != null && <span className={`tabular ml-auto text-xs font-semibold ${ch >= 0 ? "text-up" : "text-down"}`}>{pct(ch)}</span>}
+            </span>
+          ) : (
+            <span className="text-xs leading-6 text-muted">No market price yet</span>
+          )}
+          <span className="text-xs font-semibold text-brand">Compare {e.listedSources} price{e.listedSources === 1 ? "" : "s"} →</span>
         </div>
       </div>
     </Link>

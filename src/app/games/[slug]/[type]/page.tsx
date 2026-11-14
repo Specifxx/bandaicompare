@@ -36,12 +36,12 @@ export default function GameTypeHub({ params }: { params: { slug: string; type: 
       <Breadcrumbs items={[{ name: "Games", href: "/games" }, { name: line.name, href: `/games/${line.slug}` }, { name: h.label }]} />
       <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: `${line.name} ${h.label.toLowerCase()}`, numberOfItems: items.length, itemListElement: items.slice(0, 30).map((p, i) => ({ "@type": "ListItem", position: i + 1, name: p.name, url: abs(`/card/${p.slug}`) })) }} />
       <header>
-        <h1 className="font-display text-3xl font-black">{line.name} {h.label.toLowerCase()}</h1>
-        <p className="mt-2 text-muted">{h.items.length} products, newest set first. Open any one to compare every store and eBay.</p>
+        <h1 className="page-h1">{line.name} {h.label.toLowerCase()}</h1>
+        <p className="page-sub">{h.items.length} products, newest set first. Open any one to compare every store and eBay.</p>
       </header>
       <TileGrid items={items} />
       <section>
-        <h2 className="mb-3 text-lg font-bold">Other {line.name} sealed products</h2>
+        <h2 className="mb-4 font-display text-lg font-bold tracking-tight sm:text-xl">Other {line.name} sealed products</h2>
         <div className="flex flex-wrap gap-2">
           {gameTypeHubs(line).filter((x) => x.slug !== h.slug).map((x) => <Link key={x.slug} href={`/games/${line.slug}/${x.slug}`} className="chip">{x.label}</Link>)}
           <Link href={`/games/${line.slug}`} className="chip">All {line.name} sets</Link>

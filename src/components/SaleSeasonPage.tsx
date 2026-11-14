@@ -56,7 +56,7 @@ export function SaleSeasonPage({ slug }: { slug: SaleSlug }) {
   return (
     <article className="flex max-w-4xl flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl font-black">{SITE.gameShort} {saleHeading(slug, year)}</h1>
+        <h1 className="page-h1">{SITE.gameShort} {saleHeading(slug, year)}</h1>
         <p className="text-muted">
           {saleIntro(slug, year, regions)} Rebuilt from each day&apos;s store prices{asOf ? ` (last updated ${asOf})` : ""}, so bookmark it: the same page
           updates every day through the sales.

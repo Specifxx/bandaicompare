@@ -7,7 +7,7 @@ import { fitTitle } from "@/lib/seo-title";
 import { lineBySlug } from "@/lib/lines";
 import { GAME_TYPE_MIN, gameTypeHubs, gameView } from "@/lib/game-hubs";
 import { productsInSet, refCents } from "@/lib/data";
-import { money } from "@/lib/format";
+import { money, shortDate } from "@/lib/format";
 import { TileGrid } from "@/components/ProductTile";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
@@ -37,40 +37,40 @@ export default function GamePage({ params }: { params: { slug: string } }) {
       <div>
         <Breadcrumbs items={[{ name: "Games", href: "/games" }, { name: line.name }]} />
         <header className="game-hero">
-          <h1 className="font-display text-3xl font-black md:text-4xl">{line.name} prices</h1>
-          <p className="mt-2 max-w-2xl text-muted">{line.blurb}</p>
-          <p className="mt-2 text-sm text-muted">{v.sets.length} sets · {v.sealed} sealed products, compared across TCGplayer, eBay, Amazon and {SITE.stores.length} stores.</p>
-          {v.newest && <p className="mt-3"><Link className="btn-primary" href={`/sets/${v.newest.slug}`}>Newest set: {v.newest.name} →</Link></p>}
+          <h1 className="page-h1">{line.name} prices</h1>
+          <p className="page-sub">{line.blurb}</p>
+          <p className="mt-2 text-sm tabular-nums text-muted">{v.sets.length} sets · {v.sealed} sealed products, compared across TCGplayer, eBay, Amazon and {SITE.stores.length} stores.</p>
+          {v.newest && <p className="mt-4"><Link className="btn-primary" href={`/sets/${v.newest.slug}`}>Newest set: {v.newest.name} →</Link></p>}
         </header>
       </div>
 
-      <nav aria-label={`${line.name} product types`} className="-mt-4 flex flex-wrap gap-2">
+      <nav aria-label={`${line.name} product types`} className="-mt-2 flex flex-wrap gap-2">
         {gameTypeHubs(line).filter((h) => h.items.length >= GAME_TYPE_MIN).map((h) => (
-          <Link key={h.slug} href={`/games/${line.slug}/${h.slug}`} className="chip hover:border-brand">{h.label} <span className="text-muted">· {h.items.length}</span></Link>
+          <Link key={h.slug} href={`/games/${line.slug}/${h.slug}`} className="chip">{h.label} <span className="text-muted">· {h.items.length}</span></Link>
         ))}
       </nav>
 
       {v.boxes.length > 0 && (
         <section>
-          <h2 className="mb-3 text-xl font-bold">{line.name} booster boxes</h2>
+          <h2 className="mb-5 font-display text-2xl font-bold tracking-tight sm:text-[28px]">{line.name} booster boxes</h2>
           <TileGrid items={v.boxes.slice(0, 6)} />
         </section>
       )}
 
       {v.decks.length > 0 && (
         <section>
-          <h2 className="mb-3 text-xl font-bold">{line.name} starter decks</h2>
+          <h2 className="mb-5 font-display text-2xl font-bold tracking-tight sm:text-[28px]">{line.name} starter decks</h2>
           <TileGrid items={v.decks.slice(0, 6)} />
         </section>
       )}
 
 
       <section>
-        <h2 className="mb-3 text-xl font-bold">Every {line.name} set, newest first</h2>
-        <div className="overflow-hidden rounded-xl border border-ink-700/60">
+        <h2 className="mb-5 font-display text-2xl font-bold tracking-tight sm:text-[28px]">Every {line.name} set, newest first</h2>
+        <div className="card overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-ink-850 text-left text-xs uppercase text-muted">
-              <tr><th className="px-3 py-2">Set</th><th className="px-3 py-2">Released</th><th className="px-3 py-2 text-right">Sealed</th><th className="px-3 py-2 text-right">Booster box</th></tr>
+            <thead className="bg-raised text-left text-xs uppercase tracking-wide text-muted">
+              <tr><th className="px-3 py-2">Set</th><th className="hidden px-3 py-2 sm:table-cell">Released</th><th className="hidden px-3 py-2 text-right sm:table-cell">Sealed</th><th className="px-3 py-2 text-right">Booster box</th></tr>
             </thead>
             <tbody>
               {v.sets.map((s) => {
@@ -78,11 +78,11 @@ export default function GamePage({ params }: { params: { slug: string } }) {
                 const box = sealed.find((p) => p.sealedType === "Booster Box");
                 const value = box ? refCents(box.id) : null;
                 return (
-                  <tr key={s.id} className="border-t border-ink-800">
-                    <td className="px-3 py-2"><Link className="link" href={`/sets/${s.slug}`}>{s.name}</Link>{s.upcoming && <span className="tag ml-2">Upcoming</span>}</td>
-                    <td className="px-3 py-2 text-muted">{s.releasedOn}</td>
-                    <td className="px-3 py-2 text-right">{sealed.length}</td>
-                    <td className="px-3 py-2 text-right font-semibold">{value ? money(value) : "—"}</td>
+                  <tr key={s.id} className="border-t border-line transition-colors hover:bg-raised/60">
+                    <td className="px-3 py-1"><Link className="link inline-flex min-h-10 items-center" href={`/sets/${s.slug}`}>{s.name}</Link>{s.upcoming && <span className="tag ml-2">Upcoming</span>}<span className="block pb-1.5 text-xs tabular-nums text-muted sm:hidden">{shortDate(s.releasedOn)} · {sealed.length} sealed</span></td>
+                    <td className="hidden whitespace-nowrap px-3 py-2 tabular-nums text-muted sm:table-cell">{shortDate(s.releasedOn)}</td>
+                    <td className="hidden px-3 py-2 text-right tabular-nums sm:table-cell">{sealed.length}</td>
+                    <td className="whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums">{value ? money(value) : "—"}</td>
                   </tr>
                 );
               })}

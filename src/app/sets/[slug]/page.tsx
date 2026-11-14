@@ -5,8 +5,9 @@ import { SITE } from "@/site.config";
 import { canon } from "@/lib/site";
 import { setBySlug, summaryOf } from "@/lib/data";
 import { preorderSetList, sealedInSet } from "@/lib/hubs";
-import { isPreorder, preorderPath } from "@/lib/preorders";
+import { isPreorder, longDate, preorderPath } from "@/lib/preorders";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Fold, Folds } from "@/components/Fold";
 import { shortName } from "@/lib/names";
 import { TileGrid } from "@/components/ProductTile";
 import { JsonLd } from "@/components/JsonLd";
@@ -64,13 +65,13 @@ export default function SetPage({ params }: { params: { slug: string } }) {
       <div>
         <Breadcrumbs items={[{ name: "Sets", href: "/sets" }, { name: s.name }]} />
         <header>
-          <p className="text-xs uppercase tracking-wide text-brand-400">{s.upcoming ? "Upcoming" : "Released"} {s.releasedOn}</p>
-          <h1 className="font-display text-3xl font-black">{s.name} booster box &amp; sealed prices</h1>
-          <p className="mt-2 text-muted">
+          <p className="eyebrow mb-2">{s.upcoming ? "Upcoming" : "Released"}{s.releasedOn ? ` ${longDate(s.releasedOn)}` : ""}</p>
+          <h1 className="page-h1">{s.name} booster box &amp; sealed prices</h1>
+          <p className="page-sub">
             {sealed.length} sealed product{sealed.length === 1 ? "" : "s"}, compared across every store we track, TCGplayer, eBay and Amazon.
           </p>
           {preorderSetList().some((x) => x.id === s.id) && (
-            <p className="mt-2"><Link className="link font-semibold" href={preorderPath(s)}>{isPreorder(s) ? `${s.name} pre-order prices at every store →` : `${s.name} booster box prices at every store →`}</Link></p>
+            <p className="mt-3"><Link className="link -my-2 inline-flex min-h-10 items-center text-sm font-semibold" href={preorderPath(s)}>{isPreorder(s) ? `${s.name} pre-order prices at every store →` : `${s.name} booster box prices at every store →`}</Link></p>
           )}
         </header>
       </div>
@@ -78,21 +79,22 @@ export default function SetPage({ params }: { params: { slug: string } }) {
         title={`Buy ${s.name} booster boxes and sealed`}
         items={sealed.slice(0, 6).map((p) => ({ id: p.id, slug: p.slug, name: shortName(p.name), image: imageAt(p.image, "200w"), best: summaryOf(p.id).best, stores: summaryOf(p.id).listedSources }))}
       />
-      <section><h2 className="mb-3 text-xl font-bold">Every {s.name} sealed product</h2><TileGrid items={sealed} /></section>
+      <section><h2 className="mb-5 font-display text-2xl font-bold tracking-tight sm:text-[28px]">Every {s.name} sealed product</h2><TileGrid items={sealed} /></section>
       <InlineAds ads={cardAds({ setId: s.id, fill: true, limit: 10 })} search={adSearch(s.name, s)} page="set" />
       {guides.length > 0 && (
-        <section>
-          <h2 className="mb-3 text-lg font-bold">{s.name} guides</h2>
-          <ul className="list-disc pl-5 text-sm">{guides.map((g) => <li key={g.slug}><Link className="link" href={`/blog/${g.slug}`}>{g.title}</Link></li>)}</ul>
-        </section>
+        <Folds label={`${s.name} guides`} className="border-t border-line">
+          <Fold id="set-guides" title={`${s.name} guides`} meta={guides.length}>
+            <ul className="divide-y divide-line">{guides.map((g) => <li key={g.slug}><Link className="flex min-h-11 items-center py-2 text-sm font-medium text-ink transition-colors hover:text-brand" href={`/blog/${g.slug}`}>{g.title}</Link></li>)}</ul>
+          </Fold>
+        </Folds>
       )}
       <nav className="flex flex-wrap justify-between gap-3 text-sm" aria-label="Neighbouring sets">
-        {older ? <Link className="link" href={`/sets/${older.slug}`}>← {older.name}</Link> : <span />}
-        {newer && <Link className="link" href={`/sets/${newer.slug}`}>{newer.name} →</Link>}
+        {older ? <Link className="link inline-flex min-h-10 items-center" href={`/sets/${older.slug}`}>← {older.name}</Link> : <span />}
+        {newer && <Link className="link inline-flex min-h-10 items-center" href={`/sets/${newer.slug}`}>{newer.name} →</Link>}
       </nav>
       {others.length > 0 && (
         <section>
-          <h2 className="mb-3 text-lg font-bold">Other {SITE.gameShort} sets</h2>
+          <h2 className="mb-4 font-display text-lg font-bold tracking-tight sm:text-xl">Other {SITE.gameShort} sets</h2>
           <div className="flex flex-wrap gap-2">{others.map((x) => <Link key={x.id} href={`/sets/${x.slug}`} className="chip">{x.name}</Link>)}</div>
         </section>
       )}

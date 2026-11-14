@@ -127,7 +127,13 @@ export default function CardPage({ params }: { params: { slug: string } }) {
         {/* Phones: the name, price and Buy come first; the big image and the
             details follow the prices (RiftCompare's card page, 2026-09-26). */}
         <div className="order-2 flex flex-col gap-4 md:order-1">
-          {p.image && <img src={imageAt(p.image, "400w")!} alt={p.kind === "sealed" ? name : `${name} ${SITE.gameShort} card`} className="hidden w-full rounded-xl md:block" width={400} height={560} />}
+          {/* The photo on the site's plate, like every product card: a square reserved before the photo arrives (the bare image was
+              laid out as a 400×560 card and jumped to the photo's own shape), white behind a white-backed photo in the dark theme. */}
+          {p.image && (
+            <div className="plate hidden aspect-square rounded-2xl md:block">
+              <img src={imageAt(p.image, "400w")!} alt={p.kind === "sealed" ? name : `${name} ${SITE.gameShort} card`} className="h-full w-full object-contain p-5 mix-blend-multiply" width={400} height={400} />
+            </div>
+          )}
           <dl className="card-surface grid grid-cols-2 gap-x-3 gap-y-1.5 p-4 text-sm">
             {set && (<><dt className="text-muted">Set</dt><dd><Link className="link" href={`/sets/${set.slug}`}>{set.name}</Link></dd></>)}
             {p.number && (<><dt className="text-muted">Number</dt><dd>{p.number}</dd></>)}
@@ -139,14 +145,24 @@ export default function CardPage({ params }: { params: { slug: string } }) {
         <div className="order-1 flex min-w-0 flex-col gap-6 md:order-2">
           <header>
             <div className="flex items-start gap-3">
-              {p.image && <img src={imageAt(p.image, "200w")!} alt={name} className="w-20 shrink-0 rounded-md md:hidden" width={80} height={112} />}
+              {p.image && (
+                <span className="plate block h-20 w-20 shrink-0 md:hidden">
+                  <img src={imageAt(p.image, "200w")!} alt={name} className="h-full w-full object-contain p-1.5 mix-blend-multiply" width={80} height={80} />
+                </span>
+              )}
               <h1 className="min-w-0 flex-1 font-display text-2xl font-bold tracking-tight md:text-3xl">{name} {p.number && <span className="text-muted">{p.number}</span>} price</h1>
               <ShareButton path={`/card/${p.slug}`} name={`${name}${p.number ? ` ${p.number}` : ""}`} medium={p.kind === "sealed" ? "sealed" : "card"} offers={e.offers} compact className="mt-1" />
             </div>
             <div className="mt-3 flex flex-wrap items-baseline gap-x-6 gap-y-2">
-              <p><span className="tabular font-display text-3xl font-bold text-ink">{money(ref)}</span> <span className="text-sm text-muted">TCGplayer market</span></p>
-              <p className="text-sm">7d <span className={(e.change7d ?? 0) >= 0 ? "text-up" : "text-down"}>{pct(e.change7d)}</span> · 30d <span className={(e.change30d ?? 0) >= 0 ? "text-up" : "text-down"}>{pct(e.change30d)}</span></p>
-              <p className="text-sm text-muted">{inStock.length} in-stock listing{inStock.length === 1 ? "" : "s"} worldwide</p>
+              {ref ? (
+                <p><span className="tabular font-display text-3xl font-bold text-ink">{money(ref)}</span> <span className="text-sm text-muted">TCGplayer market</span></p>
+              ) : (
+                <p className="text-sm text-muted">No TCGplayer market price yet</p>
+              )}
+              {(e.change7d != null || e.change30d != null) && (
+                <p className="text-sm tabular-nums">7d <span className={e.change7d == null ? "text-muted" : e.change7d >= 0 ? "text-up" : "text-down"}>{pct(e.change7d)}</span> · 30d <span className={e.change30d == null ? "text-muted" : e.change30d >= 0 ? "text-up" : "text-down"}>{pct(e.change30d)}</span></p>
+              )}
+              <p className="text-sm text-muted">{inStock.length ? `${inStock.length} in-stock listing${inStock.length === 1 ? "" : "s"} worldwide` : "No in-stock listings right now"}</p>
             </div>
             <CardTopBuy offers={e.offers} productId={p.id} ebayQuery={`${SITE.ebay.query} ${name} ${p.number ?? ""}`.trim()} />
             <VaultOwn id={p.id} name={`${name}${p.number ? ` ${p.number}` : ""}`} href={`/card/${p.slug}`} image={p.image ? imageAt(p.image, "200w") : null} prices={lowestByMarket(e.offers)} className="mt-3" />
@@ -160,7 +176,7 @@ export default function CardPage({ params }: { params: { slug: string } }) {
           </header>
           <section>
             <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4">
-              <h2 className="text-lg font-bold">Compare prices</h2>
+              <h2 className="font-display text-lg font-bold tracking-tight">Compare prices</h2>
               <CheckedAgo at={m?.updatedAt} />
             </div>
             <div className="mb-3"><EbayCallout offers={e.offers} productId={p.id} query={`${SITE.ebay.query} ${name} ${p.number ?? ""}`.trim()} /></div>
@@ -170,8 +186,8 @@ export default function CardPage({ params }: { params: { slug: string } }) {
           {/* The one ad placement on a card page (owner, 2026-11-03): the small eBay + TCGplayer pair. Since 2026-11-10 it sits
               under the store prices, not above them: a visitor sees what they came for first (bounce). */}
           <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_CARD} />
-          <section className="card-surface p-4">
-            <h2 className="mb-2 text-lg font-bold">Price history</h2>
+          <section className="card p-4 sm:p-5">
+            <h2 className="mb-3 font-display text-lg font-bold tracking-tight">Price history</h2>
             <PriceChart series={series} days={365} />
           </section>
           <section className="prose-site max-w-none text-sm">
@@ -185,22 +201,22 @@ export default function CardPage({ params }: { params: { slug: string } }) {
       </div>
       {related.length > 0 && (
         <section>
-          <h2 className="mb-3 text-lg font-bold">More from {set?.name}</h2>
+          <h2 className="mb-4 font-display text-lg font-bold tracking-tight sm:text-xl">More from {set?.name}</h2>
           <TileGrid items={related} />
         </section>
       )}
       {line && typeHub && sameType.length > 0 && (
         <section>
           <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4">
-            <h2 className="text-lg font-bold">More {typeHub.label.toLowerCase()} from {line.name}</h2>
-            <Link className="link text-sm font-semibold" href={`/games/${line.slug}/${typeHub.slug}`}>All {typeHub.items.length} →</Link>
+            <h2 className="font-display text-lg font-bold tracking-tight sm:text-xl">More {typeHub.label.toLowerCase()} from {line.name}</h2>
+            <Link className="link -my-2 inline-flex min-h-10 items-center text-sm font-semibold" href={`/games/${line.slug}/${typeHub.slug}`}>All {typeHub.items.length} →</Link>
           </div>
           <ul className="card divide-y divide-line">
             {sameType.map((x) => {
               const r = refCents(x.id);
               return (
                 <li key={x.id}>
-                  <Link href={`/card/${x.slug}`} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm hover:bg-surface">
+                  <Link href={`/card/${x.slug}`} className="flex min-h-11 items-center justify-between gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-raised">
                     <span className="min-w-0 truncate">{shortName(x.name)}</span>
                     <span className="tabular shrink-0 text-muted">{r ? money(r) : "—"}</span>
                   </Link>

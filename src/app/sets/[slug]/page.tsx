@@ -75,12 +75,12 @@ export default function SetPage({ params }: { params: { slug: string } }) {
           )}
         </header>
       </div>
+      <InlineAds ads={cardAds({ setId: s.id, fill: true, limit: 10 })} search={adSearch(s.name, s)} page="set" />
       <SealedQuickBuy
         title={`Buy ${s.name} booster boxes and sealed`}
         items={sealed.slice(0, 6).map((p) => ({ id: p.id, slug: p.slug, name: shortName(p.name), image: imageAt(p.image, "200w"), best: summaryOf(p.id).best, stores: summaryOf(p.id).listedSources }))}
       />
       <section><h2 className="mb-5 font-display text-2xl font-bold tracking-tight sm:text-[28px]">Every {s.name} sealed product</h2><TileGrid items={sealed} /></section>
-      <InlineAds ads={cardAds({ setId: s.id, fill: true, limit: 10 })} search={adSearch(s.name, s)} page="set" />
       {guides.length > 0 && (
         <Folds label={`${s.name} guides`} className="border-t border-line">
           <Fold id="set-guides" title={`${s.name} guides`} meta={guides.length}>

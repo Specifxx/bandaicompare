@@ -73,7 +73,7 @@ test("every rail link points at a page of the site, and prices come first", () =
 test("the homepage order: hero, recently viewed, games, deals, the one ad block, sealed, the newest set's sealed, reviews, guides, FAQ, and nothing else", () => {
   const src = readFileSync("src/app/page.tsx", "utf8");
   assert.doesNotMatch(src, /<HeroSparks/);
-  const order = ["<CreatorsBubble />", "<RecentlyViewed ", "<GameRows />", "Today's top deals", "<InlineAds ", "<SealedHero", "booster boxes and sealed`}", "<SiteReviews />", 'title="Guides"', "Frequently asked questions"];
+  const order = ["<CreatorsBubble />", "<InlineAds ", "<RecentlyViewed ", "<GameRows />", "Today's top deals", "<SealedHero", "booster boxes and sealed`}", "<SiteReviews />", 'title="Guides"', "Frequently asked questions"];
   let at = -1;
   for (const o of order) {
     const i = src.indexOf(o, at + 1);

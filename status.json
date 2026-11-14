@@ -1,0 +1,48 @@
+{
+ "v": 1,
+ "site": "bandaicompare.com",
+ "at": "2026-11-14T11:11:03.365Z",
+ "overall": "warn",
+ "checks": [
+  {
+   "name": "Live site",
+   "status": "ok",
+   "detail": "200"
+  },
+  {
+   "name": "The sealed hub",
+   "status": "ok",
+   "detail": "200"
+  },
+  {
+   "name": "Retired card URLs redirect",
+   "status": "ok",
+   "detail": "308 → /sets/across-time"
+  },
+  {
+   "name": "Daily price import",
+   "status": "ok",
+   "detail": "0.7h old"
+  },
+  {
+   "name": "Store imports",
+   "status": "warn",
+   "detail": "cardbot: 0 matched; thecollectorsmith: 0 matched; tradingcardmasters: 0 matched; hobbyco: 0 matched; 6ixtcgsmarkham: 0 matched; thatgamestore: 0 matched; diademhobbies: 0 matched; envcollectible: 0 matched; forestcitycollectibles: 0 matched; mysticdragon: 0 matched; dungeoncomicsandcards: 0 matched; screenfreegames: 0 matched; gamerzparadize: 0 matched; gsgameon: 0 matched; zillerstore: 0 matched; pikkuplay: 0 matched; playe: 0 matched; sentinelgamessg: 0 matched; sgmanapro: 0 matched; toyorgame: 0 matched; kaiofcards: 0 matched; blackswampgames: 0 matched; digitalheroes: 0 matched; managaming: 0 matched; five6gaming: 0 matched; gachaboba: 0 matched; gatorscardden: 0 matched; triadgroup: 0 matched"
+  },
+  {
+   "name": "eBay budget",
+   "status": "ok",
+   "detail": "800/1000 calls on 2026-11-14, 200 eligible"
+  },
+  {
+   "name": "Family feed",
+   "status": "ok",
+   "detail": "10 items, 0.5h old; 9 sister feeds (rift, op, dex, mtg, wax, gundam, lorcana, ygo, cyberpunk)"
+  },
+  {
+   "name": "Amazon ASIN finder",
+   "status": "ok",
+   "detail": "AU: refused, 0 ASINs, 1h ago; CA: ok, 0 ASINs, 1h ago; EU: ok, 0 ASINs, 1h ago; UK: ok, 0 ASINs, 1h ago; US: ok, 12 ASINs, 1h ago"
+  }
+ ]
+}

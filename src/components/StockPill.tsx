@@ -1,22 +1,23 @@
 export type StockState = "open" | "soldout" | "pre";
 
-const STYLE: Record<StockState, string> = {
-  open: "bg-open-soft text-open",
-  pre: "bg-pre-soft text-pre",
-  soldout: "bg-sold-soft text-sold",
+// Calm palette (2026-11-12, 2026-11-14 on the tiles): the words are grey, only the 6px dot carries the state's colour, nothing pulses.
+const DOT: Record<StockState, string> = {
+  open: "bg-open",
+  pre: "bg-pre",
+  soldout: "bg-sold",
 };
 
 const SIZE = {
-  md: "gap-1.5 px-2.5 py-1 text-xs",
-  // A product card's: one 20px line that fits a 2-up phone card ("In stock · 12 stores").
-  sm: "gap-1 px-2 py-0.5 text-[11px] leading-4",
+  md: "gap-1.5 text-xs",
+  // A product card's: one 16px line that fits a 2-up phone card ("In stock · 12 stores").
+  sm: "gap-1.5 text-xs leading-4",
 };
 
-/** The engine's stock pill (from MTG Compare): a dot and the words, green in stock, violet on pre-order, grey sold out. */
+/** The engine's stock line (from MTG Compare): a dot (green in stock, violet on pre-order, grey sold out) and the words in grey. */
 export function StockPill({ state, size = "md", className = "", children }: { state: StockState; size?: keyof typeof SIZE; className?: string; children: React.ReactNode }) {
   return (
-    <span className={`inline-flex items-center whitespace-nowrap rounded-full font-semibold ${SIZE[size]} ${STYLE[state]} ${className}`}>
-      <span className={`h-1.5 w-1.5 shrink-0 rounded-full bg-current ${state === "open" ? "animate-pulse" : ""}`} aria-hidden="true" />
+    <span className={`inline-flex min-w-0 items-center whitespace-nowrap font-medium text-muted ${SIZE[size]} ${className}`}>
+      <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${DOT[state]}`} aria-hidden="true" />
       {children}
     </span>
   );

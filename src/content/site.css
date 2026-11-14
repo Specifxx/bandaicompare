@@ -52,7 +52,7 @@ header.sticky::after {
 .game-tile-stats > span { border: 0; background: rgb(255 255 255 / 0.2); color: #fff; font-weight: 700; }
 .game-tile-go { color: #161936; background: rgb(255 255 255 / 0.92); border-radius: 999px; padding: 4px 12px; }
 .game-fan-card { border: 2px solid #fff; background: #fff; }
-.game-hero { border-left-width: 6px; border-radius: 4px; }
+
 
 @media (prefers-reduced-motion: reduce) {
   .game-tile { transition: none; }

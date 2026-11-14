@@ -39,20 +39,20 @@ export default function SealedHub({ params }: { params: { type: string } }) {
         <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: `${SITE.gameShort} ${h.label.toLowerCase()}`, numberOfItems: items.length, itemListElement: items.slice(0, 30).map((p, i) => ({ "@type": "ListItem", position: i + 1, name: p.name, url: abs(`/card/${p.slug}`) })) }} />
       )}
       <header>
-        <h1 className="font-display text-3xl font-black">{SITE.gameShort} {h.label.toLowerCase()}</h1>
-        <p className="mt-2 text-muted">{h.items.length} products, newest set first. Open any one to compare every store and eBay.</p>
+        <h1 className="page-h1">{SITE.gameShort} {h.label.toLowerCase()}</h1>
+        <p className="page-sub">{h.items.length} products, newest set first. Open any one to compare every store and eBay.</p>
       </header>
       {LINES.length > 0 && (
-        <nav aria-label="By game" className="-mt-2 flex flex-wrap gap-2">
+        <nav aria-label="By game" className="flex flex-wrap gap-2">
           {LINES.map((l) => ({ l, g: gameTypeHub(l, h.slug) })).filter((x) => x.g && x.g.items.length >= GAME_TYPE_MIN).map(({ l, g }) => (
-            <Link key={l.id} href={`/games/${l.slug}/${h.slug}`} className="chip hover:border-brand">{l.name} only <span className="text-muted">· {g!.items.length}</span></Link>
+            <Link key={l.id} href={`/games/${l.slug}/${h.slug}`} className="chip">{l.name} only <span className="text-muted">· {g!.items.length}</span></Link>
           ))}
         </nav>
       )}
       <TileGrid items={items} />
       <InlineAds ads={cardAds({ kind: "sealed", limit: 10 })} search={adSearch()} page="sealed-type" />
       <section>
-        <h2 className="mb-3 text-lg font-bold">Other sealed products</h2>
+        <h2 className="mb-4 font-display text-lg font-bold tracking-tight sm:text-xl">Other sealed products</h2>
         <div className="flex flex-wrap gap-2">
           {sealedHubs().filter((x) => x.slug !== h.slug).map((x) => <Link key={x.slug} href={`/sealed/${x.slug}`} className="chip">{x.label}</Link>)}
         </div>

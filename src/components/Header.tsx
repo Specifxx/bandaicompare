@@ -22,7 +22,7 @@ export function headerNavItems(more: NavGroup[], shop: ShopMenus, sale: { href: 
   // The Deals dropdown (owner, 2026-11-09; xl and up, the row has no room for it below) lists "Deals & stock"; "More" keeps it too, for lg.
   const deals = more.filter((g) => g.title === "Deals & stock");
   return [
-    ...(sale ? [{ href: sale.href, label: sale.label, also: [] as string[] }] : []),
+    ...(sale ? [{ href: sale.href, label: sale.label, xl: true, also: [] as string[] }] : []),
     ...shop.games.map((g) => ({ href: g.href, label: g.label, menu: g.columns.length ? g.columns : undefined })),
     { href: "/sealed", label: "All sealed", also: ["/card", "/sets", "/preorders"], menu: shop.sealed.length ? shop.sealed : undefined },
     { href: "/tools/deal-finder", label: "Deals", xl: true, also: ["/black-friday", "/cyber-monday", "/boxing-day", "/january-sales", "/lunar-new-year", "/movers"], menu: deals.length ? deals : undefined },
@@ -49,9 +49,11 @@ export function Header() {
   const items = headerNavItems(navGroups({ history, sale, shop: [] }), shop.menus, sale);
   return (
     <header className="sticky top-0 z-40 h-[var(--hdr)] border-b border-line bg-surface/90 backdrop-blur-md">
-      <div className="page flex h-full items-center gap-2 sm:gap-3 lg:gap-4 xl:max-w-shell">
+      <div className="page flex h-full items-center gap-2 sm:gap-3 lg:gap-2 xl:max-w-shell">
         <Link href="/" className="flex h-11 shrink-0 items-center rounded-lg" aria-label={`${SITE.name} home`}>
-          <Logo wordmark="hidden sm:inline" />
+          {/* The word hides between lg and 1400px, where the sections need the row (2026-11-14: the row was wider than the screen
+              at every desktop width under 1600px, and pushed the cart off the right edge). */}
+          <Logo wordmark="hidden sm:inline lg:hidden min-[1400px]:inline" />
         </Link>
         <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main">
           <HeaderNavItems items={items} />
@@ -65,7 +67,7 @@ export function Header() {
             <span className="ad-pill">Ad</span> eBay
           </a>
         </nav>
-        <div className="hdr-search min-w-0 flex-1 lg:ml-auto lg:w-56 lg:flex-none xl:w-64">
+        <div className="hdr-search min-w-0 flex-1 lg:ml-auto lg:min-w-[8rem] lg:max-w-64">
           <SearchBox size="sm" />
         </div>
         <ThemeToggle className="hidden sm:inline-flex" />

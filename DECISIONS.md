@@ -1126,3 +1126,27 @@ Open Graph, JSON-LD and h1 are identical, no h2 was lost and the internal links 
 library, colour, client script, `revalidate` or caching change. Left for the owner: the home page's hero still shows two product
 cards on a desktop (the TCG rule since 13 November says a hero is words, search and ways in), and the desktop sidebar is still
 there; both are the home page's structure, which this pass keeps. No deploy marker: this rides the next release.
+
+## 2026-11-14 — Review of the day's redesign: three contrast fixes and a fold that turned under reduced motion
+
+An independent check of today's merges (#70, #71, #75) against a build of the commit before #75 (`08eae8c`, same day's data),
+twelve URLs (home, two product pages, a set, the sealed hub, a game hub, sets, a guide, stores, the deal finder, movers, a 404) at
+390×844 and 1440×900 in both themes. It found no regression from the redesign: no horizontal scroll on any of the 48 views (before:
+every desktop page was 1,516px wide at 1440 and /movers 599px on a phone), layout shift at most 0.00004, no console or hydration
+error, every focused element shows its ring, no infinite animation under reduced motion. With scripts off the title, meta
+description, canonical, robots, Open Graph, JSON-LD and h1 are identical on every URL, no h2 or internal link is lost, and the
+sponsored links are the same hrefs and words in the same order (2 to 38 a page). All 378 sitemap URLs answer 200, are indexable and
+canonical to themselves; robots.txt blocks only `/api/`, `/go` and query strings; unknown pages answer 404.
+
+What this pass changed (each was there before today, and is a colour or a motion only):
+
+- **Home**: the hero's discount badge ("−17%") was white on the dark theme's bright green, 2.0:1; it is written in the surface
+  colour like `.btn-buy` since #71 (8.5:1 dark, 5.7:1 light).
+- **Every page, light theme**: the Black Friday strip's "see the deals →" was brand orange on the strip's soft orange, 4.4:1; it is
+  `text-brand-strong`, the token made for brand text on brand-soft. Same words, same link.
+- **Product tiles**: "No image yet" is `text-neutral-600` on the plate (was 4.3:1).
+- **Folds** (stores, a set's guides): the plus-to-cross turn now runs only when the visitor allows motion.
+
+No paid link, ad block, pinned row, buy button, affiliate tag or placement name changed, and no URL, metadata, text or link
+changed, so the 19 November clicks-per-placement recheck is unaffected. Not changed, as paid rows: the eBay logo's own letter
+colours in the pinned eBay row. No deploy marker: this rides the next release.

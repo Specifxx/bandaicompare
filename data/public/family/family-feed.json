@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-14T10:39:25.088Z",
+ "generatedAt": "2026-11-15T11:07:16.495Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -60,7 +60,7 @@
    "currency": "USD",
    "store": "Game-O-Storus",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
-   "refCents": 14935,
+   "refCents": 14902,
    "refLabel": "TCGplayer market price",
    "savingPct": 13
   },

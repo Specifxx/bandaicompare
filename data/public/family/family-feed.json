@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-15T11:07:16.495Z",
+ "generatedAt": "2026-11-16T11:32:25.146Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -27,20 +27,6 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
-   "title": "Yu Yu Hakusho: Ghost Files - Booster Box",
-   "url": "https://bandaicompare.com/card/yu-yu-hakusho-ghost-files-booster-box",
-   "cents": 6000,
-   "currency": "USD",
-   "store": "Dynamic Card Collectors",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/635348_200w.jpg",
-   "refCents": 7770,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 23
-  },
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
    "title": "Ignition of X Booster Box",
    "url": "https://bandaicompare.com/card/ignition-of-x-booster-box",
    "cents": 9499,
@@ -49,6 +35,20 @@
    "refCents": 11781,
    "refLabel": "TCGplayer market price",
    "savingPct": 19
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Kaiju No. 8 - Booster Box",
+   "url": "https://bandaicompare.com/card/kaiju-no-8-booster-box",
+   "cents": 8000,
+   "currency": "USD",
+   "store": "Dynamic Card Collectors",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/625081_200w.jpg",
+   "refCents": 9766,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 18
   },
   {
    "kind": "deal",

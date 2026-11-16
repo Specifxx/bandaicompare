@@ -1150,3 +1150,9 @@ What this pass changed (each was there before today, and is a colour or a motion
 No paid link, ad block, pinned row, buy button, affiliate tag or placement name changed, and no URL, metadata, text or link
 changed, so the 19 November clicks-per-placement recheck is unaffected. Not changed, as paid rows: the eBay logo's own letter
 colours in the pinned eBay row. No deploy marker: this rides the next release.
+
+## 2026-11-16: Black Friday and Cyber Monday pages as deal cards, grouped by game
+
+Ported from TCG Prices (its DECISIONS entry of the same date): hero with the real Black Friday and Cyber Monday dates, jump chips,
+the six biggest savings under TCGplayer, a section per game and each other market, every deal a card with the saving badge, View deal
+and a labelled Add to cart. Stores only, no "was" price, no deadline or urgency copy, no pop-up. URLs, titles, h1 and FAQ unchanged.

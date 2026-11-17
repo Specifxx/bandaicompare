@@ -97,7 +97,9 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
   const live = [...inStock, ...refs];
   // Out-of-stock rows show when asked, or when nothing is in stock at all.
   const unfold = showOut || live.length === 0;
-  const shown = compact ? rows.slice(0, 6) : unfold ? rows : rows.filter((o) => live.includes(o));
+  // Owner, 2026-11-17 (final): eBay first, then TCGplayer, then Amazon (priced), all above the stores; the pinned rows keep that order.
+  const byPrice = (list: Offer[]) => list;
+  const shown = byPrice(compact ? rows.slice(0, 6) : unfold ? rows : rows.filter((o) => live.includes(o)));
   const folded = compact ? 0 : unfold ? 0 : outOfStock.length;
   // A string is the tagged search; a cell (lib/amazon-live.ts) is the item's own page, with this build's price while under 24 hours old.
   const amazonCell = amazon?.[market];
@@ -125,7 +127,8 @@ export function PriceTable({ offers, fx, productId, page, compact = false, amazo
     </tr>
   ) : null;
   // Amazon is the second row, right under eBay (first when there is no eBay row).
-  const amazonAfter = shown.findIndex((o) => o.source === "ebay" && pinned.includes(o));
+  // Amazon is the row right under the last pinned row (eBay, then TCGplayer), first when there is none.
+  const amazonAfter = shown.reduce((at, o, i) => (pinned.includes(o) ? i : at), -1);
   return (
     <div id={tableId ?? undefined} className="card overflow-hidden">
       {picker}

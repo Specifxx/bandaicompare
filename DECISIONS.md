@@ -1188,3 +1188,16 @@ Impact showed 700 to 800 TCGplayer clicks a day across the TCG sites; Vercel's b
 by User-Agent, Accept-Language and Sec-Fetch-Mode; DexCompare found on 15 November that a crawler with a whole browser's headers passes those (2,835 go_clicks on a day with 632
 visitors). The same rule is now here: a Sec-Fetch-Site other than same-origin or same-site (a /go URL opened directly is "none", one followed from elsewhere "cross-site") is a bot;
 an absent header is left alone. A bot is still sent on, untagged, and nothing is logged. A bot clicking in a real browser on our page still passes; that needs a Vercel Firewall rate limit.
+
+## 2026-11-17: Fiverr first-time-shopper review of DexCompare, applied here (owner)
+
+The owner bought a professional first-time-shopper QA review of DexCompare and asked for every finding that generalises to reach every site.
+Applied here (the full reasoning is in DexCompare's DECISIONS.md, same date):
+
+- **Cart hand-off:** the cart drawer opens with "You pay each store on its own site. We never take payment." (normal-size text, first thing in the
+  drawer); "Total before postage" became "Estimated total (before postage)"; the add button's tooltip says you pay at the store. The label stays
+  "Add to cart" (owner, 2026-11-14: a literal "Add to cart" on every row).
+- **The quick view sets the tab title and description while it is open** and restores them on close (the tab used to keep the list's title).
+- **A total beside the shipping figure** on a row that charges postage ("+ $X shipping · ≈ $Y total").
+- **The pinned eBay row's button is the ink `btn-ad`,** the filled orange/primary button is a store's (the cheapest store's "Buy now").
+- Already true here, no change: an eBay or Amazon row is never "the cheapest" or "Best price" (`neverCheapest`), so the table never contradicts its own headline.

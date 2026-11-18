@@ -32,6 +32,7 @@ import { ShareButton } from "@/components/ShareButton";
 import { attrHref, rarityHref, sealedHref } from "@/lib/hubs";
 
 import { cardTitleCandidates, fitTitle } from "@/lib/seo-title";
+import { namesGame, productTitleLadder, setPhrase } from "@/lib/game-seo";
 import { cardIndexable, priceValidUntil } from "@/lib/indexing";
 import { gtinLabel, gtinLd } from "@/lib/gtin";
 import { lineOfSet } from "@/lib/lines";
@@ -47,9 +48,12 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const ref = refCents(p.id);
   const name = shortName(p.name);
   // "<card> <number> Price — <game> <set>", stepped down to fit 60 characters (lib/seo-title.ts).
-  const title = fitTitle(cardTitleCandidates(name, p.number, set?.name ?? null, p.kind === "sealed")).absolute;
+  // Sealed: the game's own words lead ("Digimon Ignition of X Booster Box (BT27) Price", lib/game-seo.ts, 2026-11-18).
+  const title = fitTitle(p.kind === "sealed" ? productTitleLadder(name, set ?? null) : cardTitleCandidates(name, p.number, set?.name ?? null, false)).absolute;
   const stores = new Set(priceOf(p.id).offers.map((o) => o.source)).size;
-  const description = `${name} (${set?.name ?? SITE.gameShort}${p.rarity ? `, ${p.rarity}` : ""}) ${ref ? `is worth about ${money(ref)} today` : "has no TCGplayer market price yet"}. Compare ${stores} live prices from TCGplayer, eBay and ${SITE.gameShort} stores, with price history.`;
+  const game = set ? lineOfSet(set) : null;
+  const lead = game && !namesGame(name, game) ? `${game.seo?.name ?? game.short} ${name}` : name;
+  const description = `${lead} (${set ? setPhrase(set) : SITE.gameShort}${p.rarity ? `, ${p.rarity}` : ""}) ${ref ? `is worth about ${money(ref)} today` : "has no TCGplayer market price yet"}. Compare ${stores} live prices from TCGplayer, eBay and ${game ? `${game.short} ` : ""}stores, with price history.`;
   return {
     title: { absolute: title },
     description,
@@ -127,7 +131,7 @@ export default function CardPage({ params }: { params: { slug: string } }) {
           }}
         />
       )}
-      <Breadcrumbs items={[{ name: "Sealed", href: "/sealed" }, ...(set ? [{ name: set.name, href: `/sets/${set.slug}` }] : []), { name }]} />
+      <Breadcrumbs items={[line ? { name: line.short, href: `/games/${line.slug}` } : { name: "Sealed", href: "/sealed" }, ...(set ? [{ name: set.name, href: `/sets/${set.slug}` }] : []), { name }]} />
       <InlineAds ads={cardAds({ setId: p.setId, kind: p.kind, exclude: p.id, fill: true, limit: 10 })} search={adSearch(set?.name, set)} page="card" />
       <div className="grid gap-8 md:grid-cols-[minmax(0,320px)_1fr]">
         {/* Phones: the name, price and Buy come first; the big image and the

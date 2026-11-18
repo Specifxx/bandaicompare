@@ -28,6 +28,7 @@ import { InlineAds } from "@/components/InlineAds";
 import { Section } from "@/components/Section";
 import { adSearch, cardAds } from "@/lib/card-ads";
 import { HeroCards } from "@/components/home/HeroCards";
+import { rankBy, rankProducts } from "@/lib/home-demand";
 
 // The homepage leads with "<game> Booster Box Prices" (sealed only since 2026-11-06) and the number of stores compared.
 export function generateMetadata(): Metadata {
@@ -60,9 +61,10 @@ export default function Home() {
   const releases = preorderSetList();
   const upcoming = releases.find((s) => isPreorder(s)) ?? null;
   // Sealed only (2026-11-06): the newest set's sealed products, and the most valuable booster boxes as trending chips.
-  const chase = latest ? sealedInSet(latest.id).filter((p) => worthFeaturing(p.id)).slice(0, 12) : [];
+  const chase = latest ? rankProducts(sealedInSet(latest.id).filter((p) => worthFeaturing(p.id))).slice(0, 12) : [];
   const trending = byValue(products().filter((p) => p.sealedType === "Booster Box")).slice(0, 6);
-  const topDeals = deals(6);
+  // Most likely to earn first (owner, 2026-11-18; lib/home-rank.ts): demand × value over three times as many deals.
+  const topDeals = rankBy(deals(18), (d) => d.p).slice(0, 6);
   const shelf = featuredSealed(6);
   // The hero's two featured boxes: the shelf's first two with a photo (the newest released sets' booster boxes).
   const heroPicks = shelf.filter((p) => p.image).slice(0, 2);

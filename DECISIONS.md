@@ -1423,3 +1423,14 @@ the same honesty rule as RiftCompare's Hot 40. `/movers` links to it.
 **Why.** Owner, 2026-11-18: RiftCompare's Hot chart works on Reddit as a plain link and title and brings real visits;
 every site should have one stable URL to post once a week (tagged `utm_source=reddit&utm_medium=social&utm_campaign=hot100-<site>-<date>`).
 Shipped with `[deploy] [urgent]` on the owner's ask for today's links. `tests/hot100.test.ts`.
+
+## Titles in each game's own words (Cardmarket's playbook, ported from TCG Prices) — 2026-11-18
+
+**What.** Set and sealed product titles lead with the game and, where players search by it, the set code
+(`lib/game-seo.ts`, `GameLine.seo`): "Digimon Ignition of X (BT27) Booster Box & Sealed Prices", "Fusion World Reach
+the God Booster Box (FB12) Price". Before, they led with `SITE.gameShort` ("Union Arena, DBS & Digimon"), which never
+fitted, so titles fell back to the bare set name with no game. Set and product breadcrumbs go Home > game > set, and a
+set page's neighbours and "Other sets" stay inside its own game. URLs, h2s and the sitemap are unchanged.
+
+**Why.** Owner, 2026-11-18: apply Cardmarket's playbook (Semrush, "How Cardmarket wins search"): metadata templated per
+game in the community's language, and a game > set > product tree. Same change as tcgcompare #93. `tests/game-seo.test.ts`.

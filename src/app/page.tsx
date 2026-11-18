@@ -7,6 +7,7 @@ import { ChristmasGifts } from "@/components/ChristmasGifts";
 import { TileGrid } from "@/components/ProductTile";
 import { byValue, deals, latestReleasedSet, meta, products, worthFeaturing } from "@/lib/data";
 import { ago, money } from "@/lib/format";
+import { LiveAgo } from "@/components/LiveAgo";
 import { posts } from "@/lib/posts";
 import { shortName } from "@/lib/names";
 import { JsonLd } from "@/components/JsonLd";
@@ -131,7 +132,7 @@ export default function Home() {
                 <>
                   <span className="hero-stat"><b className="tabular">{products().length.toLocaleString()}</b> sealed products</span>
                   <span className="hero-stat"><b className="tabular">{storeCount}</b> stores</span>
-                  <span className="hero-stat">prices updated {ago(m.updatedAt)}</span>
+                  <span className="hero-stat">prices updated <LiveAgo iso={m.updatedAt} initial={ago(m.updatedAt)} /></span>
                 </>
               ) : (
                 <span className="hero-stat">Prices update daily</span>

@@ -45,7 +45,7 @@ export const SITE: SiteConfig = {
   priceAlerts: true,
   // The phone bottom nav (components/BottomNav.tsx, DECISIONS.md 2026-11-18): "optin" = only a visitor who opens any page with ?bn=1
   // sees it; "on" = everyone on a phone; "off" is the rollback (it ignores ?bn=1 too).
-  bottomNav: "optin",
+  bottomNav: "on",
   impactSiteVerification: "8ea88e0d-2559-4c0b-9e38-36429481b079",
   // Amazon AU: this site's own tracking ID in the owner's AU account (the US stays the engine default).
   amazonAuTag: "bandaicompare-22",

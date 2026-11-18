@@ -25,13 +25,14 @@ export default function Sealed() {
         <h1 className="page-h1">{SITE.gameShort} booster box and sealed prices</h1>
         <p className="page-sub">Newest sets first within each type. Open any product to compare every store.</p>
       </header>
-      <InlineAds ads={cardAds({ kind: "sealed", limit: 10 })} search={adSearch()} page="sealed" />
       {groups.map((g) => (
         <section key={g.t}>
           <h2 className="mb-5 font-display text-2xl font-bold tracking-tight sm:text-[28px]">{sealedHref(g.t) ? <Link className="transition-colors hover:text-brand" href={sealedHref(g.t)!}>{PLURAL[g.t] ?? g.t} →</Link> : PLURAL[g.t] ?? g.t}</h2>
           <TileGrid items={g.items.sort((a, b) => (setById(b.setId)?.releasedOn ?? "").localeCompare(setById(a.setId)?.releasedOn ?? "")).slice(0, 24)} />
         </section>
       ))}
+      {/* Ads sit below the page's own content, never above it (2026-11-19, core-update quality pass). */}
+      <InlineAds ads={cardAds({ kind: "sealed", limit: 10 })} search={adSearch()} page="sealed" />
     </div>
   );
 }

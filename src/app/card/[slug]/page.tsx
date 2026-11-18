@@ -132,7 +132,6 @@ export default function CardPage({ params }: { params: { slug: string } }) {
         />
       )}
       <Breadcrumbs items={[line ? { name: line.short, href: `/games/${line.slug}` } : { name: "Sealed", href: "/sealed" }, ...(set ? [{ name: set.name, href: `/sets/${set.slug}` }] : []), { name }]} />
-      <InlineAds ads={cardAds({ setId: p.setId, kind: p.kind, exclude: p.id, fill: true, limit: 10 })} search={adSearch(set?.name, set)} page="card" />
       <div className="grid gap-8 md:grid-cols-[minmax(0,320px)_1fr]">
         {/* Phones: the name, price and Buy come first; the big image and the
             details follow the prices (RiftCompare's card page, 2026-09-26). */}
@@ -243,6 +242,8 @@ export default function CardPage({ params }: { params: { slug: string } }) {
       <RecentlyViewed skip={p.slug} />
       <RecordView slug={p.slug} name={name} image={p.image ? imageAt(p.image, "200w") : null} type={p.sealedType ?? null} />
       <CardStickyBuyBar offers={e.offers} productId={p.id} />
+      {/* Ads sit below the page's own content, never above it (2026-11-19, core-update quality pass). */}
+      <InlineAds ads={cardAds({ setId: p.setId, kind: p.kind, exclude: p.id, fill: true, limit: 10 })} search={adSearch(set?.name, set)} page="card" />
     </article>
   );
 }

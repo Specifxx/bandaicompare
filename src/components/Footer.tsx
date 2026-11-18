@@ -1,7 +1,6 @@
 import Link from "@/components/Link";
 import { RateUsLink } from "./site-reviews/SiteReviews";
 import { SITE } from "@/site.config";
-import { creatorsOn } from "@/lib/creators";
 import { historyOn } from "@/lib/data";
 import { LogoMark } from "./Logo";
 import { FeedbackAsk } from "@/components/FeedbackAsk";
@@ -18,30 +17,17 @@ export function footerColumns(history: boolean): { title: string; links: FooterL
         { href: "/sealed/booster-box", label: "Booster box prices" },
         { href: "/sets", label: "Sets" },
         ...(SITE.kits ? [{ href: "/kits", label: `${SITE.kits.label} prices` }] : []),
-        ...(history ? [{ href: "/movers", label: "Price movers" }, { href: "/price-report", label: "Monthly price report" }] : []),
-        { href: "/black-friday", label: "Black Friday deals" },
-        { href: "/cyber-monday", label: "Cyber Monday deals" },
-        { href: "/boxing-day", label: "Boxing Day deals" },
-        { href: "/january-sales", label: "January sales" },
-        { href: "/lunar-new-year", label: "Lunar New Year deals" },
-        { href: "/embed", label: "Free price widgets" },
-        { href: "/tools/deal-finder", label: "Deal Finder" },
-        { href: "/preorders", label: "Pre-orders" },
+        ...(history ? [{ href: "/movers", label: "Price movers" }] : []),
+        { href: "/tools/deal-finder", label: "Today's deals" },
       ],
     },
     {
       title: SITE.name,
       links: [
-        { href: "/about", label: "About" },
-        { href: "/collection", label: "My collection" },
+        { href: "/about", label: "Who runs this site" },
         { href: "/methodology", label: "How prices work" },
-        { href: "/stores", label: "Stores we track" },
         { href: "/blog", label: "Guides" },
-        { href: "/forum", label: "Community forum · beta" },
-        ...(creatorsOn() ? [{ href: "/creators", label: "Creators" }] : []),
-        { href: "/feedback", label: "Send feedback" },
         { href: "/contact", label: "Contact" },
-        { href: "/list-your-store", label: "List your store" },
         { href: "/how-we-pick-stores", label: "How we pick stores" },
         { href: "/privacy", label: "Privacy" },
         { href: "/terms", label: "Terms" },

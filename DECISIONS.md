@@ -1498,3 +1498,18 @@ sitting on top of it.
   `var(--bn-space)` + a small gap up, and the body's bottom padding follows it. Hidden, it slides fully off-screen (transform only, CLS 0).
 - **Measured** (local build, dock stacked): Pixel 7 412×915 nav + dock take 129px (14.1%); iPhone 15 393×852 with a 34px safe area
   143px (16.8%); iPhone SE 375×667 129px (19.3%); the old flush bar took about the same plus the full safe area.
+
+## 2026-11-19: Core-update quality pass: fewer links, ads below content, no leave pop-up, who runs the site
+
+Google's November 2026 core update took several sister sites to near-zero impressions (a quality verdict, not a technical
+fault). BandaiCompare held, and its catalogue is already culled to ~190 products, so its indexing rules are unchanged.
+
+- **Fewer links**: the header shows three tools and the tools page, no forum, creators or feedback link, and 6 sets a game
+  (was 8). The footer drops seasonal sale pages, the report, widgets, pre-orders, collection, stores, forum, creators,
+  feedback and list-your-store. Cross-site cluster tiles are off (`CROSS_SITE_BLOCKS = false`).
+- **Ads below content** (owner, 2026-11-19: "all the ads that can negatively impact our indexing let's remove and have more
+  strategically placed ads"): the one ad block sits after each page's own content (after the price table, the grid, the FAQ),
+  never under the hero or the breadcrumbs. The exit "leave nudge" pop-up is off (`LEAVE_NUDGE_ON = false`). The phone dock
+  (small, after a scroll, dismissible) stays.
+- **Who runs it**: the about page names the co-founders (Bill and George), says AI tools help with code and guides while
+  prices are matched by a program, and gives the running cost (about A$790 a month for the group, our books to 15 Nov 2026).

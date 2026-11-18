@@ -8,7 +8,8 @@ import { refCents, setById, summaryOf } from "@/lib/data";
 import { isPreorder } from "@/lib/preorders";
 import { rankItems, type DemandFile, type RankFacts } from "./home-rank";
 
-export const HOME_DEMAND = raw as DemandFile;
+// Through unknown: a day whose views file has a one-number row no longer reads as a [views, clicks] tuple to tsc.
+export const HOME_DEMAND = raw as unknown as DemandFile;
 
 const NOT_A_STORE = new Set(["ebay", "amazon", "tcgplayer"]);
 

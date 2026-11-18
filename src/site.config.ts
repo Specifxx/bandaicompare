@@ -63,6 +63,7 @@ export const SITE: SiteConfig = {
       ebayQuery: "union arena",
       blurb: "Bandai's anime crossover card game: Jujutsu Kaisen, Demon Slayer, Chainsaw Man, Solo Leveling and dozens more series, each its own set.",
       color: "#d4557f",
+      seo: { name: "Union Arena", codes: true },
     },
     {
       id: "fw",
@@ -74,6 +75,7 @@ export const SITE: SiteConfig = {
       ebayQuery: "dragon ball super fusion world",
       blurb: "The Dragon Ball Super Card Game's 2024 reboot: FB booster sets, FS starter decks and the Manga Boosters collectors chase.",
       color: "#e08a3c",
+      seo: { name: "Fusion World", codes: true },
     },
     {
       id: "dg",
@@ -85,6 +87,7 @@ export const SITE: SiteConfig = {
       ebayQuery: "digimon card game",
       blurb: "Bandai's Digimon TCG since 2020: BT and EX booster sets, starter decks and Rare Pull alternate arts.",
       color: "#4a8fd6",
+      seo: { name: "Digimon", codes: true },
     },
   ],
   // Booster boxes in one Booster Box Case (eBay titles and store listings, 2026-11-07): a listing stating another count is another product.

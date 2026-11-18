@@ -69,6 +69,9 @@ export interface GameLine {
   blurb: string;
   /** Accent colour of the game's tile and chips. */
   color: string;
+  /** How players name the game in a search (lib/game-seo.ts, ported from TCG Prices, DECISIONS.md 2026-11-18): `name`
+   *  leads set and product titles, `codes` adds the set code players type ("UE27BT", "FB12", "BT27"). */
+  seo?: { name: string; codes?: boolean; terms?: Record<string, string> };
 }
 
 export interface SiteConfig {

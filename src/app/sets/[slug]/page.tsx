@@ -13,6 +13,8 @@ import { TileGrid } from "@/components/ProductTile";
 import { JsonLd } from "@/components/JsonLd";
 import { abs } from "@/lib/site";
 import { fitTitle, setTitleCandidates } from "@/lib/seo-title";
+import { setPhrase, setTitleLadder } from "@/lib/game-seo";
+import { lineOfSet } from "@/lib/lines";
 import { postsAbout } from "@/lib/posts";
 import { imageAt } from "@/lib/image";
 import { SealedQuickBuy } from "@/components/SealedQuickBuy";
@@ -32,10 +34,12 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!s) return {};
   const count = sealedInSet(s.id).length;
   if (!count) return {};
-  const title = fitTitle(setTitleCandidates(s.name, count, !!s.upcoming));
+  // In the game's own words (lib/game-seo.ts, DECISIONS.md 2026-11-18): "Digimon Ignition of X (BT27) Booster Box ...".
+  const title = fitTitle(setTitleLadder(s, sealedInSet(s.id).map((p) => p.sealedType)));
+  void setTitleCandidates;
   return {
     title,
-    description: `${s.name} booster box and sealed prices at every store we track: ${count} sealed product${count === 1 ? "" : "s"}, cheapest in stock first, beside TCGplayer, eBay and Amazon. Updated daily.`,
+    description: `${setPhrase(s)} booster box and sealed prices at every store we track: ${count} sealed product${count === 1 ? "" : "s"}, cheapest in stock first, beside TCGplayer, eBay and Amazon. Updated daily.`,
     ...canon(`/sets/${s.slug}`),
     openGraph: { ...canon(`/sets/${s.slug}`).openGraph, title: title.absolute },
   };
@@ -46,7 +50,9 @@ export default function SetPage({ params }: { params: { slug: string } }) {
   if (!s) notFound();
   const sealed = sealedInSet(s.id);
   if (!sealed.length) permanentRedirect(gameHubOfSet(s.slug));
-  const listed = sealedSets();
+  // Neighbours and "other sets" stay inside the set's own game (game > set > product, DECISIONS.md 2026-11-18).
+  const line = lineOfSet(s);
+  const listed = sealedSets().filter((x) => !line || x.line === s.line);
   const i = listed.findIndex((x) => x.id === s.id);
   const newer = i > 0 ? listed[i - 1] : null;
   const older = i >= 0 && i < listed.length - 1 ? listed[i + 1] : null;
@@ -64,7 +70,7 @@ export default function SetPage({ params }: { params: { slug: string } }) {
         }}
       />
       <div>
-        <Breadcrumbs items={[{ name: "Sets", href: "/sets" }, { name: s.name }]} />
+        <Breadcrumbs items={[line ? { name: line.short, href: `/games/${line.slug}` } : { name: "Sets", href: "/sets" }, { name: s.name }]} />
         <header>
           <p className="eyebrow mb-2">{s.upcoming ? "Upcoming" : "Released"}{s.releasedOn ? ` ${longDate(s.releasedOn)}` : ""}</p>
           <h1 className="page-h1">{s.name} booster box &amp; sealed prices</h1>

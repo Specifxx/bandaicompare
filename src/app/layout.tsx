@@ -33,6 +33,7 @@ import { shopNav } from "@/lib/shop-nav";
 import { historyOn } from "@/lib/data";
 import { cardAds } from "@/lib/card-ads";
 import { ReturnBeacon } from "@/components/ReturnBeacon";
+import { SinceLastVisit } from "@/components/SinceLastVisit";
 
 // The engine's two faces (DexCompare and MTG Compare: Bricolage Grotesque for headings, Inter for text), bundled as the latin
 // subsets of the variable fonts (OFL, src/app/fonts): no font request at build or at runtime. Display is optional, not swap:
@@ -96,7 +97,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="mx-auto flex w-full max-w-shell flex-1">
             <SideNav groups={navGroups({ history, sale: holidayNav(), shop: shopNav().groups })} />
             <main id="main" className="min-w-0 flex-1">
-              <div className="page py-6">{children}</div>
+              <div className="page py-6">
+                {SITE.priceAlerts && <SinceLastVisit />}
+                {children}
+              </div>
             </main>
           </div>
           <Footer />

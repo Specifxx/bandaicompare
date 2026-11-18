@@ -20,6 +20,7 @@ import { InlineAds } from "@/components/InlineAds";
 import { adSearch, cardAds } from "@/lib/card-ads";
 import { sealedSets } from "@/lib/hubs";
 import { gameHubOfSet } from "@/lib/data";
+import { ShareButton } from "@/components/ShareButton";
 
 export const dynamic = "force-dynamic"; // one CDN copy per URL (next.config.js CDN_PAGES), never ISR
 
@@ -67,6 +68,7 @@ export default function SetPage({ params }: { params: { slug: string } }) {
         <header>
           <p className="eyebrow mb-2">{s.upcoming ? "Upcoming" : "Released"}{s.releasedOn ? ` ${longDate(s.releasedOn)}` : ""}</p>
           <h1 className="page-h1">{s.name} booster box &amp; sealed prices</h1>
+          <ShareButton path={`/sets/${s.slug}`} name={`${s.name} prices`} medium="set" text={`${s.name}: every price compared on ${SITE.name}`} className="mt-3" />
           <p className="page-sub">
             {sealed.length} sealed product{sealed.length === 1 ? "" : "s"}, compared across every store we track, TCGplayer, eBay and Amazon.
           </p>

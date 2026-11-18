@@ -83,7 +83,6 @@ export default function SetPage({ params }: { params: { slug: string } }) {
           )}
         </header>
       </div>
-      <InlineAds ads={cardAds({ setId: s.id, fill: true, limit: 10 })} search={adSearch(s.name, s)} page="set" />
       <SealedQuickBuy
         title={`Buy ${s.name} booster boxes and sealed`}
         items={sealed.slice(0, 6).map((p) => ({ id: p.id, slug: p.slug, name: shortName(p.name), image: imageAt(p.image, "200w"), best: summaryOf(p.id).best, stores: summaryOf(p.id).listedSources }))}
@@ -106,6 +105,8 @@ export default function SetPage({ params }: { params: { slug: string } }) {
           <div className="flex flex-wrap gap-2">{others.map((x) => <Link key={x.id} href={`/sets/${x.slug}`} className="chip">{x.name}</Link>)}</div>
         </section>
       )}
+      {/* Ads sit below the page's own content, never above it (2026-11-19, core-update quality pass). */}
+      <InlineAds ads={cardAds({ setId: s.id, fill: true, limit: 10 })} search={adSearch(s.name, s)} page="set" />
     </div>
   );
 }

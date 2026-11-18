@@ -42,7 +42,6 @@ export default function SealedHub({ params }: { params: { type: string } }) {
         <h1 className="page-h1">{SITE.gameShort} {h.label.toLowerCase()}</h1>
         <p className="page-sub">{h.items.length} products, newest set first. Open any one to compare every store and eBay.</p>
       </header>
-      <InlineAds ads={cardAds({ kind: "sealed", limit: 10 })} search={adSearch()} page="sealed-type" />
       {LINES.length > 0 && (
         <nav aria-label="By game" className="flex flex-wrap gap-2">
           {LINES.map((l) => ({ l, g: gameTypeHub(l, h.slug) })).filter((x) => x.g && x.g.items.length >= GAME_TYPE_MIN).map(({ l, g }) => (
@@ -57,6 +56,8 @@ export default function SealedHub({ params }: { params: { type: string } }) {
           {sealedHubs().filter((x) => x.slug !== h.slug).map((x) => <Link key={x.slug} href={`/sealed/${x.slug}`} className="chip">{x.label}</Link>)}
         </div>
       </section>
+      {/* Ads sit below the page's own content, never above it (2026-11-19, core-update quality pass). */}
+      <InlineAds ads={cardAds({ kind: "sealed", limit: 10 })} search={adSearch()} page="sealed-type" />
     </div>
   );
 }

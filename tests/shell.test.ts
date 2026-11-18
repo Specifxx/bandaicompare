@@ -70,10 +70,10 @@ test("every rail link points at a page of the site, and prices come first", () =
 
 // 2026-11-10 (cost-cut redesign): recently viewed and the plain game rows come straight after the hero, the one ad block after
 // the deals, and the hero's animated background is gone.
-test("the homepage order: hero, recently viewed, games, deals, the one ad block, sealed, the newest set's sealed, reviews, guides, FAQ, and nothing else", () => {
+test("the homepage order: hero, recently viewed, games, deals, sealed, the newest set's sealed, reviews, guides, FAQ, the one ad block (2026-11-19), and nothing else", () => {
   const src = readFileSync("src/app/page.tsx", "utf8");
   assert.doesNotMatch(src, /<HeroSparks/);
-  const order = ["<CreatorsBubble />", "<InlineAds ", "<RecentlyViewed ", "<GameRows />", "Today's top deals", "<SealedHero", "booster boxes and sealed`}", "<SiteReviews />", 'title="Guides"', "Frequently asked questions"];
+  const order = ["<CreatorsBubble />", "<RecentlyViewed ", "<GameRows />", "Today's top deals", "<SealedHero", "booster boxes and sealed`}", "<SiteReviews />", 'title="Guides"', "Frequently asked questions", "<InlineAds "];
   let at = -1;
   for (const o of order) {
     const i = src.indexOf(o, at + 1);

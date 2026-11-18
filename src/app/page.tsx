@@ -150,9 +150,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The two big ad banners (owner, 2026-11-14): eBay and TCGplayer apart, directly under the hero, never in it. */}
-      <InlineAds ads={cardAds({ limit: 10 })} search={adSearch()} page="home" />
-
       {/* 2026-11-10 (cost-cut redesign: return visits, lower bounce, more exploring): what the visitor looked at last time, then
           one plain row per game with its type hubs, then the deals. The ad banner follows the deals instead of leading. */}
       <RecentlyViewed title="Pick up where you left off" />
@@ -227,6 +224,8 @@ export default function Home() {
         ))}
       </section>
       <p className="sr-only">{products().length} products tracked</p>
+      {/* Ads sit below the page's own content, never under the hero (2026-11-19, core-update quality pass). */}
+      <InlineAds ads={cardAds({ limit: 10 })} search={adSearch()} page="home" />
     </div>
   );
 }

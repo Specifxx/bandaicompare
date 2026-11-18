@@ -50,10 +50,10 @@ function build(): ShopNav {
       href: `/games/${line.slug}`,
       columns: [
         ...(types.length ? [{ title: "By product type", links: types }] : []),
-        { title: "Newest sets", links: cap(setLinks, 8, { href: home.href, label: `All ${view.sets.length} sets` }) },
+        { title: "Newest sets", links: cap(setLinks, 6, { href: home.href, label: `All ${view.sets.length} sets` }) },
       ],
     });
-    groups.push({ title: line.name, links: [{ href: home.href, label: `${line.short} home` }, ...types, ...cap(setLinks, 8, { href: "/sets", label: `All ${line.short} sets` })] });
+    groups.push({ title: line.name, links: [{ href: home.href, label: `${line.short} home` }, ...types, ...cap(setLinks, 6, { href: "/sets", label: `All ${line.short} sets` })] });
   }
   const types: NavLink[] = sealedHubs().map((h) => ({ href: `/sealed/${h.slug}`, label: h.label }));
   groups.push({ title: "All games, by type", links: [...types, { href: "/sealed", label: "All sealed" }, { href: "/sets", label: "Every set" }] });

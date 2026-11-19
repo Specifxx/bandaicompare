@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-18T11:57:30.552Z",
+ "generatedAt": "2026-11-19T11:53:06.096Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -27,20 +27,6 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
-   "title": "Yu Yu Hakusho: Ghost Files - Booster Box",
-   "url": "https://bandaicompare.com/card/yu-yu-hakusho-ghost-files-booster-box",
-   "cents": 6000,
-   "currency": "USD",
-   "store": "Dynamic Card Collectors",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/635348_200w.jpg",
-   "refCents": 7783,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 23
-  },
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
    "title": "Ignition of X Booster Box",
    "url": "https://bandaicompare.com/card/ignition-of-x-booster-box",
    "cents": 9499,
@@ -49,6 +35,20 @@
    "refCents": 11764,
    "refLabel": "TCGplayer market price",
    "savingPct": 19
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "The 100 Girlfriends Who Really, Really, Really, Really, REALLY Love You - Booster Box",
+   "url": "https://bandaicompare.com/card/the-100-girlfriends-who-really-really-really-really-really-love-you-booster-box",
+   "cents": 12809,
+   "currency": "USD",
+   "store": "Gamers Guild AZ",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/694936_200w.jpg",
+   "refCents": 15251,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 16
   },
   {
    "kind": "deal",
@@ -91,6 +91,28 @@
    "refCents": 103683,
    "refLabel": "TCGplayer market price",
    "savingPct": 8
+  },
+  {
+   "kind": "preorder",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Starter Deck 25: Rubeusdramon Starter Deck",
+   "url": "https://bandaicompare.com/preorders/starter-deck-25-rubeusdramon",
+   "cents": 1999,
+   "currency": "USD",
+   "store": "Many Realms",
+   "releaseDate": "2026-12-04"
+  },
+  {
+   "kind": "preorder",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Starter Deck 26: Yukinamon Starter Deck",
+   "url": "https://bandaicompare.com/preorders/starter-deck-26-yukinamon",
+   "cents": 1999,
+   "currency": "USD",
+   "store": "Many Realms",
+   "releaseDate": "2026-12-04"
   },
   {
    "kind": "preorder",

@@ -1,15 +1,15 @@
 name: Refresh prices
 
 # The daily import: TCGCSV + stores + budgeted eBay → data/ → commit to main.
-# The data commit's SUBJECT carries [deploy], so it is the day's one
-# production build (scripts/vercel-ignore-build.sh). Scheduled after TCGCSV's
+# Weekly release (owner, 2026-11-19): only MONDAY's (UTC) data commit carries [deploy] in its SUBJECT, the
+# week's one production build; the other days' data rides it (scripts/vercel-ignore-build.sh). Scheduled after TCGCSV's
 # ~20:00 UTC refresh would be ideal for TCGplayer, but the eBay run hour is set
 # per site (BandaiCompare needs its own eBay app, owner rule 2026-11-01; the
 # hour is SITE.ebay.runHourUtc) — keep this cron's hour equal to it.
 
 on:
   schedule:
-    - cron: "17 3 * * 1" # Mondays only: BandaiCompare is idle (2026-11-19)
+    - cron: "17 3 * * *" # daily: TCG Prices reads this data (stale after 72 h); only Monday releases
   workflow_dispatch:
     inputs:
       ebay:
@@ -68,7 +68,7 @@ jobs:
         if: ${{ !cancelled() }}
         continue-on-error: true
         run: DEMAND_WRITE_ONLY=1 bash scripts/pull-demand.sh bandai data/demand.json
-      - name: Commit data (this commit is the daily release)
+      - name: Commit data (Monday's commit is the weekly release)
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -78,7 +78,9 @@ jobs:
             echo "No data changes."
             exit 0
           fi
-          git commit -m "data: weekly prices $(date -u +%F) [deploy]" -m "Written by refresh-prices.yml. This is the one scheduled production build a week (site idle since 2026-11-19)."
+          marker=""; note="No marker: it rides Monday's weekly release (owner, 2026-11-19)."
+          if [ "$(date -u +%u)" = "1" ]; then marker=" [deploy]"; note="Monday: the one scheduled production build a week (owner, 2026-11-19)."; fi
+          git commit -m "data: daily prices $(date -u +%F)${marker}" -m "Written by refresh-prices.yml. ${note}"
           for i in 1 2 3 4; do
             git push origin HEAD:main && exit 0
             sleep $((2 ** i)); git pull --rebase origin main

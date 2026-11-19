@@ -27,10 +27,10 @@ async function check(name: string, fn: () => Promise<Omit<Result, "name">>): Pro
   }
 }
 
-/** The import runs once a week (2026-11-19: BandaiCompare idle, weekly import and release, like FigureCompare
- *  and MotorCompare), so every age check allows a week plus a day before amber and nine days before red. */
-const IDLE_OK_H = 7 * 24 + 30;
-const IDLE_RED_H = 7 * 24 + 54;
+/** The import runs daily (TCG Prices reads this data and drops a sister over 72 hours old); only the release is
+ *  weekly since 2026-11-19. Every age check: amber after 30 hours, red after 54. */
+const IDLE_OK_H = 30;
+const IDLE_RED_H = 54;
 
 async function main() {
   const meta = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data/public/meta.json"), "utf8")) as Meta;
@@ -58,7 +58,7 @@ async function main() {
         : { status: "fail", detail: `/card/${slugs[0]} answered HTTP ${r.status}${to ? ` → ${to}` : ""}, not a permanent redirect to its set` };
     }),
     check("Daily price import", async () =>
-      ageH < IDLE_OK_H ? { status: "ok", detail: `${ageH.toFixed(1)}h old` } : { status: ageH < IDLE_RED_H ? "warn" : "fail", detail: `data is ${ageH.toFixed(0)}h old — check the Refresh prices workflow (weekly)` },
+      ageH < IDLE_OK_H ? { status: "ok", detail: `${ageH.toFixed(1)}h old` } : { status: ageH < IDLE_RED_H ? "warn" : "fail", detail: `data is ${ageH.toFixed(0)}h old — check the Refresh prices workflow` },
     ),
     check("Store imports", async () => {
       const bad = Object.entries(meta.stores).filter(([, s]) => !s.ok || s.matched === 0);

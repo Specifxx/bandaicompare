@@ -1646,3 +1646,15 @@ went to every Compare site's gate.
 BandaiCompare is idle (eBay paused the same day), like FigureCompare and MotorCompare. Its daily import and the fallback
 release were the site's one build a day; both now run Mondays only (`refresh-prices.yml`, `production-deploy.yml`), and
 the ops monitor's age checks allow a week plus a day before amber. Prices refresh weekly; nothing else changes.
+
+## 2026-11-19: Weekly releases: import daily, build on Mondays
+
+The owner approved the boardroom plan's capacity move ("Let's do it", 19 Nov): BandaiCompare releases once a week. `refresh-prices.yml`
+still imports every day (eBay, stores, the alert feed's inputs and the data history keep their daily rhythm), but only
+Monday's (UTC) data commit carries `[deploy]`; the other days' data rides it. The fallback in `production-deploy.yml` runs
+on Mondays at 22:00 UTC and releases only when nothing has in six days. What visitors see, the alert feed included, is
+refreshed weekly. Why: the build budget goes to the sites that earn.
+
+This also corrects the earlier entry the same day ("Idle: import and release weekly"): the IMPORT stays daily, because TCG
+Prices reads BandaiCompare's store data for Union Arena, Fusion World and Digimon and drops a sister over 72 hours old. The
+ops monitor's freshness bounds go back to 30 and 54 hours.

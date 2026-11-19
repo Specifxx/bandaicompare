@@ -1577,6 +1577,31 @@ blue again (#3665f3, white ink, fixed in both themes) on every site; nothing els
 label), and the cheapest row keeps its mark. RiftCompare and OP Compare had started a 50/50 the same morning; it ended for
 everyone. Read: eBay buy clicks per 100 visitors, the week after release vs 12-18 Nov.
 
+## 2026-11-19 — Idle: no agent work, no eBay calls; the daily import stays for TCG Prices
+
+Owner, 2026-11-19: "bandai compare seems to be a bad idea it's not earning anything at all". The Monday report of 16 Nov:
+A$4.17 earned in 30 days (one TCGplayer sale, week of 2 Nov), A$0 since; 143 visitors and 0 buy clicks in a week; 6
+Google clicks; 4 pages in Bing; Vercel A$0.17 that week (A$35.89 over four weeks, almost all before the 10 Nov cost cut).
+The site stays live and unchanged (host, URLs, pages). Its agent loop is off. The scheduled import no longer spends eBay
+calls (`EBAY_REFRESH` is false unless a manual run ticks eBay), freeing its 1,000 a day on Cyberpunk Compare's keyset for the
+owner to move. The daily import and its release stay: TCG Prices reads this site's store data for Union Arena, Fusion World
+and Digimon and skips a sister whose data is over 72 hours old, and a release costs about A$0.02 a day here. The ops monitor
+reads an old eBay run as expected. Undo by restoring the old `EBAY_REFRESH` expression and the input default.
+
+## 2026-11-19: The price history chart draws two lines, OP Compare's look (owner)
+
+Owner: "I really really like opcompare's price history where you have the tcgplayer market price as well as the cheapest
+price locally. Can we pls copy it across all our tcg websites?" `components/PriceHistory.tsx` replaces `PriceChart.tsx` on
+the card page and in the quick view (which lists at most 10 rows): the cheapest in-stock store price in the visitor's market
+(solid red) against TCGplayer's market price (dashed gold, `data/history`, converted at the import's rate outside the US and
+labelled "converted"), Now / Low / High / change from the store line, 7D / 30D / 90D / All tabs only where the history is
+longer, and a crosshair tooltip with both lines. Either line draws alone where the other has no data. The axis ends on the
+import's own day (`historyThrough()`), never the clock, so server and browser draw the same chart.
+
+The store line is new data: the daily import now records the cheapest in-stock store price per product per market
+(`lib/import/store-lows.ts`, `data/store-lows/<setId>.json`, change-only points in the market's own cents, 0 = nothing in
+stock, never eBay, Amazon, TCGplayer or a pre-order; 730 days kept), the same file TCG Prices keeps. It starts empty here and fills from the next import (TCG Prices also reads directory stores for these games, so its lows are not this site's).
+Pure maths in `lib/history-chart.ts`, pinned by `tests/history-chart.test.ts`.
 ## 2026-11-19 — A graded-slab variant never prices the raw card
 
 A store can sell a raw card and its slabs as variants of ONE Shopify product ("Near Mint" A$344, "Graded - Beckett

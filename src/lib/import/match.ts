@@ -406,6 +406,30 @@ function codesAgree(p: Product, codes: Set<number>, idx: MatchIndex): boolean {
   return false;
 }
 
+// A starter deck's number as stores write it: "ST26", "[ST21]", "ST-23", "FS02",
+// "SD21" (live store titles, 2026-11-19). TCGplayer names the set "Starter Deck
+// 26: Yukinamon", so the set's "26" is in the title only as this code; without
+// it every "Digimon Card Game - Digimon Yukinamon ST26 Starter Deck" was missed.
+// A title with no number of its own ("Digimon Card Game - Starter Deck -
+// Rubeusdramon") may leave the set's number out: the deck's name says which deck.
+// A title that gives a number must give the set's own. Read only as a set-name
+// number; the set's other words, the product's own words, its type and the tie
+// rule still decide.
+const STARTER_CODE = /(?<![A-Za-z0-9])(?:ST|SD|FS)[\s-]?(\d{1,2})(?![A-Za-z0-9])/gi;
+export function starterDeckNumbers(title: string): Set<number> {
+  const out = new Set<number>();
+  for (const m of title.matchAll(STARTER_CODE)) out.add(Number(m[1]));
+  return out;
+}
+
+/** Every word of the set's name is in the title; its number may be a starter code. */
+function setNamed(setTokens: string[], have: Set<string>, title: string): boolean {
+  const codes = starterDeckNumbers(title);
+  // Any other number in the title (a date, a pack count, a code) counts as "a number of its own".
+  const numbered = codes.size > 0 || /(?<![A-Za-z])\d{1,2}(?!\d)/.test(title.replace(/\b(19|20)\d{2}\b/g, ""));
+  return setTokens.every((t) => have.has(t) || (/^\d+$/.test(t) && (codes.has(Number(t)) || !numbered)));
+}
+
 export function matchSealed(title: string, idx: MatchIndex): MatchResult | null {
   if (isForeign(title)) return null;
   const have = new Set(tokens(title).filter((t) => !STOP.has(t) || t === "booster"));
@@ -419,7 +443,7 @@ export function matchSealed(title: string, idx: MatchIndex): MatchResult | null 
     // "Pack Bundle Magnificent Maestros" is several packs, not one.
     if (/\bbundle\b/i.test(title) && !/\bbundle\b/i.test(p.name)) continue;
     const setTokens = idx.setName.get(p.setId) ?? [];
-    if (setTokens.length && overlap(setTokens, have) < 1) continue;
+    if (setTokens.length && !setNamed(setTokens, have, title)) continue;
     if (!codesAgree(p, codes, idx)) continue;
     const own = idx.editions ? idx.setEdition.get(p.setId) : null;
     const need = tokens(p.name).filter((t) => !STOP.has(t) && t !== own);

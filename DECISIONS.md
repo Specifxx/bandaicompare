@@ -1542,3 +1542,12 @@ Arena's had 15–29.
 A production check on a sister site found /premium opening on phones under ad blocks. Premium promises no ads, and these are
 conversion and utility pages, so the layout's ad units (DockAds) stand down on them (`lib/ad-free-paths.ts`,
 `AdRouteGate.tsx`, `tests/ad-free-paths.test.ts`).
+
+## 2026-11-19 — A calmer home page on a phone
+
+Owner, 2026-11-19: "way too much going on in the mobile version of the home page" (KaeYoung first; the same pass on every
+site). Below sm the hero is the headline, the words and the link to every sealed product; the creators bubble, the market
+row, trending chips and counts show from sm up (the header already carries the search and the market). The newest set's
+shelf is ONE sideways row on a phone (`rail` on `TileGrid`, `.phone-rail` in globals.css), and the guide cards show from
+sm up. Measured on a 390px phone: 6,752 px tall before, 5,592 after. Layout only: URLs, titles, the h1 and the h2
+outline, metadata and JSON-LD are the same, the server HTML is the same at every width, and the desktop page is unchanged.

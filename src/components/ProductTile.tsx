@@ -70,9 +70,10 @@ export function ProductTile({ p, change }: { p: Product; change?: number | null 
   );
 }
 
-export function TileGrid({ items }: { items: Product[] }) {
+/** `rail`: one sideways row on a phone (the home page's shelves, 2026-11-19), the usual grid from sm up. */
+export function TileGrid({ items, rail }: { items: Product[]; rail?: boolean }) {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+    <div className={`grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6${rail ? " phone-rail scroller" : ""}`}>
       {items.map((p) => <ProductTile key={p.id} p={p} />)}
     </div>
   );

@@ -1513,3 +1513,12 @@ fault). BandaiCompare held, and its catalogue is already culled to ~190 products
   (small, after a scroll, dismissible) stays.
 - **Who runs it**: the about page names the co-founders (Bill and George), says AI tools help with code and guides while
   prices are matched by a program, and gives the running cost (about A$790 a month for the group, our books to 15 Nov 2026).
+
+## 2026-11-19 — A calmer home page on a phone
+
+Owner, 2026-11-19: "way too much going on in the mobile version of the home page" (KaeYoung first; the same pass on every
+site). Below sm the hero is the headline, the words and the link to every sealed product; the creators bubble, the market
+row, trending chips and counts show from sm up (the header already carries the search and the market). The newest set's
+shelf is ONE sideways row on a phone (`rail` on `TileGrid`, `.phone-rail` in globals.css), and the guide cards show from
+sm up. Measured on a 390px phone: 6,752 px tall before, 5,592 after. Layout only: URLs, titles, the h1 and the h2
+outline, metadata and JSON-LD are the same, the server HTML is the same at every width, and the desktop page is unchanged.

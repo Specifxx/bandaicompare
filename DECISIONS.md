@@ -1513,3 +1513,19 @@ fault). BandaiCompare held, and its catalogue is already culled to ~190 products
   (small, after a scroll, dismissible) stays.
 - **Who runs it**: the about page names the co-founders (Bill and George), says AI tools help with code and guides while
   prices are matched by a program, and gives the running cost (about A$790 a month for the group, our books to 15 Nov 2026).
+
+## 2026-11-19: Starter decks: a store's "ST26" is the set's number, and a title may leave it out
+
+Digimon's two December starter decks (Starter Deck 25: Rubeusdramon, 26: Yukinamon, 4 Dec) had no page: stores list
+them ("Digimon Card Game - Digimon Yukinamon ST26 Starter Deck (Preorder)", "Starter Deck - Rubeusdramon (Pre-Order)"),
+but `matchSealed` needed every word of the set's name in the title, "26" included, and stores write the number as a
+code or not at all. The same gap held every Digimon and several Fusion World starter decks to 1–8 stores while Union
+Arena's had 15–29.
+
+- A set-name number is also met by a starter code with that number (`ST26`, `[ST21]`, `ST-7`, `FS06`, `SD6`;
+  `starterDeckNumbers`), or may be left out when the title carries no number of its own (a year aside).
+- A title that gives a number must give the set's own: "Yukinamon Starter Deck ST25" and "Starter Deck 24 - Yukinamon"
+  match nothing. Every other test still holds: the set's other words, the product's own words (FS01 "Starter Deck 1:
+  Son Goku" still needs its "1"), the type and the tie rule.
+- Measured on the 2026-11-03 store probe's sample titles: 71 listings gained, none lost or moved to another product.
+  Real titles in `tests/match.test.ts`.

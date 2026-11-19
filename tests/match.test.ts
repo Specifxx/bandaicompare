@@ -179,3 +179,34 @@ test("Japanese boxes and wrong set codes never match (Gundam Compare, live 2026-
   // The deck build box carries its parent set's code.
   assert.equal(matchSealed("Gundam Freedom Ascension Deck Build Box [GD05]", gidx)?.product.id, 693625);
 });
+
+// Digimon and Fusion World starter decks (live store titles, 2026-11-19). TCGplayer names the set
+// "Starter Deck 26: Yukinamon"; stores write the number as a code ("ST26", "[ST21]", "ST-7", "FS06")
+// or leave it out. A title that gives a number must give the set's own.
+test("sealed: starter deck number as a store code, or left out", () => {
+  const ss = [
+    set(30, "Starter Deck 25: Rubeusdramon"), set(31, "Starter Deck 26: Yukinamon"), set(32, "Starter Deck 21: Hero of Hope"),
+    set(33, "Starter Deck 6: Son Goku (Mini)"), set(34, "Starter Deck 1: Son Goku"),
+  ];
+  const ps = [
+    sealed(40, "Rubeusdramon Starter Deck", 30), sealed(41, "Rubeusdramon Starter Deck Display", 30),
+    sealed(42, "Yukinamon Starter Deck", 31), sealed(43, "Yukinamon Starter Deck Display", 31),
+    sealed(44, "Hero of Hope Starter Deck", 32),
+    sealed(45, "Starter Deck 6: Son Goku (Mini)", 33), sealed(46, "Starter Deck 1: Son Goku", 34),
+  ];
+  const ix = buildIndex(ps, ss, "series");
+  const id = (t: string) => matchSealed(t, ix)?.product.id ?? null;
+  assert.equal(id("Digimon Card Game - Digimon Yukinamon ST26 Starter Deck (Preorder)"), 42);
+  assert.equal(id("Digimon Card Game - Digimon Yukinamon ST26 Starter Deck Display (Preorder)"), 43);
+  assert.equal(id("[Pre-Order] DIGIMON CG ST26 YUKINAMON STARTER DECK (ETA 2026-12-04)"), 42);
+  assert.equal(id("Digimon Card Game - Starter Deck - Rubeusdramon (Pre-Order)"), 40);
+  assert.equal(id("Digimon - Starter Deck - Hero of Hope [ST21]"), 44);
+  assert.equal(id("Bandai - Digimon - Hero of Hope - ST21 - Starter Deck"), 44);
+  assert.equal(id("Dragon Ball Super Card Game Fusion World: Son Goku (Mini) [FS06] Starter Deck"), 45);
+  // The wrong deck's code, or another number, is no match.
+  assert.equal(id("Digimon Card Game - Yukinamon Starter Deck ST25"), null);
+  assert.equal(id("Digimon Card Game Starter Deck 24 - Yukinamon"), null);
+  // The deck's name still decides: Son Goku (Mini) is not Starter Deck 1: Son Goku.
+  assert.equal(id("Dragon Ball Super Fusion World Starter Deck 1: Son Goku [FS01]"), 46);
+  assert.equal(id("Dragon Ball Super Fusion World Son Goku Starter Deck FS06"), null);
+});

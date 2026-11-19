@@ -1658,3 +1658,12 @@ refreshed weekly. Why: the build budget goes to the sites that earn.
 This also corrects the earlier entry the same day ("Idle: import and release weekly"): the IMPORT stays daily, because TCG
 Prices reads BandaiCompare's store data for Union Arena, Fusion World and Digimon and drops a sister over 72 hours old. The
 ops monitor's freshness bounds go back to 30 and 54 hours.
+
+## The Hot 100's share image shows the chart with photos (2026-11-20)
+
+The owner's Reddit snapshot posts (a title and a link, nothing else) live on the link's thumbnail: the Rift "rising cards"
+snapshot gets about 2,000 views a day each. Our Hot 100 image was a text list. It now draws the #1 riser large with its
+TCGplayer photo and #2 to #6 beside it with theirs, each with its real 7-day rise and price, from the same `hotChart` the page
+lists. The photos (TCGplayer's 200-pixel images) are fetched when the image is drawn, once a day (ISR, a day), each with a
+six-second timeout and kept only as PNG or JPEG (`src/lib/og-photo.ts`); a photo that fails draws a plain tile. Every other
+share image stays text only (the Vercel cost cap, 2026-11-08): this is the one a link post lives on.

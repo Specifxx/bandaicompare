@@ -63,7 +63,8 @@ async function main() {
       if (!process.env.EBAY_CLIENT_ID) return { status: "warn", detail: "EBAY_CLIENT_ID not set in GitHub secrets — no eBay prices" };
       if (!meta.ebay) return { status: "warn", detail: "no eBay run recorded yet" };
       const age = (Date.now() - new Date(meta.ebay.at).getTime()) / 3_600_000;
-      if (age > 30) return { status: "warn", detail: `last eBay run ${age.toFixed(0)}h ago` };
+      // eBay is paused on the scheduled import (owner, 2026-11-19: the site is idle), so an old run is expected.
+      if (age > 30) return { status: "ok", detail: `eBay paused since 2026-11-19 (site idle); last run ${age.toFixed(0)}h ago` };
       return { status: "ok", detail: `${meta.ebay.calls}/${meta.ebay.budget} calls on ${meta.ebay.day}, ${meta.ebay.eligible} eligible` };
     }),
     // The Compare Empire network feed (scripts/family-sync.ts): sisters' "Also in this cluster"

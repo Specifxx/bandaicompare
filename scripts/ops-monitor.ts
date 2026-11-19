@@ -27,6 +27,11 @@ async function check(name: string, fn: () => Promise<Omit<Result, "name">>): Pro
   }
 }
 
+/** The import runs once a week (2026-11-19: BandaiCompare idle, weekly import and release, like FigureCompare
+ *  and MotorCompare), so every age check allows a week plus a day before amber and nine days before red. */
+const IDLE_OK_H = 7 * 24 + 30;
+const IDLE_RED_H = 7 * 24 + 54;
+
 async function main() {
   const meta = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data/public/meta.json"), "utf8")) as Meta;
   const ageH = (Date.now() - new Date(meta.updatedAt).getTime()) / 3_600_000;
@@ -53,7 +58,7 @@ async function main() {
         : { status: "fail", detail: `/card/${slugs[0]} answered HTTP ${r.status}${to ? ` → ${to}` : ""}, not a permanent redirect to its set` };
     }),
     check("Daily price import", async () =>
-      ageH < 30 ? { status: "ok", detail: `${ageH.toFixed(1)}h old` } : { status: ageH < 54 ? "warn" : "fail", detail: `data is ${ageH.toFixed(0)}h old — check the Refresh prices workflow` },
+      ageH < IDLE_OK_H ? { status: "ok", detail: `${ageH.toFixed(1)}h old` } : { status: ageH < IDLE_RED_H ? "warn" : "fail", detail: `data is ${ageH.toFixed(0)}h old — check the Refresh prices workflow (weekly)` },
     ),
     check("Store imports", async () => {
       const bad = Object.entries(meta.stores).filter(([, s]) => !s.ok || s.matched === 0);
@@ -74,8 +79,8 @@ async function main() {
         const f = JSON.parse(fs.readFileSync(path.join(FAMILY_DIR, FEED_FILE), "utf8")) as { generatedAt: string; items: unknown[] };
         const age = (Date.now() - new Date(f.generatedAt).getTime()) / 3_600_000;
         const sisters = familyFeeds().map((x) => x.site);
-        if (age > 54) return { status: "fail", detail: `family-feed.json is ${age.toFixed(0)}h old — check the Refresh prices workflow's family step` };
-        return { status: age > 30 ? "warn" : "ok", detail: `${f.items.length} items, ${age.toFixed(1)}h old; ${sisters.length} sister feeds (${sisters.join(", ") || "none yet"})` };
+        if (age > IDLE_RED_H) return { status: "fail", detail: `family-feed.json is ${age.toFixed(0)}h old — check the Refresh prices workflow's family step` };
+        return { status: age > IDLE_OK_H ? "warn" : "ok", detail: `${f.items.length} items, ${age.toFixed(1)}h old; ${sisters.length} sister feeds (${sisters.join(", ") || "none yet"})` };
       } catch {
         return { status: "fail", detail: "data/public/family/family-feed.json missing — check the Refresh prices workflow's family step" };
       }
@@ -91,7 +96,7 @@ async function main() {
       for (const f of files) {
         const s = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")) as { at: string; state: string; known?: number; found?: number };
         const age = (Date.now() - new Date(s.at).getTime()) / 3_600_000;
-        if (s.state === "ok" && age > 54) stale++;
+        if (s.state === "ok" && age > IDLE_RED_H) stale++;
         parts.push(`${f.slice(7, -5)}: ${s.state}${s.known != null ? `, ${s.known} ASINs` : ""}, ${age.toFixed(0)}h ago`);
       }
       return { status: stale ? "warn" : "ok", detail: parts.join("; ") };
@@ -106,10 +111,10 @@ async function main() {
             const age = (Date.now() - new Date(f.generatedAt).getTime()) / 3_600_000;
             const bad = Object.entries(f.stores).filter(([, s]) => !s.ok || s.matched === 0);
             const total = SITE.kits!.stores.length;
-            if (age > 54) return { status: "fail", detail: `kit data is ${age.toFixed(0)}h old` };
+            if (age > IDLE_RED_H) return { status: "fail", detail: `kit data is ${age.toFixed(0)}h old` };
             if (f.kits.length < 100) return { status: "fail", detail: `only ${f.kits.length} kits` };
             if (bad.length) return { status: bad.length > total / 3 ? "fail" : "warn", detail: bad.map(([k, s]) => `${k}: ${s.error ?? "0 matched"}`).join("; ") };
-            return { status: age > 30 ? "warn" : "ok", detail: `${f.kits.length} kits from ${total} stores, ${age.toFixed(1)}h old` };
+            return { status: age > IDLE_OK_H ? "warn" : "ok", detail: `${f.kits.length} kits from ${total} stores, ${age.toFixed(1)}h old` };
           }),
         ]
       : []),

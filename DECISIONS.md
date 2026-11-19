@@ -1536,3 +1536,9 @@ Arena's had 15–29.
   Son Goku" still needs its "1"), the type and the tie rule.
 - Measured on the 2026-11-03 store probe's sample titles: 71 listings gained, none lost or moved to another product.
   Real titles in `tests/match.test.ts`.
+
+## 2026-11-19: No ads on Premium, account, collection, watches, sign-in or giveaway pages
+
+A production check on a sister site found /premium opening on phones under ad blocks. Premium promises no ads, and these are
+conversion and utility pages, so the layout's ad units (DockAds) stand down on them (`lib/ad-free-paths.ts`,
+`AdRouteGate.tsx`, `tests/ad-free-paths.test.ts`).

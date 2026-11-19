@@ -8,6 +8,7 @@ import { SITE_URL } from "@/lib/site";
 import { creatorsOn } from "@/lib/creators";
 import { cardIndexable } from "@/lib/indexing";
 import { LINES } from "@/lib/lines";
+import { withoutOffSeasonSales } from "@/lib/sale-seasons";
 
 export const revalidate = 86400;
 
@@ -16,11 +17,15 @@ export const revalidate = 86400;
 // each sealed product page that asks to be indexed (a reference price or a listing, or an upcoming set; never a pack
 // insert: lib/indexing.ts). No card URL, no card hub and no retired tool: those 301 (next.config.js,
 // lib/card-redirects.ts).
+// Pages whose words do not change with the day's prices carry no lastmod: dating them "today" on every build is the
+// re-dating to look fresh that Google's guidance calls search-engine-first (search-engine-first audit, 2026-11-19).
+const PROSE_PAGES = new Set(["/about", "/methodology", "/list-your-store", "/how-we-pick-stores", "/creators", "/embed", "/tools/selling-fees"]);
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const at = meta()?.updatedAt ? new Date(meta()!.updatedAt) : new Date();
-  const fixed = ["", "/sealed", "/sets", "/preorders", "/tools/deal-finder", "/tools/is-this-a-good-price", "/price-report", "/black-friday", "/cyber-monday", "/boxing-day", "/january-sales", "/lunar-new-year", "/daily", "/blog", "/stores", "/about", "/methodology", "/list-your-store", ...(creatorsOn() ? ["/creators"] : [])];
+  const fixed = ["", "/sealed", "/sets", "/preorders", "/tools/deal-finder", "/tools/is-this-a-good-price", "/price-report", "/black-friday", "/cyber-monday", ...withoutOffSeasonSales(["/boxing-day", "/january-sales"], new Date().toISOString().slice(0, 10)), "/daily", "/blog", "/stores", "/about", "/methodology", "/list-your-store", ...(creatorsOn() ? ["/creators"] : [])];
   return [
-    ...fixed.map((p) => ({ url: `${SITE_URL}${p}`, lastModified: at, changeFrequency: "daily" as const, priority: p === "" ? 1 : 0.8 })),
+    ...fixed.map((p) => ({ url: `${SITE_URL}${p}`, ...(PROSE_PAGES.has(p) ? {} : { lastModified: at }), changeFrequency: "daily" as const, priority: p === "" ? 1 : 0.8 })),
     // The game hubs (SITE.lines): each game's sets, boxes and decks.
     ...(LINES.length ? ["/games", ...LINES.map((l) => `/games/${l.slug}`)] : []).map((p) => ({ url: `${SITE_URL}${p}`, lastModified: at, changeFrequency: "daily" as const, priority: 0.9 })),
     ...LINES.flatMap((l) => gameTypeHubs(l).filter((h) => h.items.length >= GAME_TYPE_MIN).map((h) => ({ url: `${SITE_URL}/games/${l.slug}/${h.slug}`, lastModified: at, changeFrequency: "daily" as const, priority: 0.8 }))),

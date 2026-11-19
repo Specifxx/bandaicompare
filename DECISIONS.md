@@ -1576,3 +1576,14 @@ TCGplayer, which kept its own blue button, rose (DexCompare 545 to 779, MTG Comp
 blue again (#3665f3, white ink, fixed in both themes) on every site; nothing else about the rows changes (no outline, tint, order or
 label), and the cheapest row keeps its mark. RiftCompare and OP Compare had started a 50/50 the same morning; it ended for
 everyone. Read: eBay buy clicks per 100 visitors, the week after release vs 12-18 Nov.
+
+## 2026-11-19 — Idle: no agent work, no eBay calls; the daily import stays for TCG Prices
+
+Owner, 2026-11-19: "bandai compare seems to be a bad idea it's not earning anything at all". The Monday report of 16 Nov:
+A$4.17 earned in 30 days (one TCGplayer sale, week of 2 Nov), A$0 since; 143 visitors and 0 buy clicks in a week; 6
+Google clicks; 4 pages in Bing; Vercel A$0.17 that week (A$35.89 over four weeks, almost all before the 10 Nov cost cut).
+The site stays live and unchanged (host, URLs, pages). Its agent loop is off. The scheduled import no longer spends eBay
+calls (`EBAY_REFRESH` is false unless a manual run ticks eBay), freeing its 1,000 a day on Cyberpunk Compare's keyset for the
+owner to move. The daily import and its release stay: TCG Prices reads this site's store data for Union Arena, Fusion World
+and Digimon and skips a sister whose data is over 72 hours old, and a release costs about A$0.02 a day here. The ops monitor
+reads an old eBay run as expected. Undo by restoring the old `EBAY_REFRESH` expression and the input default.

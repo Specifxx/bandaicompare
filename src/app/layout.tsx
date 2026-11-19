@@ -34,6 +34,7 @@ import { historyOn } from "@/lib/data";
 import { cardAds } from "@/lib/card-ads";
 import { ReturnBeacon } from "@/components/ReturnBeacon";
 import { SinceLastVisit } from "@/components/SinceLastVisit";
+import { AdRouteGate } from "@/components/AdRouteGate";
 
 // The engine's two faces (DexCompare and MTG Compare: Bricolage Grotesque for headings, Inter for text), bundled as the latin
 // subsets of the variable fonts (OFL, src/app/fonts): no font request at build or at runtime. Display is optional, not swap:
@@ -108,7 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* Rate us (owner, 2026-11-03): the corner card, asking only after real use; RiftCompare keeps the ratings. */}
           <RateCard />
           {/* The phone dock (the side rails are gone, owner 2026-11-13): eBay and TCGplayer tiles along the foot of a narrow screen, after a scroll. */}
-          <DockAds ads={cardAds({ limit: 10 })} />
+          <AdRouteGate><DockAds ads={cardAds({ limit: 10 })} /></AdRouteGate>
           {/* The phone bottom nav (BottomNav.tsx, owner 2026-11-18): SITE.bottomNav "optin" (?bn=1 only), "on" or "off" (the rollback). */}
           {(SITE.bottomNav ?? "off") !== "off" && <BottomNav mode={SITE.bottomNav ?? "off"} />}
         </PrefsProvider>

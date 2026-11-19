@@ -1514,6 +1514,13 @@ fault). BandaiCompare held, and its catalogue is already culled to ~190 products
 - **Who runs it**: the about page names the co-founders (Bill and George), says AI tools help with code and guides while
   prices are matched by a program, and gives the running cost (about A$790 a month for the group, our books to 15 Nov 2026).
 
+## 2026-11-19: The dock A/B ends: the phone ad strip sits above the bottom nav for everyone (owner)
+
+The owner, 2026-11-19: "I want it for all the sites, so people have like an ad on their phone right there." The dock A/B of
+2026-11-18 (`lib/dock-arm.ts`) ends early with its "on" arm for every visitor: the eBay (and, where the site has it, TCGplayer) dock is
+stacked just above the phone bottom nav whenever it shows, instead of taking turns with the nav. Its own rules are unchanged: after a
+scroll, labelled "Ad", ✕ for the visit, never Amazon. `dock_arm` on buy_click now always reads "on".
+
 ## 2026-11-19: Starter decks: a store's "ST26" is the set's number, and a title may leave it out
 
 Digimon's two December starter decks (Starter Deck 25: Rubeusdramon, 26: Yukinamon, 4 Dec) had no page: stores list

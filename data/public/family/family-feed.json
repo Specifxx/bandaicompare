@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-19T11:53:06.096Z",
+ "generatedAt": "2026-11-20T11:40:49.974Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -22,6 +22,20 @@
    "refCents": 19247,
    "refLabel": "TCGplayer market price",
    "savingPct": 38
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Kaiju No. 8 - Booster Box",
+   "url": "https://bandaicompare.com/card/kaiju-no-8-booster-box",
+   "cents": 8000,
+   "currency": "USD",
+   "store": "Dynamic Card Collectors",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/625081_200w.jpg",
+   "refCents": 9842,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 19
   },
   {
    "kind": "deal",
@@ -77,20 +91,6 @@
    "refCents": 104749,
    "refLabel": "TCGplayer market price",
    "savingPct": 9
-  },
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
-   "title": "Chivalrous XIII - Booster Box Case",
-   "url": "https://bandaicompare.com/card/chivalrous-xiii-booster-box-case",
-   "cents": 95000,
-   "currency": "USD",
-   "store": "Impact Gaming Center",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/711382_200w.jpg",
-   "refCents": 103683,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 8
   },
   {
    "kind": "preorder",

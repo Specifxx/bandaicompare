@@ -48,7 +48,7 @@ export function Header() {
   // The "More" dropdown is everything the shopping dropdowns do not already list.
   const items = headerNavItems(navGroups({ history, sale, shop: [] }), shop.menus, sale);
   return (
-    <header className="sticky top-0 z-40 h-[var(--hdr)] border-b border-line bg-surface/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 h-[var(--hdr)] border-b border-line bg-surface/90 backdrop-blur-md xmas-garland">
       <div className="page flex h-full items-center gap-2 sm:gap-3 lg:gap-2 xl:max-w-shell">
         <Link href="/" className="flex h-11 shrink-0 items-center rounded-lg" aria-label={`${SITE.name} home`}>
           {/* The word hides between lg and 1400px, where the sections need the row (2026-11-14: the row was wider than the screen

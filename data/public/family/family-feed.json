@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-21T11:04:11.081Z",
+ "generatedAt": "2026-11-22T11:25:37.140Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -33,7 +33,7 @@
    "currency": "USD",
    "store": "Dynamic Card Collectors",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/635348_200w.jpg",
-   "refCents": 7812,
+   "refCents": 7828,
    "refLabel": "TCGplayer market price",
    "savingPct": 23
   },
@@ -47,7 +47,7 @@
    "currency": "USD",
    "store": "Dynamic Card Collectors",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/625081_200w.jpg",
-   "refCents": 9842,
+   "refCents": 9871,
    "refLabel": "TCGplayer market price",
    "savingPct": 19
   },
@@ -60,9 +60,9 @@
    "cents": 9499,
    "currency": "USD",
    "store": "Many Realms",
-   "refCents": 11764,
+   "refCents": 11446,
    "refLabel": "TCGplayer market price",
-   "savingPct": 19
+   "savingPct": 17
   },
   {
    "kind": "deal",

@@ -1708,3 +1708,9 @@ TCGplayer's lowest listing and the cheapest US eBay Buy It Now (never counted as
 recording it, its tracked range and where today sits; the set's release and age, the product's rank among the set's priced
 sealed products and how many of its cheapest pack it costs (a price ratio, never a claim about contents). `setRead` adds
 "<set> prices at a glance" under each set page's grid the same way. Nothing is said without data on the render to back it. Judge on 1 to 8 Dec against 3 to 9 Nov.
+
+## 2026-11-26: The header's string of Christmas lights is removed (owner)
+
+Owner, 2026-11-26: "I don't really like the Christmas lights on the very top." The string of lights hanging under the header
+(2026-11-20) is removed on every Compare site: the `.xmas-garland::after` rule is gone from the `xmas-logo` block in `globals.css`
+and the class is off the header. The Santa hat on the logo stays, and nothing else of the Christmas layer changes.

@@ -66,7 +66,9 @@ test("the ads are ONE native horizontal block per page (owner, 2026-11-13); the 
   }
   // On the home page, after the questions, never under the hero.
   const home = read("src/app/page.tsx");
-  assert.ok(home.indexOf("<InlineAds ") > home.indexOf("Frequently asked questions"));
+  // Mid-page on the home page (owner, 2026-11-25): after the deals and sealed, before the reviews, guides and questions.
+  assert.ok(home.indexOf("<InlineAds ") > home.indexOf("Today's top deals"), "after the deals");
+  assert.ok(home.indexOf("<InlineAds ") < home.indexOf("<SiteReviews />"), "before the reviews, guides and questions");
   assert.doesNotMatch(read("src/components/CardAds.tsx"), /export function (EbayCardStrip|TcgplayerCardStrip|CardAdPair)/);
   for (const f of ["src/components/InlineAds.tsx", "src/components/DockAds.tsx"]) assert.match(read(f), /"use client"/, f);
 });
@@ -90,4 +92,27 @@ test("Amazon's row only for products Amazon carries (owner, 2026-11-12)", async 
   const { amazonCarries } = await import("@/lib/amazon-live");
   for (const t of ["Booster Box", "Booster Pack", "Starter Deck", "Tin", "Collection"]) assert.equal(amazonCarries({ id: 987654321, sealedType: t }), true, t);
   for (const t of ["Case", "Prerelease", "Insert", "Other", "Starter Deck Display", null]) assert.equal(amazonCarries({ id: 987654321, sealedType: t }), false, String(t));
+});
+
+test("the gutter column (owner, 2026-11-25): TCGplayer only, right of the page from 1900px, browser-only, never narrowing the page", async () => {
+  const { GUTTER_MIN, pastBanner } = await import("@/components/GutterAds");
+  assert.equal(GUTTER_MIN, 1900);
+  assert.ok(GUTTER_MIN - 16 - 240 >= 1392 + 2 * (96 + 28), "a column of about 100px fits from GUTTER_MIN, beside the sidebar and a scrollbar");
+  const read = (f: string) => readFileSync(f, "utf8");
+  const g = read("src/components/GutterAds.tsx");
+  assert.match(g, /"use client"/);
+  assert.match(g, /data-adfree/, "never for ad-free members");
+  assert.match(g, /rel="sponsored nofollow noopener"/);
+  assert.match(g, /"gutter-tcg"/);
+  assert.match(g, /className="ad-pill">Ad</);
+  assert.doesNotMatch(g, /source: "(ebay|amazon)"/, "TCGplayer only on a light-ad site");
+  const css = read("src/app/globals.css");
+  assert.match(css, /\.gutter-ads \{[^}]*--g: calc\(\(100% - 1392px\) \/ 2\)/, "measured beside the page content (1392px)");
+  assert.match(css, /--gw: min\(180px, calc\(var\(--g\) - 28px\)\)/, "and kept 14px clear of it");
+  assert.match(css, /\.gutter-card \{[^}]*position: sticky/);
+  const layout = read("src/app/layout.tsx");
+  assert.match(layout, /<main id="main" className="relative min-w-0 flex-1">/, "inside main, so it ends where the content ends");
+  assert.match(layout, /<AdRouteGate><GutterAds /, "never on the ad-free pages");
+  assert.deepEqual(pastBanner([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), [5, 6, 7, 8, 9, 10]);
+  assert.deepEqual(pastBanner([1, 2, 3, 4, 5]), [1, 2, 3, 4, 5]);
 });

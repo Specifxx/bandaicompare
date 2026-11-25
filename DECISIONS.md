@@ -1714,3 +1714,16 @@ sealed products and how many of its cheapest pack it costs (a price ratio, never
 Owner, 2026-11-26: "I don't really like the Christmas lights on the very top." The string of lights hanging under the header
 (2026-11-20) is removed on every Compare site: the `.xmas-garland::after` rule is gone from the `xmas-logo` block in `globals.css`
 and the class is off the header. The Santa hat on the logo stays, and nothing else of the Christmas layer changes.
+
+## 2026-11-25: The home ad block moves mid-page, and a TCGplayer column fills the empty right side on very wide windows (owner)
+
+Owner, 2026-11-25: "Why are the display ads at the very bottom of the site? … there's so much space on the left and the right
+side of the website." Ported from YGO Compare and Gundam Compare (same day):
+
+- The home page's one ad block (`InlineAds`) moves from under the FAQ to mid-page: after the deals, sealed and the newest set,
+  before the reviews, guides and questions. Never under the hero, never above a price.
+- `GutterAds.tsx`: from 1900px wide, one slim, labelled column of the import's own TCGplayer tiles sits in the empty space right
+  of the page's 1392px content, inside `<main>` (now `relative`), never over the sidebar, the page, the header or the footer; its
+  card is sticky under the header. A light-ad site: TCGplayer only, right only, never eBay or Amazon. Browser-only (CLS 0), never
+  for ad-free members, the app or the ad-free pages (`AdRouteGate`), rel sponsored through /go under `gutter-tcg`, skipping the
+  banner's products (`pastBanner`). Not the old side rail: the page keeps its full width. `tests/card-ads.test.ts` pins it.

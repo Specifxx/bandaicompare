@@ -13,7 +13,7 @@ test("the shell is the engine's: header, sidebar beside main, no fixed rail vari
   const layout = readFileSync("src/app/layout.tsx", "utf8");
   assert.match(layout, /max-w-shell/);
   assert.match(layout, /<SideNav /);
-  assert.match(layout, /<main id="main" className="min-w-0 flex-1">/);
+  assert.match(layout, /<main id="main" className="relative min-w-0 flex-1">/);
   assert.match(layout, /<DockAds /);
   assert.doesNotMatch(layout, /sidenav-w|fonts\.googleapis/);
   assert.match(readFileSync("src/components/SideNav.tsx", "utf8"), /hidden w-60 shrink-0 xl:block/);
@@ -70,10 +70,10 @@ test("every rail link points at a page of the site, and prices come first", () =
 
 // 2026-11-10 (cost-cut redesign): recently viewed and the plain game rows come straight after the hero, the one ad block after
 // the deals, and the hero's animated background is gone.
-test("the homepage order: hero, recently viewed, games, deals, sealed, the newest set's sealed, reviews, guides, FAQ, the one ad block (2026-11-19), and nothing else", () => {
+test("the homepage order: hero, recently viewed, games, deals, sealed, the newest set's sealed, the one ad block (mid-page, 2026-11-25), reviews, guides, FAQ, and nothing else", () => {
   const src = readFileSync("src/app/page.tsx", "utf8");
   assert.doesNotMatch(src, /<HeroSparks/);
-  const order = ["<CreatorsBubble />", "<RecentlyViewed ", "<GameRows />", "Today's top deals", "<SealedHero", "booster boxes and sealed`}", "<SiteReviews />", 'title="Guides"', "Frequently asked questions", "<InlineAds "];
+  const order = ["<CreatorsBubble />", "<RecentlyViewed ", "<GameRows />", "Today's top deals", "<SealedHero", "booster boxes and sealed`}", "<InlineAds ", "<SiteReviews />", 'title="Guides"', "Frequently asked questions"];
   let at = -1;
   for (const o of order) {
     const i = src.indexOf(o, at + 1);

@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-24T13:45:39.400Z",
+ "generatedAt": "2026-11-25T12:56:14.682Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -9,20 +9,6 @@
   }
  },
  "items": [
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
-   "title": "BLEACH: Thousand-Year Blood War Vol.2 - Booster Box",
-   "url": "https://bandaicompare.com/card/bleach-thousand-year-blood-war-vol-2-booster-box",
-   "cents": 12000,
-   "currency": "USD",
-   "store": "Eternal Games Chesterfield",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/607851_200w.jpg",
-   "refCents": 19307,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 38
-  },
   {
    "kind": "deal",
    "cluster": "cards",
@@ -55,12 +41,27 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
-   "title": "Ignition of X Booster Box",
-   "url": "https://bandaicompare.com/card/ignition-of-x-booster-box",
-   "cents": 9499,
+   "title": "HUNTER X HUNTER Vol.2 - Booster Box",
+   "url": "https://bandaicompare.com/card/hunter-x-hunter-vol-2-booster-box",
+   "cents": 7000,
    "currency": "USD",
-   "store": "Many Realms",
-   "refCents": 11213,
+   "store": "Devastation Store",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/624229_200w.jpg",
+   "refCents": 8488,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 18
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
+   "title": "Re:ZERO -Starting Life in Another World- - Booster Box",
+   "url": "https://bandaicompare.com/card/re-zero-starting-life-in-another-world-booster-box",
+   "cents": 7999,
+   "currency": "USD",
+   "store": "GuuBuu Hobby",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/696138_200w.jpg",
+   "refCents": 9463,
    "refLabel": "TCGplayer market price",
    "savingPct": 15
   },

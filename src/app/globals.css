@@ -613,6 +613,38 @@ html:has(.menu-sheet[open]) {
     margin-right: 0;
   }
 }
+/* The gutter column (owner, 2026-11-25; components/GutterAds.tsx): from 1900px, in the empty space right of the page's 1392px
+   content inside <main> (from 1280px main runs to the window's edge, the page centred in it), centred in that space and 14px clear
+   of the content and the window; never over the sidebar, the page, the header or the footer. */
+.gutter-ads {
+  --g: calc((100% - 1392px) / 2);
+  --gw: min(180px, calc(var(--g) - 28px));
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  right: calc((var(--g) - var(--gw)) / 2);
+  width: var(--gw);
+  z-index: 10;
+}
+.gutter-card {
+  position: sticky;
+  top: calc(var(--hdr) + 16px);
+  display: flex;
+  max-height: calc(100vh - var(--hdr) - 80px);
+  flex-direction: column;
+  padding: 10px;
+}
+.gutter-list {
+  margin-top: 8px;
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  gap: 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
 /* The hero's stat line, as chips. */
 .hero-stat {
   @apply inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-sm text-muted;

@@ -31,7 +31,8 @@ import { DockAds } from "@/components/DockAds";
 import { navGroups } from "@/lib/nav";
 import { shopNav } from "@/lib/shop-nav";
 import { historyOn } from "@/lib/data";
-import { cardAds } from "@/lib/card-ads";
+import { adSearch, cardAds } from "@/lib/card-ads";
+import { GutterAds } from "@/components/GutterAds";
 import { ReturnBeacon } from "@/components/ReturnBeacon";
 import { SinceLastVisit } from "@/components/SinceLastVisit";
 import { AdRouteGate } from "@/components/AdRouteGate";
@@ -97,11 +98,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* The engine's shell: from xl the sidebar sits in the flow beside <main>, both inside the 1480px shell. */}
           <div className="mx-auto flex w-full max-w-shell flex-1">
             <SideNav groups={navGroups({ history, sale: holidayNav(), shop: shopNav().groups })} />
-            <main id="main" className="min-w-0 flex-1">
+            <main id="main" className="relative min-w-0 flex-1">
               <div className="page py-6">
                 {SITE.priceAlerts && <SinceLastVisit />}
                 {children}
               </div>
+              {/* The gutter column (owner, 2026-11-25): TCGplayer tiles right of the page on very wide windows, browser-only. */}
+              <AdRouteGate><GutterAds ads={cardAds({ limit: 14 })} search={adSearch()} /></AdRouteGate>
             </main>
           </div>
           <Footer />

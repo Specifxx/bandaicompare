@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-25T12:56:14.682Z",
+ "generatedAt": "2026-11-26T12:34:24.696Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -27,6 +27,20 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
+   "title": "HUNTER X HUNTER Vol.2 - Booster Box",
+   "url": "https://bandaicompare.com/card/hunter-x-hunter-vol-2-booster-box",
+   "cents": 7000,
+   "currency": "USD",
+   "store": "Devastation Store",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/624229_200w.jpg",
+   "refCents": 8594,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 19
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
    "title": "Kaiju No. 8 - Booster Box",
    "url": "https://bandaicompare.com/card/kaiju-no-8-booster-box",
    "cents": 8000,
@@ -41,27 +55,13 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
-   "title": "HUNTER X HUNTER Vol.2 - Booster Box",
-   "url": "https://bandaicompare.com/card/hunter-x-hunter-vol-2-booster-box",
-   "cents": 7000,
-   "currency": "USD",
-   "store": "Devastation Store",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/624229_200w.jpg",
-   "refCents": 8488,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 18
-  },
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
    "title": "Re:ZERO -Starting Life in Another World- - Booster Box",
    "url": "https://bandaicompare.com/card/re-zero-starting-life-in-another-world-booster-box",
    "cents": 7999,
    "currency": "USD",
    "store": "GuuBuu Hobby",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/696138_200w.jpg",
-   "refCents": 9463,
+   "refCents": 9414,
    "refLabel": "TCGplayer market price",
    "savingPct": 15
   },
@@ -75,7 +75,7 @@
    "currency": "USD",
    "store": "Game-O-Storus",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
-   "refCents": 14947,
+   "refCents": 14894,
    "refLabel": "TCGplayer market price",
    "savingPct": 13
   },

@@ -43,7 +43,7 @@ test("every retired card URL goes to its set's sealed page, or /sealed; anything
 
 test("the card page redirects a retired card permanently and the redirect file ships with the functions", () => {
   const page = fs.readFileSync("src/app/card/[slug]/page.tsx", "utf8");
-  assert.match(page, /permanentRedirect\(to\)/);
+  assert.match(page, /permanentRedirect\(mergedUrl\(to\)\)/);
   assert.match(fs.readFileSync("next.config.js", "utf8"), /\.\/data\/redirects\/\*\.json/);
 });
 
@@ -62,11 +62,12 @@ test("the sitemap lists no card, card hub or retired page", () => {
 test("retired guides 301 and the kept ones still render", async () => {
   const config = (await import(NEXT_CONFIG as string)).default as { redirects: () => Promise<{ source: string; destination: string; statusCode?: number }[]> };
   const rules = await config.redirects();
+  // Since the merge (2026-11-26) every guide 301s to TCG Prices: the retired ones to a hub, the kept ones to the same guide there.
   const retired = rules.filter((r) => r.source.startsWith("/blog/"));
   assert.ok(retired.length >= 2);
   for (const r of retired) {
     assert.equal(r.statusCode, 301);
-    assert.ok(!POSTS.some((p) => `/blog/${p.slug}` === r.source), `${r.source} is still a post`);
+    assert.ok(r.destination.startsWith("https://tcgprices.app/"), r.source);
   }
   const ids = new Set(products().map((p) => String(p.id)));
   for (const p of POSTS) {

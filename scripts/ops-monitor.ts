@@ -41,6 +41,17 @@ async function main() {
       const r = await fetch(site, { signal: AbortSignal.timeout(20000) });
       return r.ok ? { status: "ok", detail: `${r.status}` } : { status: "fail", detail: `HTTP ${r.status}` };
     }),
+    // Merged into TCG Prices (owner, 2026-11-26): the home page and a game hub must 301 there, one hop.
+    check("Merged into TCG Prices", async () => {
+      if (!live) return { status: "warn", detail: "SITE_URL repository variable not set — live checks skipped" };
+      const bad: string[] = [];
+      for (const p of ["/", "/games/union-arena", "/sealed/booster-box"]) {
+        const r = await fetch(`${site}${p}`, { redirect: "manual", signal: AbortSignal.timeout(20000) });
+        const to = r.headers.get("location") ?? "";
+        if (r.status !== 301 || !to.startsWith("https://tcgprices.app/")) bad.push(`${p} answered HTTP ${r.status}${to ? ` → ${to}` : ""}`);
+      }
+      return bad.length ? { status: "fail", detail: bad.join("; ") } : { status: "ok", detail: "301 to tcgprices.app" };
+    }),
     check("The sealed hub", async () => {
       if (!live) return { status: "warn", detail: "SITE_URL repository variable not set — live checks skipped" };
       const r = await fetch(`${site}/sealed`, { signal: AbortSignal.timeout(20000) });
@@ -53,7 +64,7 @@ async function main() {
       const [, slugs] = Object.entries(map.bySet).find(([s, l]) => s && l.length)!;
       const r = await fetch(`${site}/card/${slugs[0]}`, { redirect: "manual", signal: AbortSignal.timeout(20000) });
       const to = r.headers.get("location") ?? "";
-      return (r.status === 301 || r.status === 308) && /\/(sets\/|games\/|sealed)/.test(to)
+      return (r.status === 301 || r.status === 308) && /^https:\/\/tcgprices\.app\/(sets\/|games\/|sealed)/.test(to)
         ? { status: "ok", detail: `${r.status} → ${to.replace(site, "")}` }
         : { status: "fail", detail: `/card/${slugs[0]} answered HTTP ${r.status}${to ? ` → ${to}` : ""}, not a permanent redirect to its set` };
     }),

@@ -1,5 +1,10 @@
 # Working in this repo
 
+**Merged into TCG Prices (owner, 2026-11-26; DECISIONS.md).** bandaicompare.com 301s every page to its twin on
+tcgprices.app (`data/redirects/tcgprices.json`, frozen; `next.config.js`, `lib/merged.ts`). This repo now exists for its
+daily store import, which TCG Prices reads as the price feed for Union Arena, Fusion World and Digimon, and for the
+alert feed RiftCompare reads. Site work goes to `Specifxx/tcgcompare`; here only keep the import and the redirects working.
+
 Read `README.md` first. This is BandaiCompare (Union Arena, Dragon Ball Super Fusion World and the
 Digimon Card Game on one site, `SITE.lines`), **sealed only** since 2026-11-08 (owner): booster boxes,
 cases, packs and starter decks, no single cards. It runs the **Dex / MTG Compare engine's look** on its

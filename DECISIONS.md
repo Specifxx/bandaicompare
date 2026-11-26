@@ -1727,3 +1727,24 @@ side of the website." Ported from YGO Compare and Gundam Compare (same day):
   card is sticky under the header. A light-ad site: TCGplayer only, right only, never eBay or Amazon. Browser-only (CLS 0), never
   for ad-free members, the app or the ad-free pages (`AdRouteGate`), rel sponsored through /go under `gutter-tcg`, skipping the
   banner's products (`pastBanner`). Not the old side rail: the page keeps its full width. `tests/card-ads.test.ts` pins it.
+
+## 2026-11-26: Merged into TCG Prices
+
+The owner asked whether to split BandaiCompare into one site per game or merge it into TCG Prices ("Bandai Compare
+literally has earned us nothing"). Four weeks to 22-23 Nov: A$4 earned, 299 visitors, 1 buy click; the best page in
+Google had 19 impressions and no click. TCG Prices already had the three games as game hubs (357 products to our 219,
+202 of ours under the same slug) and already took this site's store prices. New per-game sites would start from zero
+(no new site before 18 Jan). Merged.
+
+- Every page 301s, one hop, to its TCG Prices twin: `data/redirects/tcgprices.json` (frozen, 508 paths: 389 to the same
+  path there, sets with no sealed product there and the 17 old Digimon products TCG Prices culled to the game's hub, the
+  three evergreen guides to the same guides, which moved there) through `next.config.js`, then every other path to the
+  same path on tcgprices.app. `/card/<slug>` stays with the card page, which sends a retired single or culled product
+  through the same map (`lib/merged.ts`). `tests/merged.test.ts` pins it.
+- Stays on this host: `/alert-feed.json` (RiftCompare's sister alerts still read it for the alerts people already have),
+  `/api/*` (the eBay deletion hook), `robots.txt`, `sitemap.xml` (so Google recrawls the old URLs and sees the 301s),
+  `/go`, `ads.txt`, the IndexNow key.
+- The daily import, store probe and ops monitor keep running: TCG Prices reads this repo's prices and store list for
+  Union Arena, Fusion World and Digimon (`sisters.ts` there), the 100 eurozone shops of today included. The Monday
+  release stays, for the alert feed and the sitemap. The domain keeps renewing.
+- The ops monitor's "Merged into TCG Prices" check fails if `/`, a game hub or a sealed hub stops 301ing there.

@@ -13,6 +13,11 @@ const CDN_PAGES = ["/card/:slug", "/kit/:slug", "/sets/:slug", "/sealed/:type", 
 // Sealed only (owner, 2026-11-08; YGO Compare's 2026-11-06 rule): the card hubs and card tools are gone; each old URL is a 301 to the nearest sealed
 // page, so links and search results keep working. A single card's own URL (/card/<slug>) is redirected by its page
 // (lib/card-redirects.ts), because the same route still serves every sealed product.
+// BandaiCompare merged into TCG Prices (owner, 2026-11-26): the frozen page map, and the paths that stay on this host.
+const MERGE = require("./data/redirects/tcgprices.json");
+const mergedUrl = (p) => `${MERGE.host}${MERGE.paths[p] ?? p}`;
+const STAYS = ["card/", "api/", "_next/", "alert-feed\\.json$", "robots\\.txt$", "sitemap\\.xml$", "ads\\.txt$", "indexnow-key\\.txt$", "go$"].join("|");
+
 const RETIRED = [
   { source: "/cards", destination: "/sealed" },
   { source: "/cards/rarity/:path*", destination: "/blog/union-arena-star-rarities-explained" },
@@ -43,7 +48,20 @@ module.exports = {
     },
   },
   async redirects() {
-    return [{ source: "/deals", destination: "/tools/deal-finder", permanent: true }, ...RETIRED.map((r) => ({ ...r, statusCode: 301 }))];
+    // Merged into TCG Prices (owner, 2026-11-26; DECISIONS.md): every page 301s, in one hop, to the TCG Prices page
+    // that serves it now. The retired and mapped pages first (data/redirects/tcgprices.json, frozen), then the few
+    // pages TCG Prices has no twin for, then every other path to the same path there. /card/<slug> is left to the card
+    // page (a retired single or culled product is looked up there, lib/merged.ts). The price-alert feed RiftCompare
+    // reads, the eBay deletion hook and the other endpoints stay here.
+    return [
+      { source: "/deals", destination: mergedUrl("/tools/deal-finder"), statusCode: 301 },
+      ...RETIRED.map((r) => ({ source: r.source, destination: mergedUrl(r.destination), statusCode: 301 })),
+      ...Object.entries(MERGE.paths).map(([source, to]) => ({ source, destination: `${MERGE.host}${to}`, statusCode: 301 })),
+      { source: "/forum/:path*", destination: mergedUrl("/forum"), statusCode: 301 },
+      { source: "/kit/:path*", destination: mergedUrl("/kits"), statusCode: 301 },
+      { source: "/kits/:path*", destination: mergedUrl("/kits"), statusCode: 301 },
+      { source: `/:path((?!${STAYS}).+)`, destination: `${MERGE.host}/:path`, statusCode: 301 },
+    ];
   },
   async headers() {
     return [

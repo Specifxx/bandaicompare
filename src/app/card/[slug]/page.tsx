@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { notFound, permanentRedirect } from "next/navigation";
 import { retiredCardTarget } from "@/lib/card-redirects";
 import { culledSetSlug } from "@/lib/culled";
+import { MERGED, mergedUrl } from "@/lib/merged";
 import { gameHubOfSet, storeLowsOf, historyThrough } from "@/lib/data";
 import { SITE } from "@/site.config";
 import { byValue, historyOf, looseSingleSetId, meta, priceOf, productBySlug, productsInSet, refCents, setById, setBySlug } from "@/lib/data";
@@ -72,18 +73,20 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 
 export default function CardPage({ params }: { params: { slug: string } }) {
   const p = productBySlug(params.slug);
+  // Merged into TCG Prices (owner, 2026-11-26): a product still listed here goes to the same page there.
+  if (p && MERGED) permanentRedirect(mergedUrl(`/card/${p.slug}`));
   if (!p) {
     // A single card from before the site went sealed-only: a permanent redirect to its set (lib/card-redirects.ts).
     const to = retiredCardTarget(params.slug, (s) => (setBySlug(s)?.productCount ?? 0) > 0, gameHubOfSet);
-    if (to) permanentRedirect(to);
+    if (to) permanentRedirect(mergedUrl(to));
     // A sealed product the sealed focus culled (lib/import/focus.ts): its set, or its game when the set is empty.
     const culled = culledSetSlug(params.slug);
-    if (culled != null) permanentRedirect((setBySlug(culled)?.productCount ?? 0) > 0 ? `/sets/${culled}` : gameHubOfSet(culled));
+    if (culled != null) permanentRedirect(mergedUrl((setBySlug(culled)?.productCount ?? 0) > 0 ? `/sets/${culled}` : gameHubOfSet(culled)));
     // A single that TCGplayer filed as sealed (lib/data.ts isLooseSingle): its set, or the sealed hub.
     const loose = looseSingleSetId(params.slug);
     if (loose != null) {
       const set = setById(loose);
-      permanentRedirect(set && set.productCount > 0 ? `/sets/${set.slug}` : gameHubOfSet(set?.slug ?? ""));
+      permanentRedirect(mergedUrl(set && set.productCount > 0 ? `/sets/${set.slug}` : gameHubOfSet(set?.slug ?? "")));
     }
     notFound();
   }

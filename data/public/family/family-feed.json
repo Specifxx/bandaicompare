@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-26T12:34:24.696Z",
+ "generatedAt": "2026-11-27T12:19:35.756Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -19,7 +19,7 @@
    "currency": "USD",
    "store": "Dynamic Card Collectors",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/635348_200w.jpg",
-   "refCents": 7844,
+   "refCents": 7880,
    "refLabel": "TCGplayer market price",
    "savingPct": 24
   },
@@ -55,15 +55,15 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
-   "title": "Re:ZERO -Starting Life in Another World- - Booster Box",
-   "url": "https://bandaicompare.com/card/re-zero-starting-life-in-another-world-booster-box",
-   "cents": 7999,
+   "title": "GODDESS OF VICTORY: NIKKE - Booster Box",
+   "url": "https://bandaicompare.com/card/goddess-of-victory-nikke-booster-box",
+   "cents": 6000,
    "currency": "USD",
-   "store": "GuuBuu Hobby",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/696138_200w.jpg",
-   "refCents": 9414,
+   "store": "Eternal Games Chesterfield",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
+   "refCents": 7332,
    "refLabel": "TCGplayer market price",
-   "savingPct": 15
+   "savingPct": 18
   },
   {
    "kind": "deal",

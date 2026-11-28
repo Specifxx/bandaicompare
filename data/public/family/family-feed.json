@@ -1,7 +1,7 @@
 {
  "v": 1,
  "site": "bandai",
- "generatedAt": "2026-11-27T12:19:35.756Z",
+ "generatedAt": "2026-11-28T11:47:20.484Z",
  "links": {
   "US": {
    "deals": "https://bandaicompare.com/black-friday",
@@ -13,13 +13,27 @@
    "kind": "deal",
    "cluster": "cards",
    "region": "US",
+   "title": "Digital World Shambala Booster Box",
+   "url": "https://bandaicompare.com/card/digital-world-shambala-booster-box",
+   "cents": 6999,
+   "currency": "USD",
+   "store": "Gaming Giant",
+   "image": "https://tcgplayer-cdn.tcgplayer.com/product/680510_200w.jpg",
+   "refCents": 10285,
+   "refLabel": "TCGplayer market price",
+   "savingPct": 32
+  },
+  {
+   "kind": "deal",
+   "cluster": "cards",
+   "region": "US",
    "title": "Yu Yu Hakusho: Ghost Files - Booster Box",
    "url": "https://bandaicompare.com/card/yu-yu-hakusho-ghost-files-booster-box",
    "cents": 6000,
    "currency": "USD",
    "store": "Dynamic Card Collectors",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/635348_200w.jpg",
-   "refCents": 7880,
+   "refCents": 7892,
    "refLabel": "TCGplayer market price",
    "savingPct": 24
   },
@@ -33,9 +47,9 @@
    "currency": "USD",
    "store": "Devastation Store",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/624229_200w.jpg",
-   "refCents": 8594,
+   "refCents": 8864,
    "refLabel": "TCGplayer market price",
-   "savingPct": 19
+   "savingPct": 21
   },
   {
    "kind": "deal",
@@ -47,23 +61,9 @@
    "currency": "USD",
    "store": "Dynamic Card Collectors",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/625081_200w.jpg",
-   "refCents": 9871,
+   "refCents": 9872,
    "refLabel": "TCGplayer market price",
    "savingPct": 19
-  },
-  {
-   "kind": "deal",
-   "cluster": "cards",
-   "region": "US",
-   "title": "GODDESS OF VICTORY: NIKKE - Booster Box",
-   "url": "https://bandaicompare.com/card/goddess-of-victory-nikke-booster-box",
-   "cents": 6000,
-   "currency": "USD",
-   "store": "Eternal Games Chesterfield",
-   "image": "https://tcgplayer-cdn.tcgplayer.com/product/638096_200w.jpg",
-   "refCents": 7332,
-   "refLabel": "TCGplayer market price",
-   "savingPct": 18
   },
   {
    "kind": "deal",
@@ -75,9 +75,9 @@
    "currency": "USD",
    "store": "Game-O-Storus",
    "image": "https://tcgplayer-cdn.tcgplayer.com/product/565626_200w.jpg",
-   "refCents": 14894,
+   "refCents": 14833,
    "refLabel": "TCGplayer market price",
-   "savingPct": 13
+   "savingPct": 12
   },
   {
    "kind": "deal",
@@ -101,7 +101,7 @@
    "url": "https://bandaicompare.com/preorders/starter-deck-25-rubeusdramon",
    "cents": 1999,
    "currency": "USD",
-   "store": "Many Realms",
+   "store": "jawbreakers",
    "releaseDate": "2026-12-04"
   },
   {
@@ -112,7 +112,7 @@
    "url": "https://bandaicompare.com/preorders/starter-deck-26-yukinamon",
    "cents": 1999,
    "currency": "USD",
-   "store": "Many Realms",
+   "store": "jawbreakers",
    "releaseDate": "2026-12-04"
   },
   {

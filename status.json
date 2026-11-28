@@ -1,0 +1,53 @@
+{
+ "v": 1,
+ "site": "bandaicompare.com",
+ "at": "2026-11-28T17:48:00.097Z",
+ "overall": "warn",
+ "checks": [
+  {
+   "name": "Live site",
+   "status": "ok",
+   "detail": "200"
+  },
+  {
+   "name": "Merged into TCG Prices",
+   "status": "ok",
+   "detail": "301 to tcgprices.app"
+  },
+  {
+   "name": "The sealed hub",
+   "status": "ok",
+   "detail": "200"
+  },
+  {
+   "name": "Retired card URLs redirect",
+   "status": "ok",
+   "detail": "308 → https://tcgprices.app/sets/across-time"
+  },
+  {
+   "name": "Daily price import",
+   "status": "ok",
+   "detail": "6.1h old"
+  },
+  {
+   "name": "Store imports",
+   "status": "warn",
+   "detail": "cardbot: 0 matched; legendsandcollectables: 0 matched; spellroogaming: 0 matched; thecardcave: https://thecardcave.com.au/collections/dragon-ball/products.json?limit=250&page=1&country=AU: HTTP 401 ; thecollectorsmith: 0 matched; tradingcardmasters: 0 matched; hobbyco: 0 matched; 6ixtcgsmarkham: 0 matched; thatgamestore: 0 matched; diademhobbies: 0 matched; envcollectible: 0 matched; forestcitycollectibles: 0 matched; manalounge: 0 matched; dungeoncomicsandcards: 0 matched; screenfreegames: 0 matched; cardworld: https://cardworld.be/collections/other-tcg-dragon-ball-super/products.json?limit=250&page=1&country=ES: fetch failed; zillerstore: 0 matched; 1uprm: 0 matched; adcardcollectibles: 0 matched; aiegames: 0 matched; area151: 0 matched; azcardtrading: 0 matched; biridama: 0 matched; boostertcg: 0 matched; cardcollector: 0 matched; cardcosmos: 0 matched; cardgames24: 0 matched; cardzone: 0 matched; collectavenue: 0 matched; ccncards: 0 matched; dungeonstreet: 0 matched; eclipsetcg: 0 matched; emeraldcardcave: 0 matched; dracaugames: 0 matched; escamon: 0 matched; evlutcg: 0 matched; factorycardstcg: 0 matched; funside: 0 matched; gamesavenue: 0 matched; godofcards: 0 matched; goosegames: 0 matched; grancards: 0 matched; elduelista: 0 matched; kaiofcards: 0 matched; isengard: 0 matched; jjcollection: 0 matched; kaibacards: 0 matched; kartenmeier: 0 matched; lorenzone: 0 matched; madridnortetcg: 0 matched; manamecha: 0 matched; metamorphcenter: 0 matched; mocards: 0 matched; mrcollect: 0 matched; mucollectibles: 0 matched; ninpostore: 0 matched; opssmarket: 0 matched; pelikrypta: 0 matched; pokechest: 0 matched; pokemillon: 0 matched; poneglyphcards: 0 matched; primeprotector: store charges USD, but is configured for EU (EUR) — fix its market in src/content/stores.ts; psydeck: 0 matched; ronintcg: 0 matched; sarumangames: 0 matched; pokefamily: 0 matched; spieles: 0 matched; sgames: 0 matched; sunnystore: 0 matched; secretwonderscollectibles: 0 matched; superelfcards: 0 matched; tcgotakuyaes: 0 matched; tcggarden: 0 matched; tcgreus: 0 matched; tcgstars: 0 matched; tkcollectibles: 0 matched; tobistoys: 0 matched; teamlunti: 0 matched; toytreasure: 0 matched; varietycards: 0 matched; vegastore: 0 matched; yonkotcg: 0 matched; sentinelgamessg: 0 matched; playe: 0 matched; sgmanapro: 0 matched; pikkuplay: 0 matched; trinketmage: 0 matched; blackswampgames: 0 matched; digitalheroes: 0 matched; five6gaming: 0 matched; gamersngeeks: 0 matched; gachaboba: 0 matched; gatorscardden: 0 matched; managaming: 0 matched; triadgroup: 0 matched"
+  },
+  {
+   "name": "eBay budget",
+   "status": "ok",
+   "detail": "eBay paused since 2026-11-19 (site idle); last run 246h ago"
+  },
+  {
+   "name": "Family feed",
+   "status": "ok",
+   "detail": "12 items, 6.0h old; 9 sister feeds (rift, op, dex, mtg, gundam, lorcana, ygo, cyberpunk, sealed)"
+  },
+  {
+   "name": "Amazon ASIN finder",
+   "status": "ok",
+   "detail": "AU: ok, 18 ASINs, 6h ago; CA: ok, 0 ASINs, 6h ago; EU: ok, 0 ASINs, 6h ago; UK: ok, 0 ASINs, 6h ago; US: ok, 13 ASINs, 6h ago"
+  }
+ ]
+}
